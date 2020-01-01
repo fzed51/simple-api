@@ -21,7 +21,7 @@ class ApiRenderer
             'data' => $data,
             'error' => null
         ];
-        return $this->render($dataResponse);
+        return $this->render($dataResponse)->withStatus(200);
     }
 
     public function error(int $code, string $err): Response
@@ -34,7 +34,7 @@ class ApiRenderer
                 'message' => $err
             ]
         ];
-        return $this->render($dataResponse);
+        return $this->render($dataResponse)->withStatus($code);
     }
 
     private function render($data): Response
