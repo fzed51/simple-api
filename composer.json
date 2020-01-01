@@ -1,0 +1,33 @@
+{
+  "name": "fzed51/simple-api",
+  "description": "api permettant d'enregistrer des ressources et des bin\u0000mes cl\u0000 valeur (json) pour les ressources.",
+  "type": "project",
+  "require": {
+    "slim/slim": "^3",
+    "php": "^7.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabien Sanchez",
+      "email": "fzed51+git@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "test/"
+    }
+  },
+  "config": {
+    "process-timeout": 0,
+    "sort-packages": true
+  },
+  "scripts": {
+    "start": "php -S localhost:8008 -t public",
+    "test": "phpunit"
+  }
+}
