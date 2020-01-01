@@ -19,6 +19,7 @@
   "minimum-stability": "stable",
   "autoload-dev": {
     "psr-4": {
+      "App\\": "src/",
       "Tests\\": "test/"
     }
   },
@@ -28,6 +29,7 @@
   },
   "scripts": {
     "start": "php -S localhost:8008 -t public",
+    "client": "php -S localhost:9009 -t tests/Client",
     "test": "phpunit"
   }
 }
