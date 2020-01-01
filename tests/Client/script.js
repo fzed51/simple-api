@@ -1,41 +1,44 @@
 (() => {
-  fetch("https://jsonplaceholder.typicode.com/todos/1")
-    .then(response => response.text())
-    .then(text => document.querySelector("#body").value = text);
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+        .then(response => response.text())
+        .then(text => document.querySelector("#body").value = text);
 
-  const send = event => {
-    const uri = document.querySelector("#uri").value;
-    const methode = document.querySelector("#methode").value;
-    const path = document.querySelector("#path").value;
-    const body = document.querySelector("#body").value;
-    console.debug("uri", uri);
-    console.debug("methode", methode);
-    console.debug("path", path);
-    methode == "POST" && console.debug("body", JSON.parse(body));
+    const send = event => {
+        const uri = document.querySelector("#uri").value;
+        const owner = document.querySelector("#owner").value;
+        const methode = document.querySelector("#methode").value;
+        const path = document.querySelector("#path").value;
+        const body = document.querySelector("#body").value;
+        console.debug("uri", uri);
+        console.debug("methode", methode);
+        console.debug("path", path);
+        methode == "POST" && console.debug("body", JSON.parse(body));
 
-    fetch(
-      uri + path,
-      methode !== "POST"
-        ? {
-            headers: {
-              Accept: "application/json"
-            },
-            method: methode
-          }
-        : {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            method: methode,
-            body
-          }
-    )
-      .then(response => response.json())
-      .then(data => {
-        console.dir(data);
-      });
-  };
+        fetch(
+            uri + path,
+            methode !== "POST"
+                ? {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: 'Bearer ' + owner
+                    },
+                    method: methode
+                }
+                : {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: 'Bearer ' + owner,
+                        "Content-Type": "application/json"
+                    },
+                    method: methode,
+                    body
+                }
+        )
+            .then(response => response.json())
+            .then(data => {
+                console.dir(data);
+            });
+    };
 
-  document.querySelector("#btn-send").addEventListener("click", send);
+    document.querySelector("#btn-send").addEventListener("click", send);
 })();
