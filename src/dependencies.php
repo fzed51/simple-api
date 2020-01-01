@@ -8,7 +8,7 @@ return function (App $app) {
 
     // view renderer
     $container['renderer'] = function (ContainerInterface $c) {
-        
+        return new \App\Renderer\ApiRenderer($c->get('response'));
     };
 
 
