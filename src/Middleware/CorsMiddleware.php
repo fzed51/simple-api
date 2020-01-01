@@ -22,7 +22,7 @@ class CorsMiddleware extends Middleware
         }
         $response = $next($request, $response);
         return $response->withHeader('Access-Control-Allow-Origin', $origin)
-            ->withHeader('Access-Control-Allow-Headers', 'content-type')
+            ->withHeader('Access-Control-Allow-Headers', 'Content-Type')
             ->withHeader('Access-Control-Allow-Method', 'GET POST DELETE');
     }
 }

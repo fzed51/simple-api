@@ -4,10 +4,16 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-return function (App $app) {
+return static function (App $app) {
     $container = $app->getContainer();
 
-    $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
-        return $container->get('renderer')->render($response, 'index.phtml', $args);
+    $app->post('/', function (Request $request, Response $response, array $args) use ($container) {
+        return $container->get('renderer')->success($request->getParsedBody());
     });
+    $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
+        return $container->get('renderer')->success(['prenom' => 'fabien']);
+    });
+
+
+    //error_log(var_export($container->get('router')->getRoutes(), true));
 };
