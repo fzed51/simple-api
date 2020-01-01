@@ -30,8 +30,8 @@ class ApiRenderer
             'success' => true,
             'data' => null,
             'error' => [
-                "status" => $code,
-                "message" => $err
+                'status' => $code,
+                'message' => $err
             ]
         ];
         return $this->render($dataResponse);
@@ -40,6 +40,6 @@ class ApiRenderer
     private function render($data): Response
     {
         $this->response->write(json_encode($data));
-        return $this->response->withHeader('content-type', 'application/json');
+        return $this->response->withHeader('Content-Type', 'application/json');
     }
 }
