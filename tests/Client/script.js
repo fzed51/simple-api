@@ -1,0 +1,37 @@
+(() => {
+  const send = event => {
+    const uri = document.querySelector("#uri").value;
+    const methode = document.querySelector("#methode").value;
+    const path = document.querySelector("#path").value;
+    const body = document.querySelector("#body").value;
+    console.debug("uri", uri);
+    console.debug("methode", methode);
+    console.debug("path", path);
+    methode == "POST" && console.debug("body", JSON.parse(body));
+
+    fetch(
+      uri + path,
+      methode !== "POST"
+        ? {
+            headers: {
+              Accept: "application/json"
+            },
+            method: methode
+          }
+        : {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            method: methode,
+            body
+          }
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.dir(data);
+      });
+  };
+
+  document.querySelector("#btn-send").addEventListener("click", send);
+})();

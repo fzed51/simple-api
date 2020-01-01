@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>simple-api - Client test</title>
+  </head>
+  <body>
+    <div>
+      <label>
+        URI :
+        <input type="text" name="uri" id="uri" value="http://localhost:8008" />
+      </label>
+    </div>
+    <div>
+      <label>
+        Methode
+        <select name="methode" id="methode">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label>
+        Path :
+        <input type="text" name="path" id="path" value="" />
+      </label>
+    </div>
+    <div>
+      <label>
+        Body :
+        <textarea name="body" id="body" cols="30" rows="10"></textarea>
+      </label>
+    </div>
+    <div><button type="button" id="btn-send">send</button></div>
+    <script src="./script.js"></script>
+  </body>
+</html>
