@@ -1,4 +1,8 @@
 (() => {
+  fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then(response => response.text())
+    .then(text => document.querySelector("#body").value = text);
+
   const send = event => {
     const uri = document.querySelector("#uri").value;
     const methode = document.querySelector("#methode").value;
