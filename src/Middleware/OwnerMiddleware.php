@@ -4,6 +4,7 @@
 namespace App\Middleware;
 
 
+use App\Owner;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -43,6 +44,8 @@ class OwnerMiddleware extends Middleware
         if ($owner === null) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
         }
+        $owner = new Owner($owner);
+        error_log(var_export($owner, true));
         $request = $request->withAttribute('owner', $owner);
         return $next($request, $response);
     }
