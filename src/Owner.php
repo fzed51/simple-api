@@ -10,7 +10,7 @@ class Owner
     private $ref;
     /** @var string */
     private $description;
-    /** @var array  */
+    /** @var array */
     private $ressources;
 
     public function __construct(array $data)
@@ -31,8 +31,35 @@ class Owner
     private function hydrateRessources(array $ressources)
     {
         $this->ressources = [];
-        foreach ($ressources as $ressource){
+        foreach ($ressources as $ressource) {
             $this->ressources[] = new Ressource($ressource);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getRef(): string
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function hasRessource(string $ressourceName)
+    {
+        /** @var \App\Ressource $ressource */
+        foreach ($this->ressources as $ressource){
+            if($ressource->is($ressourceName)){
+                return true;
+            }
+        }
+        return false;
     }
 }

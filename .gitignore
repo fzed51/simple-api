@@ -5,6 +5,7 @@
 /vendor/
 
 # PROJECT
+/cover/
 /logs/*
-!.empty
 /ressources/owner.json
+!.empty
