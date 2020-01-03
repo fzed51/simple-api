@@ -8,4 +8,5 @@
 /cover/
 /logs/*
 /ressources/owner.json
+/migration-config.json
 !.empty

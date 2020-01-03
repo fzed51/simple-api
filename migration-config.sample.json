@@ -1,0 +1,11 @@
+{
+    "migration_directory": "./ressources/migration",
+    "config_intern": {
+        "provider": "mysql",
+        "host": "localhost",
+        "port": 3306,
+        "name": "db",
+        "user": "user",
+        "pass": "pass"
+    }
+}

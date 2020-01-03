@@ -3,9 +3,11 @@
   "description": "api permettant d'enregistrer des ressources et des bin\u0000mes cl\u0000 valeur (json) pour les ressources.",
   "type": "project",
   "require": {
+    "php": "^7.2",
     "ext-json": "*",
     "ext-openssl": "*",
-    "php": "^7.2",
+    "fzed51/migration": "^1.4",
+    "fzed51/pdo-helper": "^1.2",
     "slim/slim": "^3"
   },
   "require-dev": {
