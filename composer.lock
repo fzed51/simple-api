@@ -4,8 +4,125 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "431db963f9e0c3dcfc3f3971cc853ec2",
+    "content-hash": "12d30173cf63cc7eda5c50145c793304",
     "packages": [
+        {
+            "name": "fzed51/console-options",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/console-options.git",
+                "reference": "0049517b5b1bd96d5ffdc4daf89e40ae240559c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/console-options/zipball/0049517b5b1bd96d5ffdc4daf89e40ae240559c9",
+                "reference": "0049517b5b1bd96d5ffdc4daf89e40ae240559c9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "fzed51/run-test": "^1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Console\\Options\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "option parser pour ligne de commande PHP",
+            "time": "2019-01-30T10:29:11+00:00"
+        },
+        {
+            "name": "fzed51/migration",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/migration.git",
+                "reference": "b87648d6041312bca3c02336f6d5497be141a608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/migration/zipball/b87648d6041312bca3c02336f6d5497be141a608",
+                "reference": "b87648d6041312bca3c02336f6d5497be141a608",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-pdo": "*",
+                "fzed51/console-options": "^1",
+                "fzed51/pdo-helper": "^1",
+                "php": "^7.1"
+            },
+            "bin": [
+                "./bin/migrate"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Migration\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "Outil de migration de base de donnée",
+            "time": "2020-01-03T00:02:35+00:00"
+        },
+        {
+            "name": "fzed51/pdo-helper",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/pdo-helper.git",
+                "reference": "c553ab3d9d4d606bad1bde3351a71bd49ef0d3cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/pdo-helper/zipball/c553ab3d9d4d606bad1bde3351a71bd49ef0d3cd",
+                "reference": "c553ab3d9d4d606bad1bde3351a71bd49ef0d3cd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": "^7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Helper\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "Helper pour faciliter l'initialisation d'objet PDO",
+            "time": "2019-08-28T12:18:54+00:00"
+        },
         {
             "name": "nikic/fast-route",
             "version": "v1.3.0",
@@ -1798,6 +1915,10 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.2",
+        "ext-json": "*",
+        "ext-openssl": "*"
+    },
     "platform-dev": []
 }
