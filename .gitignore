@@ -10,3 +10,5 @@
 /ressources/owner.json
 /migration-config.json
 !.empty
+/src/private.php
+/.phpunit.result.cache

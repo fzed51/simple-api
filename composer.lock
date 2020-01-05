@@ -44,16 +44,16 @@
         },
         {
             "name": "fzed51/migration",
-            "version": "v1.4",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzed51/migration.git",
-                "reference": "b87648d6041312bca3c02336f6d5497be141a608"
+                "reference": "8a02e57809710b7daeaea421261a426b804a0bcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzed51/migration/zipball/b87648d6041312bca3c02336f6d5497be141a608",
-                "reference": "b87648d6041312bca3c02336f6d5497be141a608",
+                "url": "https://api.github.com/repos/fzed51/migration/zipball/8a02e57809710b7daeaea421261a426b804a0bcc",
+                "reference": "8a02e57809710b7daeaea421261a426b804a0bcc",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 }
             ],
             "description": "Outil de migration de base de donnée",
-            "time": "2020-01-03T00:02:35+00:00"
+            "time": "2020-01-03T15:19:13+00:00"
         },
         {
             "name": "fzed51/pdo-helper",

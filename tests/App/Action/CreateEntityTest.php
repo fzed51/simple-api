@@ -1,0 +1,31 @@
+<?php
+
+namespace Tests\App\Action;
+
+use App\action\CreateEntity;
+use Tests\Functional\ActionTestCase;
+
+class CreateEntityTest extends ActionTestCase
+{
+    public function test_construcUneAction(): void
+    {
+        $action = new CreateEntity($this->getPdo(), $this->getOwner(), 'item');
+        $this->assertInstanceOf(CreateEntity::class, $action);
+    }
+
+    public function test_creationDUneEntity(): void
+    {
+        $pdo = $this->getPdo();
+        $nbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $createEntity = new CreateEntity($this->getPdo(), $this->getOwner(), 'item');
+        $newRef = $createEntity(json_encode(['foo' => 'bar']));
+        $newNbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $this->assertTrue($nbEntity < $newNbEntity, "$nbEntity < $newNbEntity");
+        $this->assertTrue(is_string($newRef));
+        $this->assertTrue(strlen($newRef) > 10);
+        // $entity = $pdo
+        //     ->query("select * from entity where ref = '$newRef'")
+        //     ->fetch(\PDO::FETCH_ASSOC);
+        // var_export($entity);
+    }
+}
