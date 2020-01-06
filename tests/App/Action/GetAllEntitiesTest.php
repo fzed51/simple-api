@@ -27,8 +27,13 @@ class GetAllEntitiesTest extends ActionTestCase
     {
         $getAll = new GetAllEntities($this->getPdo(), $this->getOwner(), 'item');
         $entities = $getAll();
+        $this->assertIsArray($entities);
         $this->assertCount(2, $entities);
-        $this->assertEquals($this->refEntity, $entities[0]['id']);
-        $this->assertEquals('aze', $entities[1]['foo']);
+        $this->assertIsArray($entities[0]);
+        $entity = $entities[0];
+        $this->assertArrayHasKey('id', $entity);
+        $this->assertArrayHasKey('foo', $entity);
+        $this->assertEquals($this->refEntity, $entity['id']);
+        $this->assertEquals('bar', $entity['foo']);
     }
 }

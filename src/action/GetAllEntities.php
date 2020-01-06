@@ -7,7 +7,7 @@ namespace App\action;
 class GetAllEntities extends EntityAccessRead
 {
 
-    public function __invoke()
+    public function __invoke(): array
     {
         $stm = $this->pdo->prepare(<<<SQL
 SELECT ref, data 
