@@ -8,6 +8,11 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true">
+
+    <php>
+        <ini name="xdebug.remote_enable" value="1"/>
+    </php>
+
     <testsuites>
         <testsuite name="simple-api">
             <directory suffix="Test.php">tests</directory>

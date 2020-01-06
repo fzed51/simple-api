@@ -1,5 +1,5 @@
 <?php
-include './private.php';
+include __DIR__ . '/private.php';
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production

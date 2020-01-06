@@ -35,4 +35,11 @@ class GetEntityTest extends ActionTestCase
         $this->assertEquals($this->refEntity, $entity['id']);
         $this->assertEquals('bar', $entity['foo']);
     }
+
+    public function test_lireUneEntityInconnu(): void
+    {
+        $getOne = new GetEntity($this->getPdo(), $this->getOwner(), 'item');
+        $entity = $getOne('unknow');
+        $this->assertNull($entity);
+    }
 }

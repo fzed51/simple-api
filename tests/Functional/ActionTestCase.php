@@ -35,7 +35,7 @@ class ActionTestCase extends PdoTestCase
      * @param mixed $data converti en json pour ecrire en base
      * @return string
      */
-    protected function addEntity(string $owner, string $ressource, $data)
+    protected function addEntity(string $owner, string $ressource, $data): string
     {
         $security = new ApiSecurity();
         $ref = $security->getUid();
