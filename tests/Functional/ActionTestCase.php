@@ -4,6 +4,7 @@
 namespace Tests\Functional;
 
 
+use App\ApiSecurity;
 use App\Owner;
 
 class ActionTestCase extends PdoTestCase
@@ -26,5 +27,27 @@ class ActionTestCase extends PdoTestCase
             'description' => 'test',
             'ressources' => ['item']
         ]);
+    }
+
+    /**
+     * @param string $owner
+     * @param string $ressource
+     * @param mixed $data converti en json pour ecrire en base
+     * @return string
+     */
+    protected function addEntity(string $owner, string $ressource, $data)
+    {
+        $security = new ApiSecurity();
+        $ref = $security->getUid();
+        $pdo = $this->getPdo();
+        $stm = $pdo->prepare(<<<SQL
+INSERT INTO entity 
+    (ref, owner, ressource, data) 
+    values (?,?,?,?)
+SQL
+        );
+        $json = json_encode($data);
+        $stm->execute([$ref, $owner, $ressource, $json]);
+        return $ref;
     }
 }
