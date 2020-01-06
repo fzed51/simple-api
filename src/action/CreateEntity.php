@@ -8,7 +8,7 @@ use App\ApiSecurity;
 
 class CreateEntity extends EntityAccess
 {
-    public function __invoke(string $json)
+    public function __invoke(string $json): string
     {
         $security = new ApiSecurity();
         $stm = $this->pdo->prepare(<<<SQL
