@@ -50,4 +50,27 @@ SQL
         $stm->execute([$ref, $owner, $ressource, $json]);
         return $ref;
     }
+
+
+    /**
+     * @param string $owner
+     * @param string $ressource
+     * @param string $ref
+     * @return array|null
+     */
+    protected function getEntity(string $owner, string $ressource, string $ref): ?array
+    {
+        $pdo = $this->getPdo();
+        $stm = $pdo->prepare(<<<SQL
+SELECT * 
+FROM entity 
+WHERE owner = ?
+    AND ressource = ?
+    AND ref = ?
+SQL
+        );
+        $stm->execute([$owner, $ressource, $ref]);
+        $fetch = $stm->fetch(\PDO::FETCH_ASSOC);
+        return $fetch !== false ? $fetch : null;
+    }
 }

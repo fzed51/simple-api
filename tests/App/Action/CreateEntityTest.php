@@ -23,9 +23,5 @@ class CreateEntityTest extends ActionTestCase
         $this->assertTrue($nbEntity < $newNbEntity, "$nbEntity < $newNbEntity");
         $this->assertTrue(is_string($newRef));
         $this->assertTrue(strlen($newRef) > 10);
-        // $entity = $pdo
-        //     ->query("select * from entity where ref = '$newRef'")
-        //     ->fetch(\PDO::FETCH_ASSOC);
-        // var_export($entity);
     }
 }

@@ -9,7 +9,7 @@ class GetEntity extends EntityAccessRead
     public function __invoke(string $ref): ?array
     {
         $stm = $this->pdo->prepare(<<<SQL
-SELECT ref, data 
+SELECT ref, created, updated, data 
 FROM entity 
 WHERE owner = ? 
   AND ressource = ?
