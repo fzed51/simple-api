@@ -1,5 +1,6 @@
 [CmdletBinding()]
 param (
+    [switch]$DeleteBranch
 )
 
 [int]$nbElement = (git status --porcelain).length
@@ -20,3 +21,7 @@ $mergeMessage = "*** Merge $CurrentBranch into $DevBranch ***`n`n$CommitMessage"
 git checkout $DevBranch
 git merge --no-ff --no-commit $CurrentBranch
 git commit -m $mergeMessage
+
+if ($DeleteBranch){
+    git branch -D  $CurrentBranch
+}
