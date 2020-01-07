@@ -4,12 +4,16 @@ param (
     $FeatureName
 )
 
+[int]$nbElement = (git status --porcelain).length
+if ($nbElement -gt 0) {
+    Write-Host 
+    "Impossible de d'ajouter la feature. Des fichier ne sont pas commit"
+    return;
+}
+
 [string]$FeatureFullName = "feature/$FeatureName"
 
-git add --all
-git stash
 git checkout develop
 git pull
 git branch $FeatureFullName
 git checkout $FeatureFullName
-git stash pop
