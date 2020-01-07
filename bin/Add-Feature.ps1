@@ -1,13 +1,14 @@
 [CmdletBinding()]
 param (
+    [Parameter(Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
     [string]
     $FeatureName
 )
 
 [int]$nbElement = (git status --porcelain).length
 if ($nbElement -gt 0) {
-    Write-Host 
-    "Impossible de d'ajouter la feature. Des fichier ne sont pas commit"
+    Write-Host "Impossible de d'ajouter la feature. Des fichier ne sont pas commit" -ForegroundColor red
     return;
 }
 
