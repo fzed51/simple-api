@@ -12,8 +12,9 @@ if ($nbElement -gt 0) {
 }
 
 [string]$FeatureFullName = "feature/$FeatureName"
+[string]$DevBranch = git branch | % { $_.trim(' *') } | ? { $_ -like "dev*" }
 
-git checkout develop
+git checkout $DevBranch
 git pull
 git branch $FeatureFullName
 git checkout $FeatureFullName
