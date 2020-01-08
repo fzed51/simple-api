@@ -12,16 +12,20 @@ if ($nbElement -gt 0) {
 }
 
 
-[string]$DevBranch = git branch | % { $_.trim(' *') } | ? { $_ -like "dev*" }
+[string]$DevBranch = git branch `
+| ForEach-Object { $_.trim(' *') } `
+| Where-Object { $_ -like "dev*" }
 [string]$CurrentBranch = git symbolic-ref --short HEAD
 
-$CommitMessage = git log --format="%s" "$DevBranch..$CurrentBranch"
-$mergeMessage = "*** Merge $CurrentBranch into $DevBranch ***`n`n$CommitMessage"
+[array]$CommitMessage = @(git log --format="%s" "$DevBranch..$CurrentBranch")
+[array]::Reverse($CommitMessage)
+[string]$StrCommitMessage = $CommitMessage -join "`n"
+[string]$MergeMessage = "*** Merge $CurrentBranch into $DevBranch ***`n`n$StrCommitMessage"
 
 git checkout $DevBranch
 git merge --no-ff --no-commit $CurrentBranch
 git commit -m $mergeMessage
 
-if ($DeleteBranch){
+if ($DeleteBranch) {
     git branch -D  $CurrentBranch
 }
