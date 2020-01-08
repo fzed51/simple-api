@@ -3,7 +3,6 @@
 namespace Tests\App;
 
 use App\RessourceController;
-use Slim\Http\Response;
 use Tests\Functional\ControllerTestCase;
 
 class RessourceControllerTest extends ControllerTestCase
@@ -22,6 +21,8 @@ class RessourceControllerTest extends ControllerTestCase
             $this->getResponse(),
             ['ressource' => 'item']
         );
-        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSuccessResponse($response);
+        $data = $this->getDataResponse($response);
+        $this->assertIsArray($data);
     }
 }
