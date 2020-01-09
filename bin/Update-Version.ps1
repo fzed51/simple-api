@@ -6,7 +6,8 @@ param (
     [string]$PreRelease,
     [ValidateSet("major", "minor", "patch")]
     [string]$Increment,
-    [switch]$NoPreRelease
+    [switch]$NoPreRelease,
+    [switch]$PassThru
 )
 
 function Write-Variable {
@@ -137,3 +138,7 @@ if ($NoPreRelease) {
 Write-Variable "Nouvelle version" $CurrentVersion.ToString()
 
 $CurrentVersion.ToJson() | Set-Content version.json
+
+if ($PassThru) {
+    return $CurrentVersion.ToJson() | ConvertFrom-Json
+}
