@@ -18,14 +18,15 @@ class GetAllEntitiesTest extends ActionTestCase
 
     public function test__construitUneActionGetAllEntities(): void
     {
-        $getAll = new GetAllEntities($this->getPdo(), $this->getOwner(), 'item');
+        $getAll = new GetAllEntities($this->getPdo());
         $this->assertInstanceOf(GetAllEntities::class, $getAll);
     }
 
 
     public function test__lireLesEntities(): void
     {
-        $getAll = new GetAllEntities($this->getPdo(), $this->getOwner(), 'item');
+        $getAll = new GetAllEntities($this->getPdo());
+        $getAll->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $entities = $getAll();
         $this->assertIsArray($entities);
         $this->assertCount(2, $entities);

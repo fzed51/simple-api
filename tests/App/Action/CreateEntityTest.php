@@ -9,7 +9,7 @@ class CreateEntityTest extends ActionTestCase
 {
     public function test_construcUneAction(): void
     {
-        $action = new CreateEntity($this->getPdo(), $this->getOwner(), 'item');
+        $action = new CreateEntity($this->getPdo());
         $this->assertInstanceOf(CreateEntity::class, $action);
     }
 
@@ -17,11 +17,12 @@ class CreateEntityTest extends ActionTestCase
     {
         $pdo = $this->getPdo();
         $nbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
-        $createEntity = new CreateEntity($this->getPdo(), $this->getOwner(), 'item');
+        $createEntity = new CreateEntity($this->getPdo());
+        $createEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $newRef = $createEntity(json_encode(['foo' => 'bar']));
         $newNbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
         $this->assertTrue($nbEntity < $newNbEntity, "$nbEntity < $newNbEntity");
-        $this->assertTrue(is_string($newRef));
+        $this->assertIsString($newRef);
         $this->assertTrue(strlen($newRef) > 10);
     }
 }
