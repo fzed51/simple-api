@@ -7,6 +7,7 @@ param (
     [ValidateSet("major", "minor", "patch")]
     [string]$Increment,
     [switch]$NoPreRelease,
+    [switch]$Rag,
     [switch]$PassThru
 )
 
@@ -92,7 +93,7 @@ if (Test-Path version.json) {
     $CurrentVersion.PreRelease = $DataVersion.PreRelease
 }
 
-Write-Variable "Version courrante" $CurrentVersion.ToString()
+# Write-Variable "Version courrante" $CurrentVersion.ToString()
 
 if ($PSBoundParameters.ContainsKey('Major')) {
     $CurrentVersion.Major = $Major
@@ -112,16 +113,16 @@ if ($PSBoundParameters.ContainsKey('Patch')) {
 
 if ($PSBoundParameters.ContainsKey('Increment')) {
     switch ($Increment) {
-        'Major' { 
+        'major' { 
             $CurrentVersion.Major = $CurrentVersion.Major + 1
             $CurrentVersion.Minor = 0
             $CurrentVersion.Patch = 0
         }
-        'Minor' {
+        'minor' {
             $CurrentVersion.Minor = $CurrentVersion.Minor + 1
             $CurrentVersion.Patch = 0
         }
-        'Patch' {
+        'patch' {
             $CurrentVersion.Patch = $CurrentVersion.Patch + 1
         }
     }
@@ -135,7 +136,12 @@ if ($NoPreRelease) {
     $CurrentVersion.PreRelease = ''
 }
 
-Write-Variable "Nouvelle version" $CurrentVersion.ToString()
+# Write-Variable "Nouvelle version" $CurrentVersion.ToString()
+
+if ($Tag) {
+    [string]$TagName = 'v' + $CurrentVersion.ToString()
+    git tag $TagName
+}
 
 $CurrentVersion.ToJson() | Set-Content version.json
 

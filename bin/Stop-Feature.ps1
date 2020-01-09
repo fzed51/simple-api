@@ -1,5 +1,7 @@
 [CmdletBinding()]
 param (
+    [ValidateSet('breaking_change', 'feature', 'fix', 'none')]
+    [string]$TypeUpdate = 'feature',
     [switch]$DeleteBranch
 )
 
@@ -11,6 +13,8 @@ if ($nbElement -gt 0) {
     return;
 }
 
+[string]$ScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+[string]$ScriptVersion = Join-Path $ScriptDirectory "Update-Version.ps1"
 
 [string]$DevBranch = git branch `
 | ForEach-Object { $_.trim(' *') } `
@@ -23,9 +27,30 @@ if ($nbElement -gt 0) {
 [string]$MergeMessage = "*** Merge $CurrentBranch into $DevBranch ***`n`n$StrCommitMessage"
 
 git checkout $DevBranch
+
+
+$CurrentDevVersion = &$ScriptDirectory -PassThru
+
 git merge --no-ff --no-commit $CurrentBranch
 git commit -m $mergeMessage
 
 if ($DeleteBranch) {
     git branch -D  $CurrentBranch
+    #TODO : detecter la branche du remote
+    #TODO : supprimer la branche du remote
+}
+
+switch ($TypeUpdate) {
+    'breaking_change' {
+        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment major
+    }
+    'feature' {  
+        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment minor
+    }
+    'fix' {  
+        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment patch
+    }
+    'none' {
+        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' 
+    }
 }
