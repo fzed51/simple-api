@@ -10,6 +10,7 @@ namespace Tests\Functional;
 
 use App\Renderer\ApiRenderer;
 use DomainException;
+use InstanceResolver\ResolverClass;
 use PDO;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
@@ -30,12 +31,16 @@ class ControllerTestCase extends ActionTestCase
         if (null === $container) {
             $container = new Container();
         }
+
         $self = $this;
 
         $container[PDO::class] = static function () use ($self) {
             return $self->getPDO();
         };
-
+        $container['resolve'] = static function (Container $c) {
+            $resolver = new ResolverClass($c);
+            return $resolver;
+        };
         $container['renderer'] = static function (ContainerInterface $c) {
             return new ApiRenderer($c->get('response'));
         };
@@ -109,11 +114,21 @@ class ControllerTestCase extends ActionTestCase
 
     /**
      * @param \Slim\Http\Response $response
+     * @return string
+     */
+    protected function gerRawDataResponse(Response $response): string
+    {
+        return (string)$response->getBody();
+    }
+
+    /**
+     * @param \Slim\Http\Response $response
      * @return mixed
      */
     protected function getDataResponse(Response $response)
     {
-        $body = (string)$response->getBody();
+        $body = $this->gerRawDataResponse($response);
+
         $data = json_decode($body, false, 512, JSON_THROW_ON_ERROR);
         if (!isset($data->data)) {
             throw new DomainException("la réponse n'est pas valide car elle ne contient pas de propriété 'data'");
