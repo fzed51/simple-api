@@ -16,11 +16,11 @@ class CreateEntityTest extends ActionTestCase
     public function test_creationDUneEntity(): void
     {
         $pdo = $this->getPdo();
-        $nbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $nbEntity = $this->dbCount('entity');
         $createEntity = new CreateEntity($this->getPdo());
         $createEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $newRef = $createEntity(json_encode(['foo' => 'bar']));
-        $newNbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $newNbEntity = $this->dbCount('entity');
         $this->assertTrue($nbEntity < $newNbEntity, "$nbEntity < $newNbEntity");
         $this->assertIsString($newRef);
         $this->assertTrue(strlen($newRef) > 10);

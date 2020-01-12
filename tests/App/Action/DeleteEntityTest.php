@@ -25,11 +25,11 @@ class DeleteEntityTest extends ActionTestCase
     public function test__supprimeUneEntity()
     {
         $pdo = $this->getPdo();
-        $nbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $nbEntity =$this->dbCount('entity');
         $deleteEntity = new DeleteEntity($pdo);
         $deleteEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $ok = $deleteEntity($this->ref);
-        $newNbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $newNbEntity = $this->dbCount('entity');
         $this->assertLessThan($nbEntity, $newNbEntity);
         $this->assertTrue($ok);
     }
@@ -37,11 +37,11 @@ class DeleteEntityTest extends ActionTestCase
     public function test__supprimeUneEntityInconnu()
     {
         $pdo = $this->getPdo();
-        $nbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $nbEntity = $this->dbCount('entity');
         $deleteEntity = new DeleteEntity($pdo);
         $deleteEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $ok = $deleteEntity('unknow');
-        $newNbEntity = (int)$pdo->query('select count(*) from entity')->fetchColumn();
+        $newNbEntity = $this->dbCount('entity');
         $this->assertEquals($nbEntity, $newNbEntity);
         $this->assertFalse($ok);
     }
