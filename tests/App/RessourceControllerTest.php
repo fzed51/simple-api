@@ -15,6 +15,7 @@ class RessourceControllerTest extends ControllerTestCase
 
     public function test_RecupereToutesLesRessource()
     {
+        $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->getAll(
             $this->getRequest('GET', '/item'),
@@ -24,5 +25,6 @@ class RessourceControllerTest extends ControllerTestCase
         $this->assertSuccessResponse($response);
         $data = $this->getDataResponse($response);
         $this->assertIsArray($data);
+        $this->assertCount($nbEntity, $data);
     }
 }
