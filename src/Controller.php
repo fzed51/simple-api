@@ -10,6 +10,7 @@ namespace App;
 
 
 use Psr\Container\ContainerInterface;
+use Slim\Http\Request;
 
 class Controller
 {
@@ -22,6 +23,17 @@ class Controller
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    protected function getBodyRequest(Request $request)
+    {
+        $body = (string)$request->getBody();
+    }
+
+    protected function valideJson(string $string)
+    {
+        json_decode($string, true);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 
 }
