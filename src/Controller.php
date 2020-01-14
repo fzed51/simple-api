@@ -27,7 +27,7 @@ class Controller
 
     protected function getBodyRequest(Request $request)
     {
-        $body = (string)$request->getBody();
+        return (string)$request->getBody();
     }
 
     protected function valideJson(string $string)

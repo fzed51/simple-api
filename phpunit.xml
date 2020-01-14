@@ -10,7 +10,11 @@
          verbose="true">
 
     <php>
+        <ini name="xdebug.default_enable" value="1"/>
         <ini name="xdebug.remote_enable" value="1"/>
+        <ini name="xdebug.remote_autostart" value="1"/>
+        <ini name="xdebug.remote_connect_back" value="1"/>
+        <ini name="xdebug.remote_port" value="9000"/>
     </php>
 
     <testsuites>

@@ -83,6 +83,7 @@ class ControllerTestCase extends ActionTestCase
             }
             $b = $request->getBody();
             $b->write($body);
+            $request = $request->withBody($b);
         }
         return $request;
     }

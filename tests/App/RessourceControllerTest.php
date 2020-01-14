@@ -55,9 +55,13 @@ class RessourceControllerTest extends ControllerTestCase
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->create(
-            $this->getRequest('POST', '/item', [
-                'foo' => 'bar'
-            ]),
+            $this->getRequest(
+                'POST',
+                '/item',
+                [],
+                [
+                    'foo' => 'bar'
+                ]),
             $this->getResponse(),
             ['ressource' => 'item']
         );

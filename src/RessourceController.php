@@ -91,7 +91,7 @@ class RessourceController extends Controller
             return $render->error(400, 'Ressource non renseignee');
         }
         $data = $this->getBodyRequest($request);
-        if (!$this->valideJson($data)) {
+        if (!is_string($data) || !$this->valideJson($data)) {
             return $render->error(400, 'Les donnée a enregistrer ne sont pas valide.');
         }
         try {
