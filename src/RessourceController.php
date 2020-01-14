@@ -77,11 +77,11 @@ class RessourceController extends Controller
      */
     public function create(Request $request, Response $response, array $args)
     {
-        /** @var \App\Renderer\ApiRenderer $render */
+        /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
-        /** @var \InstanceResolver\ResolverClass $resolve */
+        /* @var \InstanceResolver\ResolverClass $resolve */
         $resolve = $this->container->get('resolve');
-        /** @var \App\Owner $owner */
+        /* @var \App\Owner $owner */
         $owner = $request->getAttribute('owner');
         if (!is_a($owner, Owner::class)) {
             return $render->error(400, 'Owner non renseignee');
@@ -95,10 +95,10 @@ class RessourceController extends Controller
             return $render->error(400, 'Les donnée a enregistrer ne sont pas valide.');
         }
         try {
-            /** @var \App\action\CreateEntity $create */
+            /* @var \App\action\CreateEntity $create */
             $create = $resolve(CreateEntity::class);
             $create->hydrateOwnerAndRessource($owner, $ressource);
-            /** @var \App\action\GetEntity $getOne */
+            /* @var \App\action\GetEntity $getOne */
             $getOne = $resolve(GetEntity::class);
             $getOne->hydrateOwnerAndRessource($owner, $ressource);
             $entity = $getOne($create($data));

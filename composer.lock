@@ -44,16 +44,16 @@
         },
         {
             "name": "fzed51/instance-resolver",
-            "version": "v1.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzed51/instance-resolver.git",
-                "reference": "dad5796a76b1597f5703d905754c5a0a827baa90"
+                "reference": "896cdd40ad4c4487f88d81ea74d12970047ab054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzed51/instance-resolver/zipball/dad5796a76b1597f5703d905754c5a0a827baa90",
-                "reference": "dad5796a76b1597f5703d905754c5a0a827baa90",
+                "url": "https://api.github.com/repos/fzed51/instance-resolver/zipball/896cdd40ad4c4487f88d81ea74d12970047ab054",
+                "reference": "896cdd40ad4c4487f88d81ea74d12970047ab054",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
                 }
             ],
             "description": "Resolver d'instace, auto link",
-            "time": "2019-07-16T08:44:07+00:00"
+            "time": "2020-01-14T23:19:20+00:00"
         },
         {
             "name": "fzed51/migration",

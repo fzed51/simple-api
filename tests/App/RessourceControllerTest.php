@@ -67,7 +67,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $this->assertSuccessResponse($response);
         $data = $this->getDataResponse($response);
-        $this->assertIsArray($data);
+        $this->assertIsObject($data);
         $newNbEntity = $this->dbCount('entity', "ressource = 'item'");
         $this->assertEquals($nbEntity + 1, $newNbEntity);
     }
