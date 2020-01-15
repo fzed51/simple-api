@@ -3,10 +3,8 @@
 namespace Tests\Functional;
 
 use Slim\App;
-use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Http\Environment;
-use PHPUnit\Framework\TestCase;
+
 
 /**
  * This is an example class that shows how you could set up a method that
@@ -14,40 +12,26 @@ use PHPUnit\Framework\TestCase;
  * tuned to the specifics of this skeleton app, so if your needs are
  * different, you'll need to change it.
  */
-class BaseTestCase extends TestCase
+class AppTestCase extends ControllerTestCase
 {
     /**
      * Use middleware when running application?
-     *
      * @var bool
      */
     protected $withMiddleware = true;
 
     /**
      * Process the application given a request method and URI
-     *
      * @param string $requestMethod the request method (e.g. GET, POST, etc.)
      * @param string $requestUri the request URI
-     * @param array|object|null $requestData the request data
+     * @param array $requestHeader
+     * @param mixed $requestData the request data
      * @return \Slim\Http\Response
+     * @throws \Throwable
      */
-    public function runApp($requestMethod, $requestUri, $requestData = null)
+    public function runApp(string $requestMethod, string $requestUri, $requestHeader = [], $requestData = null)
     {
-        // Create a mock environment for testing with
-        $environment = Environment::mock(
-            [
-                'REQUEST_METHOD' => $requestMethod,
-                'REQUEST_URI' => $requestUri
-            ]
-        );
-
-        // Set up a request object based on the environment
-        $request = Request::createFromEnvironment($environment);
-
-        // Add request data, if it exists
-        if (isset($requestData)) {
-            $request = $request->withParsedBody($requestData);
-        }
+        $request = $this->getRequest($requestMethod, $requestUri, $requestHeader, $requestData);
 
         // Set up a response object
         $response = new Response();
@@ -61,6 +45,7 @@ class BaseTestCase extends TestCase
         // Set up dependencies
         $dependencies = require __DIR__ . '/../../src/dependencies.php';
         $dependencies($app);
+        $this->getContainer($app->getContainer() ?: null);
 
         // Register middleware
         if ($this->withMiddleware) {
@@ -73,6 +58,7 @@ class BaseTestCase extends TestCase
         $routes($app);
 
         // Process the application
+        /* @var \Slim\Http\Response $response */
         $response = $app->process($request, $response);
 
         // Return the response

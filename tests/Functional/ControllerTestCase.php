@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * User: Fabien Sanchez
  * Date: 07/01/2020
@@ -38,8 +37,7 @@ class ControllerTestCase extends ActionTestCase
             return $self->getPDO();
         };
         $container['resolve'] = static function (Container $c) {
-            $resolver = new ResolverClass($c);
-            return $resolver;
+            return new ResolverClass($c);
         };
         $container['renderer'] = static function (ContainerInterface $c) {
             return new ApiRenderer($c->get('response'));
@@ -48,13 +46,6 @@ class ControllerTestCase extends ActionTestCase
         return $container;
     }
 
-    /**
-     * @param string $method -- GET, POST, DELETE, PUT, PATCH, OPTION
-     * @param string $uri
-     * @param array $header
-     * @param $body
-     * @return \Slim\Http\Request
-     */
     protected function getRequest(string $method, string $uri, array $header = [], $body = null): Request
     {
         // CREATION DE LA REQUETE DE BASE
@@ -73,8 +64,6 @@ class ControllerTestCase extends ActionTestCase
                 $request = $request->withHeader($key, $value);
             }
         }
-        $owner = $this->getOwner();
-        $request = $request->withAttribute('owner', $owner);
         // ECRITURE DU BODY
         if (null !== $body) {
             if (!is_string($body)) {
@@ -86,6 +75,20 @@ class ControllerTestCase extends ActionTestCase
             $request = $request->withBody($b);
         }
         return $request;
+    }
+
+    /**
+     * @param string $method -- GET, POST, DELETE, PUT, PATCH, OPTION
+     * @param string $uri
+     * @param array $header
+     * @param $body
+     * @return \Slim\Http\Request
+     */
+    protected function getRequestWithOwner(string $method, string $uri, array $header = [], $body = null): Request
+    {
+        $request = $this->getRequest($method, $uri, $header, $body);
+        $owner = $this->getOwner();
+        return $request->withAttribute('owner', $owner);
     }
 
     protected function getResponse(): Response
