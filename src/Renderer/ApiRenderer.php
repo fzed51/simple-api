@@ -14,7 +14,7 @@ class ApiRenderer
         $this->response = $response;
     }
 
-    public function success($data): Response
+    public function success($data = null): Response
     {
         $dataResponse = [
             'success' => true,
@@ -27,7 +27,7 @@ class ApiRenderer
     public function error(int $code, string $err): Response
     {
         $dataResponse = [
-            'success' => true,
+            'success' => false,
             'data' => null,
             'error' => [
                 'status' => $code,

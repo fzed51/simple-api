@@ -132,7 +132,7 @@ class ControllerTestCase extends ActionTestCase
 
         $data = json_decode($body, false, 512, JSON_THROW_ON_ERROR);
         if (!isset($data->data)) {
-            throw new DomainException("la réponse n'est pas valide car elle ne contient pas de propriété 'data'");
+            throw new DomainException("(getDataResponse) la réponse n'est pas valide car elle ne contient pas de propriété 'data'");
         }
         return $data->data;
     }

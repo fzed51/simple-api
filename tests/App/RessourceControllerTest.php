@@ -71,4 +71,52 @@ class RessourceControllerTest extends ControllerTestCase
         $newNbEntity = $this->dbCount('entity', "ressource = 'item'");
         $this->assertEquals($nbEntity + 1, $newNbEntity);
     }
+
+    public function test_ModifiUneRessource(): void
+    {
+        $refEntity = $this->addEntity(
+            $this->getOwner()->getRef(),
+            'item',
+            [
+                'foo' => 'aze'
+            ]
+        );
+        $control = new RessourceController($this->getContainer());
+        $response = $control->update(
+            $this->getRequest(
+                'POST',
+                '/item/' . $refEntity,
+                [],
+                [
+                    'id' => $refEntity,
+                    'foo' => 'baz'
+                ]
+            ),
+            $this->getResponse(),
+            ['ressource' => 'item', 'ref' => $refEntity]
+        );
+        $this->assertSuccessResponse($response);
+        $data = $this->getDataResponse($response);
+    }
+
+    public function test_SupprimeUneRessource(): void
+    {
+        $refEntity = $this->addEntity(
+            $this->getOwner()->getRef(),
+            'item',
+            [
+                'foo' => 'aze'
+            ]
+        );
+        $control = new RessourceController($this->getContainer());
+        $response = $control->delete(
+            $this->getRequest(
+                'DELETE',
+                '/item/' . $refEntity
+            ),
+            $this->getResponse(),
+            ['ressource' => 'item', 'ref' => $refEntity]
+        );
+        $this->assertSuccessResponse($response);
+    }
 }
