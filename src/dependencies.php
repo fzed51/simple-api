@@ -3,6 +3,7 @@
 use App\Middleware\OwnerMiddleware;
 use App\Renderer\ApiRenderer;
 use Helper\PDOFactory;
+use InstanceResolver\ResolverClass;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 
@@ -39,6 +40,10 @@ return static function (App $app) {
                     "le provider de base de donnée '{$settings['db']['provider']}' n'est pas pris en compte"
                 );
         }
+    };
+
+    $container['resolve'] = function (ContainerInterface $c) {
+        return new ResolverClass($c);
     };
 
     return $container;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12d30173cf63cc7eda5c50145c793304",
+    "content-hash": "a7322289ce84a34e55923cc118d16570",
     "packages": [
         {
             "name": "fzed51/console-options",
@@ -41,6 +41,46 @@
             ],
             "description": "option parser pour ligne de commande PHP",
             "time": "2019-01-30T10:29:11+00:00"
+        },
+        {
+            "name": "fzed51/instance-resolver",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/instance-resolver.git",
+                "reference": "896cdd40ad4c4487f88d81ea74d12970047ab054"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/instance-resolver/zipball/896cdd40ad4c4487f88d81ea74d12970047ab054",
+                "reference": "896cdd40ad4c4487f88d81ea74d12970047ab054",
+                "shasum": ""
+            },
+            "require": {
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "fzed51/run-test": "^1.8",
+                "pimple/pimple": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "InstanceResolver\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51+git@gmail.com"
+                }
+            ],
+            "description": "Resolver d'instace, auto link",
+            "time": "2020-01-14T23:19:20+00:00"
         },
         {
             "name": "fzed51/migration",
@@ -1067,16 +1107,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.1",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2"
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
                 "shasum": ""
             },
             "require": {
@@ -1146,7 +1186,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-25T14:49:39+00:00"
+            "time": "2020-01-08T08:49:49+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1918,7 +1958,8 @@
     "platform": {
         "php": "^7.2",
         "ext-json": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "ext-pdo": "*"
     },
     "platform-dev": []
 }

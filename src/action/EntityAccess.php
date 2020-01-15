@@ -18,9 +18,8 @@ class EntityAccess extends DbAccess
      */
     protected $ressourceName;
 
-    public function __construct(\PDO $pdo, Owner $owner, string $ressourceName)
+    public function hydrateOwnerAndRessource(Owner $owner, string $ressourceName)
     {
-        parent::__construct($pdo);
         $this->owner = $owner;
         $this->ressourceName = $ressourceName;
     }

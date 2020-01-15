@@ -21,13 +21,14 @@ class GetEntityTest extends ActionTestCase
 
     public function test__construitUneActionGetEntity(): void
     {
-        $getOne = new GetEntity($this->getPdo(), $this->getOwner(), 'item');
+        $getOne = new GetEntity($this->getPdo());
         $this->assertInstanceOf(GetEntity::class, $getOne);
     }
 
     public function test_lireUneEntity(): void
     {
-        $getOne = new GetEntity($this->getPdo(), $this->getOwner(), 'item');
+        $getOne = new GetEntity($this->getPdo());
+        $getOne->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $entity = $getOne($this->refEntity);
         $this->assertIsArray($entity);
         $this->assertArrayHasKey('id', $entity);
@@ -38,7 +39,8 @@ class GetEntityTest extends ActionTestCase
 
     public function test_lireUneEntityInconnu(): void
     {
-        $getOne = new GetEntity($this->getPdo(), $this->getOwner(), 'item');
+        $getOne = new GetEntity($this->getPdo());
+        $getOne->hydrateOwnerAndRessource($this->getOwner(), 'item');
         $entity = $getOne('unknow');
         $this->assertNull($entity);
     }
