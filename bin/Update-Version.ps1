@@ -7,7 +7,8 @@ param (
     [ValidateSet("major", "minor", "patch")]
     [string]$Increment,
     [switch]$NoPreRelease,
-    [switch]$Rag,
+    [switch]$Tag,
+    [switch]$Quiet,
     [switch]$PassThru
 )
 
@@ -93,7 +94,7 @@ if (Test-Path version.json) {
     $CurrentVersion.PreRelease = $DataVersion.PreRelease
 }
 
-# Write-Variable "Version courrante" $CurrentVersion.ToString()
+$StartVersion = $CurrentVersion.ToString()
 
 if ($PSBoundParameters.ContainsKey('Major')) {
     $CurrentVersion.Major = $Major
@@ -136,7 +137,15 @@ if ($NoPreRelease) {
     $CurrentVersion.PreRelease = ''
 }
 
-# Write-Variable "Nouvelle version" $CurrentVersion.ToString()
+$EndVersion = $CurrentVersion.ToString()
+if (-not $Quiet) {
+    if ($StartVersion -eq $EndVersion) {
+        Write-Variable "Version courrante" $CurrentVersion.ToString()
+    }
+    else {
+        Write-Variable "Nouvelle version" $CurrentVersion.ToString()
+    }
+}
 
 if ($Tag) {
     [string]$TagName = 'v' + $CurrentVersion.ToString()

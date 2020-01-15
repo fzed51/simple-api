@@ -28,29 +28,31 @@ if ($nbElement -gt 0) {
 
 git checkout $DevBranch
 
-
-$CurrentDevVersion = &$ScriptDirectory -PassThru
+$CurrentDevVersion = &$ScriptVersion -PassThru
 
 git merge --no-ff --no-commit $CurrentBranch
+
+&$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease $CurrentDevVersion.PreRelease -Quiet
+switch ($TypeUpdate) {
+    'breaking_change' {
+        &$ScriptVersion -PreRelease 'dev' -Increment major
+    }
+    'feature' {  
+        &$ScriptVersion -PreRelease 'dev' -Increment minor
+    }
+    'fix' {  
+        &$ScriptVersion -PreRelease 'dev' -Increment patch
+    }
+    'none' {
+        &$ScriptVersion -PreRelease 'dev' 
+    }
+}
+git add version.json
+
 git commit -m $mergeMessage
 
 if ($DeleteBranch) {
     git branch -D  $CurrentBranch
     #TODO : detecter la branche du remote
     #TODO : supprimer la branche du remote
-}
-
-switch ($TypeUpdate) {
-    'breaking_change' {
-        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment major
-    }
-    'feature' {  
-        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment minor
-    }
-    'fix' {  
-        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' -Increment patch
-    }
-    'none' {
-        &$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease 'dev' 
-    }
 }
