@@ -3,7 +3,6 @@
 namespace Tests\Functional;
 
 use Slim\App;
-use Slim\Http\Response;
 
 
 /**
@@ -20,11 +19,16 @@ class AppTestCase extends ControllerTestCase
      */
     protected $withMiddleware = true;
 
+    protected function getOwnerBearerToken(): string
+    {
+        return 'Bearer ' . $this->getOwner()->getRef();
+    }
+
     /**
      * Process the application given a request method and URI
-     * @param string $requestMethod the request method (e.g. GET, POST, etc.)
+     * @param string $requestMethod the request method (GET, POST, etc.)
      * @param string $requestUri the request URI
-     * @param array $requestHeader
+     * @param array $requestHeader the request header (content-type, x-header, ...)
      * @param mixed $requestData the request data
      * @return \Slim\Http\Response
      * @throws \Throwable
@@ -34,7 +38,7 @@ class AppTestCase extends ControllerTestCase
         $request = $this->getRequest($requestMethod, $requestUri, $requestHeader, $requestData);
 
         // Set up a response object
-        $response = new Response();
+        $response = $this->getResponse();
 
         // Use the application settings
         $settings = require __DIR__ . '/../../src/settings.php';
