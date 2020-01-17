@@ -97,8 +97,8 @@ class ControllerTestCase extends ActionTestCase
     }
 
     /**
-     * @param \Slim\Http\Response $expectedResponse
-     */
+ * @param \Slim\Http\Response $expectedResponse
+ */
     protected function assertSuccessResponse($expectedResponse): void
     {
         // la source doit être une reponse
@@ -114,6 +114,27 @@ class ControllerTestCase extends ActionTestCase
         $this->assertObjectHasAttribute('error', $data);
         // la reponse doit être un succes
         $this->assertTrue($data->success);
+    }
+
+
+    /**
+     * @param \Slim\Http\Response $expectedResponse
+     */
+    protected function assertErrorResponse($expectedResponse): void
+    {
+        // la source doit être une reponse
+        $this->assertInstanceOf(Response::class, $expectedResponse);
+        $body = (string)$expectedResponse->getBody();
+        // le body de la source doit être un json valide
+        $this->assertJson($body);
+        $data = json_decode($body, false);
+        // la donnee doit être une reponse de l'api valide
+        $this->assertIsObject($data);
+        $this->assertObjectHasAttribute('success', $data);
+        $this->assertObjectHasAttribute('data', $data);
+        $this->assertObjectHasAttribute('error', $data);
+        // la reponse doit être un succes
+        $this->assertFalse($data->success);
     }
 
     /**
@@ -138,6 +159,11 @@ class ControllerTestCase extends ActionTestCase
             throw new DomainException("(getDataResponse) la réponse n'est pas valide car elle ne contient pas de propriété 'data'");
         }
         return $data->data;
+    }
+
+    protected function getOwnerBearerToken(): string
+    {
+        return 'Bearer ' . $this->getOwner()->getRef();
     }
 
 }

@@ -19,11 +19,6 @@ class AppTestCase extends ControllerTestCase
      */
     protected $withMiddleware = true;
 
-    protected function getOwnerBearerToken(): string
-    {
-        return 'Bearer ' . $this->getOwner()->getRef();
-    }
-
     /**
      * Process the application given a request method and URI
      * @param string $requestMethod the request method (GET, POST, etc.)
