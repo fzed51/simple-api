@@ -22,6 +22,7 @@ class End2EndTest extends AppTestCase
                 'Authorization' => $this->getOwnerBearerToken()
             ]
         );
+        echo (string)$response->getBody();
         $this->assertSuccessResponse($response);
     }
 
