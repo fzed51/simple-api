@@ -72,7 +72,7 @@ class End2EndTest extends AppTestCase
         $refItem = $this->addEntity(
             $this->getOwner()->getRef(),
             'item',
-            json_encode(['foo' => 'bar'])
+            ['foo' => 'bar']
         );
         $response = $this->runApp(
             'POST',
@@ -92,7 +92,7 @@ class End2EndTest extends AppTestCase
         $refItem = $this->addEntity(
             $this->getOwner()->getRef(),
             'item',
-            json_encode(['foo' => 'bar'])
+            ['foo' => 'bar']
         );
         $response = $this->runApp(
             'DELETE',

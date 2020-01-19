@@ -10,6 +10,9 @@ class CreateEntity extends EntityAccess
 {
     public function __invoke(string $json): string
     {
+        if (!$this->isValidJson($json)) {
+            throw new \InvalidArgumentException('Le JSON passé en paramètre à ' . __CLASS__ . ' n\'est pas  valide', 400);
+        }
         $security = new ApiSecurity();
         $stm = $this->pdo->prepare(<<<SQL
 INSERT INTO entity 

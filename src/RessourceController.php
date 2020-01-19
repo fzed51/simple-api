@@ -67,6 +67,14 @@ class RessourceController extends Controller
             $entity = $getOne($args['ref']);
             return $render->success($entity);
         } Catch (\Exception $e) {
+            error_log(json_encode([
+                'origin' => __FILE__,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace()
+            ]));
             return $render->error(500, 'Erreur interne');
         }
     }
@@ -109,6 +117,14 @@ class RessourceController extends Controller
             $entity = $getOne($create($data));
             return $render->success($entity);
         } Catch (\Exception $e) {
+            error_log(json_encode([
+                'origin' => __FILE__,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace()
+            ]));
             return $render->error(500, 'Erreur interne');
         }
     }
@@ -164,6 +180,14 @@ class RessourceController extends Controller
             $entity = $getOne($update($ref, $json));
             return $render->success($entity);
         } Catch (\Exception $e) {
+            error_log(json_encode([
+                'origin' => __FILE__,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace()
+            ]));
             return $render->error(500, 'Erreur interne');
         }
     }
@@ -201,6 +225,14 @@ class RessourceController extends Controller
             $delete($ref);
             return $render->success();
         } Catch (\Exception $e) {
+            error_log(json_encode([
+                'origin' => __FILE__,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTrace()
+            ]));
             return $render->error(500, 'Erreur interne');
         }
     }
