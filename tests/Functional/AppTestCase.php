@@ -46,6 +46,10 @@ class AppTestCase extends ControllerTestCase
         $dependencies($app);
         $this->getContainer($app->getContainer() ?: null);
 
+        // Set up handlers
+        $handlers = require __DIR__ . '/../../src/handlers.php';
+        $handlers($app);
+
         // Register middleware
         if ($this->withMiddleware) {
             $middleware = require __DIR__ . '/../../src/middleware.php';
