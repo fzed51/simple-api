@@ -116,14 +116,19 @@ class ControllerTestCase extends ActionTestCase
         $this->assertObjectHasAttribute('data', $data);
         $this->assertObjectHasAttribute('error', $data);
         // la reponse doit être un succes
-        $this->assertTrue($data->success);
+        $messageErr = (!$data->success) ? '(' . (string)$data->error->status . ') ' . $data->error->message : '';
+        $this->assertTrue(
+            $data->success,
+            "La réponse n'est pas de type 'success' elle a retournée une erreur : " . $messageErr
+        );
     }
 
 
     /**
      * @param \Slim\Http\Response $expectedResponse
+     * @param int $code donner un code pour verifier le code de la réponse
      */
-    protected function assertErrorResponse($expectedResponse): void
+    protected function assertErrorResponse($expectedResponse, int $code = -1): void
     {
         // la source doit être une reponse
         $this->assertInstanceOf(Response::class, $expectedResponse);
@@ -136,8 +141,11 @@ class ControllerTestCase extends ActionTestCase
         $this->assertObjectHasAttribute('success', $data);
         $this->assertObjectHasAttribute('data', $data);
         $this->assertObjectHasAttribute('error', $data);
-        // la reponse doit être un succes
+        // la reponse doit être une error
         $this->assertFalse($data->success);
+        if ($code > 0) {
+            $this->assertEquals($code, $data->error->status);
+        }
     }
 
     /**
