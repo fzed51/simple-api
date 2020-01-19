@@ -7,6 +7,7 @@
 
 namespace Tests\Functional;
 
+use App\Middleware\OwnerMiddleware;
 use App\Renderer\ApiRenderer;
 use DomainException;
 use InstanceResolver\ResolverClass;
@@ -42,7 +43,9 @@ class ControllerTestCase extends ActionTestCase
         $container['renderer'] = static function (ContainerInterface $c) {
             return new ApiRenderer($c->get('response'));
         };
-
+        $container[OwnerMiddleware::class] = static function (ContainerInterface $c) use ($self) {
+            return new OwnerMiddleware($c, $self->getOwners());
+        };
         return $container;
     }
 
@@ -97,8 +100,8 @@ class ControllerTestCase extends ActionTestCase
     }
 
     /**
- * @param \Slim\Http\Response $expectedResponse
- */
+     * @param \Slim\Http\Response $expectedResponse
+     */
     protected function assertSuccessResponse($expectedResponse): void
     {
         // la source doit être une reponse
