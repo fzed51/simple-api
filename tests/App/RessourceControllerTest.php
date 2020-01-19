@@ -18,7 +18,7 @@ class RessourceControllerTest extends ControllerTestCase
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->getAll(
-            $this->getRequest('GET', '/item'),
+            $this->getRequestWithOwner('GET', '/item'),
             $this->getResponse(),
             ['ressource' => 'item']
         );
@@ -39,7 +39,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->getOne(
-            $this->getRequest('GET', "/item/$refEntity"),
+            $this->getRequestWithOwner('GET', "/item/$refEntity"),
             $this->getResponse(),
             [
                 'ressource' => 'item',
@@ -55,7 +55,7 @@ class RessourceControllerTest extends ControllerTestCase
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->create(
-            $this->getRequest(
+            $this->getRequestWithOwner(
                 'POST',
                 '/item',
                 [],
@@ -83,7 +83,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->update(
-            $this->getRequest(
+            $this->getRequestWithOwner(
                 'POST',
                 '/item/' . $refEntity,
                 [],
@@ -110,7 +110,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->delete(
-            $this->getRequest(
+            $this->getRequestWithOwner(
                 'DELETE',
                 '/item/' . $refEntity
             ),

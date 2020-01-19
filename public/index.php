@@ -22,6 +22,10 @@ $app = new \Slim\App($settings);
 $dependencies = require __DIR__ . '/../src/dependencies.php';
 $dependencies($app);
 
+// Set up handlers
+$handlers = require __DIR__ . '/../src/handlers.php';
+$handlers($app);
+
 // Register middleware
 $middleware = require __DIR__ . '/../src/middleware.php';
 $middleware($app);

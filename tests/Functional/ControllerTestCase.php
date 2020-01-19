@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * User: Fabien Sanchez
  * Date: 07/01/2020
@@ -8,6 +7,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional;
 
+use App\Middleware\OwnerMiddleware;
 use App\Renderer\ApiRenderer;
 use DomainException;
 use InstanceResolver\ResolverClass;
@@ -38,23 +38,17 @@ class ControllerTestCase extends ActionTestCase
             return $self->getPDO();
         };
         $container['resolve'] = static function (Container $c) {
-            $resolver = new ResolverClass($c);
-            return $resolver;
+            return new ResolverClass($c);
         };
         $container['renderer'] = static function (ContainerInterface $c) {
             return new ApiRenderer($c->get('response'));
         };
-
+        $container[OwnerMiddleware::class] = static function (ContainerInterface $c) use ($self) {
+            return new OwnerMiddleware($c, $self->getOwners());
+        };
         return $container;
     }
 
-    /**
-     * @param string $method -- GET, POST, DELETE, PUT, PATCH, OPTION
-     * @param string $uri
-     * @param array $header
-     * @param $body
-     * @return \Slim\Http\Request
-     */
     protected function getRequest(string $method, string $uri, array $header = [], $body = null): Request
     {
         // CREATION DE LA REQUETE DE BASE
@@ -73,8 +67,6 @@ class ControllerTestCase extends ActionTestCase
                 $request = $request->withHeader($key, $value);
             }
         }
-        $owner = $this->getOwner();
-        $request = $request->withAttribute('owner', $owner);
         // ECRITURE DU BODY
         if (null !== $body) {
             if (!is_string($body)) {
@@ -86,6 +78,20 @@ class ControllerTestCase extends ActionTestCase
             $request = $request->withBody($b);
         }
         return $request;
+    }
+
+    /**
+     * @param string $method -- GET, POST, DELETE, PUT, PATCH, OPTION
+     * @param string $uri
+     * @param array $header
+     * @param $body
+     * @return \Slim\Http\Request
+     */
+    protected function getRequestWithOwner(string $method, string $uri, array $header = [], $body = null): Request
+    {
+        $request = $this->getRequest($method, $uri, $header, $body);
+        $owner = $this->getOwner();
+        return $request->withAttribute('owner', $owner);
     }
 
     protected function getResponse(): Response
@@ -110,7 +116,36 @@ class ControllerTestCase extends ActionTestCase
         $this->assertObjectHasAttribute('data', $data);
         $this->assertObjectHasAttribute('error', $data);
         // la reponse doit être un succes
-        $this->assertTrue($data->success);
+        $messageErr = (!$data->success) ? '(' . (string)$data->error->status . ') ' . $data->error->message : '';
+        $this->assertTrue(
+            $data->success,
+            "La réponse n'est pas de type 'success' elle a retournée une erreur : " . $messageErr
+        );
+    }
+
+
+    /**
+     * @param \Slim\Http\Response $expectedResponse
+     * @param int $code donner un code pour verifier le code de la réponse
+     */
+    protected function assertErrorResponse($expectedResponse, int $code = -1): void
+    {
+        // la source doit être une reponse
+        $this->assertInstanceOf(Response::class, $expectedResponse);
+        $body = (string)$expectedResponse->getBody();
+        // le body de la source doit être un json valide
+        $this->assertJson($body);
+        $data = json_decode($body, false);
+        // la donnee doit être une reponse de l'api valide
+        $this->assertIsObject($data);
+        $this->assertObjectHasAttribute('success', $data);
+        $this->assertObjectHasAttribute('data', $data);
+        $this->assertObjectHasAttribute('error', $data);
+        // la reponse doit être une error
+        $this->assertFalse($data->success);
+        if ($code > 0) {
+            $this->assertEquals($code, $data->error->status);
+        }
     }
 
     /**
@@ -135,6 +170,11 @@ class ControllerTestCase extends ActionTestCase
             throw new DomainException("(getDataResponse) la réponse n'est pas valide car elle ne contient pas de propriété 'data'");
         }
         return $data->data;
+    }
+
+    protected function getOwnerBearerToken(): string
+    {
+        return 'Bearer ' . $this->getOwner()->getRef();
     }
 
 }
