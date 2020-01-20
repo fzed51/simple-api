@@ -18,7 +18,8 @@ if ($nbElement -gt 0) {
 
 [string]$DevBranch = git branch `
 | ForEach-Object { $_.trim(' *') } `
-| Where-Object { $_ -like "dev*" }
+| Where-Object { $_ -like "dev*" } `
+| Select-Object -First 1
 [string]$CurrentBranch = git symbolic-ref --short HEAD
 
 [array]$CommitMessage = @(git log --format="%s" "$DevBranch..$CurrentBranch")
