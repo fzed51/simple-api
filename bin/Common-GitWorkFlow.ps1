@@ -1,6 +1,3 @@
-[CmdletBinding()]
-param ()
-
 function Test-StatusIsNotClear {
     [int]$nbElement = (git status --porcelain).length
     if ($nbElement -gt 0) {
@@ -27,35 +24,38 @@ function Read-YesNo {
     )
     Write-Host $Question -NoNewline -ForegroundColor White
     Write-Host ' [' -NoNewline -ForegroundColor White
-    if($NoDefault){
+    if ($NoDefault) {
         Write-Host 'yes' -NoNewline -ForegroundColor Gray
-    }else{
+    }
+    else {
         Write-Host 'yes' -NoNewline -ForegroundColor Yellow
     }
     Write-Host '/' -NoNewline -ForegroundColor White
-    if($NoDefault){
+    if ($NoDefault) {
         Write-Host 'no' -NoNewline -ForegroundColor Yellow
-    }else{
+    }
+    else {
         Write-Host 'no' -NoNewline -ForegroundColor Gray
     }
     Write-Host ']' -ForegroundColor White
     do {
         $reponse = Read-Host
-        if ($reponse -eq ''){
-            if($NoDefault){
+        if ($reponse -eq '') {
+            if ($NoDefault) {
                 $reponse = 'n'
-            } else {
+            }
+            else {
                 $reponse = 'y'
             }
         }
         $reponse = $reponse.ToLower()[0]
-        if($reponse -eq 'y'){
+        if ($reponse -eq 'y') {
             return $true
         }
-        if($reponse -eq 'n'){
+        if ($reponse -eq 'n') {
             return $false
         }
-        Write-Host "Je n'ai pas compris la réponse"
+        Write-Host "Je n'ai pas compris la rÃ©ponse"
     } while ($true)
 }
 
@@ -64,31 +64,3 @@ function Get-ScriptVersion {
     [string]$ScriptVersion = Join-Path $ScriptDirectory "Update-Version.ps1"
     return $ScriptVersion 
 }
-
-if (Test-StatusIsNotClear) {
-    Write-Host "Impossible de d'ajouter la feature. Des fichier ne sont pas commit"
-    # return;
-}
-
-[string]$DevBranch = Get-DevBranch
-[string]$CurrentBranch = Get-CurrentBranch
-
-if ( $DevBranch -ne $CurrentBranch) {
-    if (-not (Read-YesNo "Attention vous n'êtes pas sur la abranche de dev! Voulez-vous continuer ? " -NoDefault)) {
-        return;
-    } else {
-        git checkout $DevBranch
-    }
-}
-
-$ScriptVersion = Get-ScriptVersion
-$CurrentVersion = &$ScriptVersion -Quiet -PassThru
-$ReleaseName = "v" + $CurrentVersion.Major + "-" + $CurrentVersion.Minor + "-" + $CurrentVersion.Patch
-$ReleaseFullName = "release/" + $ReleaseName
-&$ScriptVersion -PreRelease rc
-git add .
-git stash
-git checkout -B $ReleaseFullName
-git stash pop
-git add .
-git commit -m "*** debut de $ReleaseName release"
