@@ -1,0 +1,15 @@
+# IDE
+/.idea/
+
+# COMPOSER
+/vendor/
+
+# PROJECT
+/cover/
+/logs/*
+/ressources/owner.json
+/migration-config.json
+!.empty
+/src/private.php
+/.phpunit.result.cache
+!php_errors.log
