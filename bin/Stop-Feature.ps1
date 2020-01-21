@@ -2,7 +2,8 @@
 param (
     [ValidateSet('breaking_change', 'feature', 'fix', 'none')]
     [string]$TypeUpdate = 'feature',
-    [switch]$DeleteBranch
+    [switch]$DeleteBranch,
+    [switch]$Tag
 )
 
 [int]$nbElement = (git status --porcelain).length
@@ -18,7 +19,8 @@ if ($nbElement -gt 0) {
 
 [string]$DevBranch = git branch `
 | ForEach-Object { $_.trim(' *') } `
-| Where-Object { $_ -like "dev*" }
+| Where-Object { $_ -like "dev*" } `
+| Select-Object -First 1
 [string]$CurrentBranch = git symbolic-ref --short HEAD
 
 [array]$CommitMessage = @(git log --format="%s" "$DevBranch..$CurrentBranch")
@@ -48,8 +50,10 @@ switch ($TypeUpdate) {
     }
 }
 git add version.json
-
 git commit -m $mergeMessage
+if ($tag) {
+    &$ScriptVersion -Tag
+}
 
 if ($DeleteBranch) {
     git branch -D  $CurrentBranch

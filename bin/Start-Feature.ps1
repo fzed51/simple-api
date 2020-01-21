@@ -12,7 +12,7 @@ if ($nbElement -gt 0) {
 }
 
 [string]$FeatureFullName = "feature/$FeatureName"
-[string]$DevBranch = git branch | % { $_.trim(' *') } | ? { $_ -like "dev*" }
+[string]$DevBranch = git branch | ForEach-Object { $_.trim(' *') } | Where-Object { $_ -like "dev*" } | Select-Object -First 1
 
 git checkout $DevBranch
 git pull
