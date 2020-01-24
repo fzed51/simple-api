@@ -34,7 +34,7 @@ $CurrentDevVersion = &$ScriptVersion -PassThru
 
 git merge --no-ff --no-commit $CurrentBranch
 
-&$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease $CurrentDevVersion.PreRelease -Quiet
+&$ScriptVersion -Version $CurrentDevVersion -Quiet
 switch ($TypeUpdate) {
     'breaking_change' {
         &$ScriptVersion -PreRelease 'dev' -Increment major

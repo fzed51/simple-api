@@ -58,7 +58,7 @@ git checkout $CurrentBranch
 git checkout $DevBranch
 $CurrentDevVersion = &$ScriptVersion -PassThru -Quiet
 git merge --no-ff --no-commit $CurrentBranch
-&$ScriptVersion -Major $CurrentDevVersion.Major -Minor $CurrentDevVersion.Minor -Patch $CurrentDevVersion.Patch -PreRelease $CurrentDevVersion.PreRelease -Quiet
+&$ScriptVersion -Version $CurrentDevVersion -Quiet
 if ($NbLog -gt 1) {
     &$ScriptVersion  -Increment -Patch
 }

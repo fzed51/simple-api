@@ -1,5 +1,17 @@
 [CmdletBinding()]
 param (
+    [ValidateScript( {
+            function test ($obj) {   
+                $Properties = $obj.psobject.Properties.Name
+                if ($Properties -inotcontains 'Major') { return $false }
+                if ($Properties -inotcontains 'Minor') { return $false }
+                if ($Properties -inotcontains 'Patch') { return $false }
+                if ($Properties -inotcontains 'PreRelease') { return $false }
+                return $true
+            }
+            return test $_
+        })]
+    [PSCustomObject]$Version,
     [Int]$Major,
     [Int]$Minor,
     [Int]$Patch,
@@ -96,20 +108,28 @@ if (Test-Path version.json) {
 
 $StartVersion = $CurrentVersion.ToString()
 
-if ($PSBoundParameters.ContainsKey('Major')) {
-    $CurrentVersion.Major = $Major
-    $CurrentVersion.Minor = 0
-    $CurrentVersion.Patch = 0    
-    $CurrentVersion.PreRelease = ''
+if ($PSBoundParameters.ContainsKey('Version')) {
+    $CurrentVersion.Major = $Version.Major
+    $CurrentVersion.Minor = $Version.Minor
+    $CurrentVersion.Patch = $Version.Patch
+    $CurrentVersion.PreRelease = $Version.PreRelease
 }
-if ($PSBoundParameters.ContainsKey('Minor')) {
-    $CurrentVersion.Minor = $Minor
-    $CurrentVersion.Patch = 0
-    $CurrentVersion.PreRelease = ''
-}
-if ($PSBoundParameters.ContainsKey('Patch')) {
-    $CurrentVersion.Patch = $Patch
-    $CurrentVersion.PreRelease = ''
+else {
+    if ($PSBoundParameters.ContainsKey('Major')) {
+        $CurrentVersion.Major = $Major
+        $CurrentVersion.Minor = 0
+        $CurrentVersion.Patch = 0    
+        $CurrentVersion.PreRelease = ''
+    }
+    if ($PSBoundParameters.ContainsKey('Minor')) {
+        $CurrentVersion.Minor = $Minor
+        $CurrentVersion.Patch = 0
+        $CurrentVersion.PreRelease = ''
+    }
+    if ($PSBoundParameters.ContainsKey('Patch')) {
+        $CurrentVersion.Patch = $Patch
+        $CurrentVersion.PreRelease = ''
+    }
 }
 
 if ($PSBoundParameters.ContainsKey('Increment')) {
