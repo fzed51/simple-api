@@ -84,7 +84,7 @@ class End2EndTest extends AppTestCase
         );
         $this->assertErrorResponse($response, 404);
     }
-    
+
     /**
      * @throws \Throwable
      */
