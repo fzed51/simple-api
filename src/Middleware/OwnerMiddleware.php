@@ -36,7 +36,7 @@ class OwnerMiddleware extends Middleware
     public function __invoke(Request $request, Response $response, callable $next): Response
     {
         $authorization = $request->getHeader('HTTP_AUTHORIZATION');
-        if (null === $authorization) {
+        if (null === $authorization || empty($authorization)) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
         }
         $authorization = $authorization[0];
