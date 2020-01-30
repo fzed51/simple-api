@@ -126,17 +126,14 @@ else {
     if ($PSBoundParameters.ContainsKey('Major')) {
         $CurrentVersion.Major = $Major
         $CurrentVersion.Minor = 0
-        $CurrentVersion.Patch = 0    
-        $CurrentVersion.PreRelease = ''
+        $CurrentVersion.Patch = 0
     }
     if ($PSBoundParameters.ContainsKey('Minor')) {
         $CurrentVersion.Minor = $Minor
         $CurrentVersion.Patch = 0
-        $CurrentVersion.PreRelease = ''
     }
     if ($PSBoundParameters.ContainsKey('Patch')) {
         $CurrentVersion.Patch = $Patch
-        $CurrentVersion.PreRelease = ''
     }
 }
 
