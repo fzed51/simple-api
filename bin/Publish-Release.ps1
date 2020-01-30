@@ -41,10 +41,10 @@ if ( $CurrentBranch -notlike 'release/*') {
 [string]$ScriptVersion = Get-ScriptVersion
 
 
+$CurrentVersion = &$ScriptVersion -PassThru -Quiet
 git checkout master
 git merge --no-ff --no-commit $CurrentBranch
-&$ScriptVersion -NoPreRelease
-$CurrentVersion = &$ScriptVersion -PassThru -Quiet
+&$ScriptVersion -Version $CurrentVersion -NoPreRelease
 git add version.json
 [string]$strVersion = "v" + $CurrentVersion.Major + "." + $CurrentVersion.Minor + "." + $CurrentVersion.Patch
 git commit -m "=== Publication de $strVersion ==="
