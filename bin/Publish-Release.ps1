@@ -41,10 +41,11 @@ if ( $CurrentBranch -notlike 'release/*') {
 [string]$ScriptVersion = Get-ScriptVersion
 
 
+$CurrentVersion = &$ScriptVersion -PassThru -Quiet
 git checkout master
 git merge --no-ff --no-commit $CurrentBranch
+&$ScriptVersion -Version $CurrentVersion -Quiet
 &$ScriptVersion -NoPreRelease
-$CurrentVersion = &$ScriptVersion -PassThru -Quiet
 git add version.json
 [string]$strVersion = "v" + $CurrentVersion.Major + "." + $CurrentVersion.Minor + "." + $CurrentVersion.Patch
 git commit -m "=== Publication de $strVersion ==="
@@ -60,7 +61,7 @@ $CurrentDevVersion = &$ScriptVersion -PassThru -Quiet
 git merge --no-ff --no-commit $CurrentBranch
 &$ScriptVersion -Version $CurrentDevVersion -Quiet
 if ($NbLog -gt 1) {
-    &$ScriptVersion  -Increment -Patch
+    &$ScriptVersion  -Increment Patch
 }
 git add version.json
 git commit -m "=== Publication de $strVersion ==="
