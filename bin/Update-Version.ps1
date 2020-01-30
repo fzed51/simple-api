@@ -99,11 +99,19 @@ class Version {
 $CurrentVersion = [Version]::new(0, 1)
 
 if (Test-Path version.json) {
-    $DataVersion = Get-Content version.json | ConvertFrom-Json
-    $CurrentVersion.Major = $DataVersion.Major
-    $CurrentVersion.Minor = $DataVersion.Minor
-    $CurrentVersion.Patch = $DataVersion.Patch
-    $CurrentVersion.PreRelease = $DataVersion.PreRelease
+    try {
+        $DataVersion = Get-Content version.json | ConvertFrom-Json
+        $CurrentVersion.Major = $DataVersion.Major
+        $CurrentVersion.Minor = $DataVersion.Minor
+        $CurrentVersion.Patch = $DataVersion.Patch
+        $CurrentVersion.PreRelease = $DataVersion.PreRelease
+    }
+    catch {
+        if (-not $Quiet) {
+            Write-Host "le fichier 'version.json' n'est pas valide" -ForegroundColor Red
+        }
+        $CurrentVersion = [Version]::new(0, 1)
+    }
 }
 
 $StartVersion = $CurrentVersion.ToString()
