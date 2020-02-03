@@ -25,7 +25,11 @@ class Owner
         }
         $this->ref = $data['ref'];
         $this->description = $data['description'] ?? '';
-        $this->hydrateRessources($data['ressources'] ?? []);
+        try {
+            $this->hydrateRessources($data['ressources'] ?? []);
+        } catch ( \Throwable $t) {
+            throw new \Exception('Ressources du owner corompues', 500);
+        }
     }
 
     private function hydrateRessources(array $ressources)

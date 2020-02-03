@@ -9,6 +9,22 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
+function logvar($var): void
+{
+    $h = fopen('trace.log', 'a+');
+    $maintenant = (new DateTime())->format(DATE_ATOM);
+    $type = gettype($var);
+    if ($type === 'object') {
+        $type = get_class($var);
+    }
+    if ($type === 'ressource') {
+        $var = (int)$var;
+    }
+    $varStr = json_encode($var);
+    fwrite($h, sprintf('[%s] (%s) %s', $maintenant, $type, $varStr) . PHP_EOL);
+    fclose($h);
+}
+
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();

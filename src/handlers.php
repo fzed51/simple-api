@@ -28,6 +28,23 @@ return static function (App $app): ContainerInterface {
         };
     };
 
+    $container['phpErrorHandler'] = static function (ContainerInterface $c) {
+        return static function ($request, $response, \Throwable $exception) use ($c) {
+            /** @var \App\Renderer\ApiRenderer $formatter */
+            $formatter = $c->get('renderer');
+            $code = 500;
+            $message = 'Erreur interne';
+            error_log(json_encode([
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'code' => $exception->getCode(),
+                'trace' => $exception->getTrace()
+            ]));
+            return $formatter->error($code, $message);
+        };
+    };
+
     $container['notFoundHandler'] = static function (ContainerInterface $c) {
         return static function ($request, $response) use ($c) {
             /** @var \App\Renderer\ApiRenderer $formatter */
