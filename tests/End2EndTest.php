@@ -42,7 +42,47 @@ class End2EndTest extends AppTestCase
                 'Authorization' => 'Bearer 123ade-123ade-123ade-123ade'
             ]
         );
-        $this->assertErrorResponse($response);
+        $this->assertErrorResponse($response, 401);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function test_ReponseQuandIlNYAPasDOwner(): void
+    {
+        $response = $this->runApp(
+            'GET',
+            '/item',
+            []
+        );
+        $this->assertErrorResponse($response, 401);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function test_ReponseQuandIlNYAPasDeRessourceValide(): void
+    {
+        $response = $this->runApp(
+            'GET',
+            '/meti',
+            [
+                'Authorization' => $this->getOwnerBearerToken()
+            ]
+        );
+        $this->assertErrorResponse($response, 404);
+    }
+
+    public function test_SansRequeteValide(): void
+    {
+        $response = $this->runApp(
+            'GET',
+            '/',
+            [
+                'Authorization' => $this->getOwnerBearerToken()
+            ]
+        );
+        $this->assertErrorResponse($response, 404);
     }
 
     /**

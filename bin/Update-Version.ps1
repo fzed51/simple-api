@@ -99,11 +99,19 @@ class Version {
 $CurrentVersion = [Version]::new(0, 1)
 
 if (Test-Path version.json) {
-    $DataVersion = Get-Content version.json | ConvertFrom-Json
-    $CurrentVersion.Major = $DataVersion.Major
-    $CurrentVersion.Minor = $DataVersion.Minor
-    $CurrentVersion.Patch = $DataVersion.Patch
-    $CurrentVersion.PreRelease = $DataVersion.PreRelease
+    try {
+        $DataVersion = Get-Content version.json | ConvertFrom-Json
+        $CurrentVersion.Major = $DataVersion.Major
+        $CurrentVersion.Minor = $DataVersion.Minor
+        $CurrentVersion.Patch = $DataVersion.Patch
+        $CurrentVersion.PreRelease = $DataVersion.PreRelease
+    }
+    catch {
+        if (-not $Quiet) {
+            Write-Host "le fichier 'version.json' n'est pas valide" -ForegroundColor Red
+        }
+        $CurrentVersion = [Version]::new(0, 1)
+    }
 }
 
 $StartVersion = $CurrentVersion.ToString()
@@ -118,17 +126,14 @@ else {
     if ($PSBoundParameters.ContainsKey('Major')) {
         $CurrentVersion.Major = $Major
         $CurrentVersion.Minor = 0
-        $CurrentVersion.Patch = 0    
-        $CurrentVersion.PreRelease = ''
+        $CurrentVersion.Patch = 0
     }
     if ($PSBoundParameters.ContainsKey('Minor')) {
         $CurrentVersion.Minor = $Minor
         $CurrentVersion.Patch = 0
-        $CurrentVersion.PreRelease = ''
     }
     if ($PSBoundParameters.ContainsKey('Patch')) {
         $CurrentVersion.Patch = $Patch
-        $CurrentVersion.PreRelease = ''
     }
 }
 

@@ -16,11 +16,21 @@ return static function (App $app) {
     };
 
     $container[OwnerMiddleware::class] = static function (ContainerInterface $c) {
-        $owners = json_decode(
-            file_get_contents(__DIR__ . '/../ressources/owner.json'),
-            true
-        );
-        return new OwnerMiddleware($c, $owners);
+        $ownerFile = __DIR__ . '/../ressources/owner.json';
+        if (is_file($ownerFile)) {
+            $owners = json_decode(
+                file_get_contents($ownerFile),
+                true
+            );
+            if (is_array($owners) && (json_last_error() === JSON_ERROR_NONE)) {
+                return new OwnerMiddleware($c, $owners);
+            } else {
+                error_log("Le fichier [$ownerFile] n'est pas un JSON valide");
+            }
+        } else {
+            error_log("Le fichier [$ownerFile] n'existe pas");
+        }
+        return new OwnerMiddleware($c, []);
     };
 
     $container[PDO::class] = static function (ContainerInterface $c) {
