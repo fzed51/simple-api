@@ -24,7 +24,10 @@ return static function (App $app): ContainerInterface {
                 'code' => $exception->getCode(),
                 'trace' => $exception->getTrace()
             ]));
-            return $formatter->error($code, $message);
+            $origin = $request->getServerParam('HTTP_ORIGIN', 'http://localhost');
+            return $formatter->error($code, $message)->withHeader('Access-Control-Allow-Origin', $origin)
+                ->withHeader('Access-Control-Allow-Headers', 'content-type, Authorization')
+                ->withHeader('Access-Control-Allow-Method', 'GET, POST, DELETE');
         };
     };
 
@@ -41,7 +44,10 @@ return static function (App $app): ContainerInterface {
                 'code' => $exception->getCode(),
                 'trace' => $exception->getTrace()
             ]));
-            return $formatter->error($code, $message);
+            $origin = $request->getServerParam('HTTP_ORIGIN', 'http://localhost');
+            return $formatter->error($code, $message)->withHeader('Access-Control-Allow-Origin', $origin)
+                ->withHeader('Access-Control-Allow-Headers', 'content-type, Authorization')
+                ->withHeader('Access-Control-Allow-Method', 'GET, POST, DELETE');
         };
     };
 
@@ -49,7 +55,11 @@ return static function (App $app): ContainerInterface {
         return static function ($request, $response) use ($c) {
             /** @var \App\Renderer\ApiRenderer $formatter */
             $formatter = $c->get('renderer');
-            return $formatter->error(404, 'Ressource non trouvée');
+            $origin = $request->getServerParam('HTTP_ORIGIN', 'http://localhost');
+            return $formatter->error(404, 'Ressource non trouvée')
+                ->withHeader('Access-Control-Allow-Origin', $origin)
+                ->withHeader('Access-Control-Allow-Headers', 'content-type, Authorization')
+                ->withHeader('Access-Control-Allow-Method', 'GET, POST, DELETE');
         };
     };
 

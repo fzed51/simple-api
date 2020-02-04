@@ -21,6 +21,7 @@ class Owner
     private function hydrate(array $data)
     {
         if (!array_key_exists('ref', $data)) {
+            error_log('data : ' . json_encode($data));
             throw new \Exception('Données du owner corompues', 500);
         }
         $this->ref = $data['ref'];
@@ -28,6 +29,7 @@ class Owner
         try {
             $this->hydrateRessources($data['ressources'] ?? []);
         } catch ( \Throwable $t) {
+            error_log('data.ressources : ' . json_encode($data['ressources']));
             throw new \Exception('Ressources du owner corompues', 500);
         }
     }
