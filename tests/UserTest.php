@@ -17,13 +17,12 @@ class UserTest extends TestCase
     protected $userDateValide;
     protected $userPassWord;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    public function setUp(): void
     {
-        parent::__construct($name, $data, $dataName);
         $this->userPassWord = 'A6F8B8RT9';
         $this->userDateValide = [
             'ref' => 'azeazeaze',
-            'login' => 'johndoe',
+            'name' => 'johndoe',
             'email' => 'john.doe@mail.net',
             'pass' => password_hash($this->userPassWord, PASSWORD_BCRYPT),
             'roles' => ['special']
@@ -37,5 +36,20 @@ class UserTest extends TestCase
         $user = new User($this->userDateValide);
         $this->assertInstanceOf(User::class, $user);
 
+    }
+
+    public function test_getter()
+    {
+        $user = new User($this->userDateValide);
+        $this->assertEquals($this->userDateValide['ref'], $user->getRef());
+        $this->assertEquals($this->userDateValide['name'], $user->getName());
+        $this->assertEquals($this->userDateValide['email'], $user->getEmail());
+    }
+
+    public function test_hasRoles()
+    {
+        $user = new User($this->userDateValide);
+        $this->assertTrue($user->hasRoles($this->userDateValide['roles'][0]));
+        $this->assertFalse($user->hasRoles('ADMIN'));
     }
 }
