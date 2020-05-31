@@ -39,7 +39,7 @@ class User
 
     }
 
-    private function hydrate($data)
+    protected function hydrate($data)
     {
         $this->controleUser($data);
         $this->ref = $data['ref'];
@@ -57,24 +57,26 @@ class User
         }
     }
 
+    protected static function isValidString($str): bool
+    {
+        return is_string($str) && !empty($str);
+    }
+
     private function controleUser($data)
     {
-        $isValidString = function ($str) {
-            return is_string($str) && !empty($str);
-        };
         if (!is_array($data)) {
             throw new \Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
         }
-        if (!array_key_exists('ref', $data) || !$isValidString($data['ref'])) {
+        if (!array_key_exists('ref', $data) || !self::isValidString($data['ref'])) {
             throw new \Exception("La ref du user n'est pas valide");
         }
-        if (!array_key_exists('name', $data) || !$isValidString($data['name'])) {
+        if (!array_key_exists('name', $data) || !self::isValidString($data['name'])) {
             throw new \Exception("Le nom du user n'est pas valide");
         }
-        if (!array_key_exists('email', $data) || !$isValidString($data['email'])) {
+        if (!array_key_exists('email', $data) || !self::isValidString($data['email'])) {
             throw new \Exception("L'e-mail' du user n'est pas valide");
         }
-        if (!array_key_exists('pass', $data) || !$isValidString($data['pass'])) {
+        if (!array_key_exists('pass', $data) || !self::isValidString($data['pass'])) {
             throw new \Exception("Le mot de passe du user n'est pas valide");
         }
         if (!array_key_exists('roles', $data) || !is_array($data['roles'])) {

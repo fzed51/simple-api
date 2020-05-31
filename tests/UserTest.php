@@ -11,45 +11,29 @@ namespace Tests;
 use App\User;
 use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase
+class UserTest extends BaseUserSession
 {
-
-    protected $userDateValide;
-    protected $userPassWord;
-
-    public function setUp(): void
-    {
-        $this->userPassWord = 'A6F8B8RT9';
-        $this->userDateValide = [
-            'ref' => 'azeazeaze',
-            'name' => 'johndoe',
-            'email' => 'john.doe@mail.net',
-            'pass' => password_hash($this->userPassWord, PASSWORD_BCRYPT),
-            'roles' => ['special']
-        ];
-    }
-
 
     public function test__construct()
     {
 
-        $user = new User($this->userDateValide);
+        $user = new User($this->dataValide);
         $this->assertInstanceOf(User::class, $user);
 
     }
 
     public function test_getter()
     {
-        $user = new User($this->userDateValide);
-        $this->assertEquals($this->userDateValide['ref'], $user->getRef());
-        $this->assertEquals($this->userDateValide['name'], $user->getName());
-        $this->assertEquals($this->userDateValide['email'], $user->getEmail());
+        $user = new User($this->dataValide);
+        $this->assertEquals($this->dataValide['ref'], $user->getRef());
+        $this->assertEquals($this->dataValide['name'], $user->getName());
+        $this->assertEquals($this->dataValide['email'], $user->getEmail());
     }
 
     public function test_hasRoles()
     {
-        $user = new User($this->userDateValide);
-        $this->assertTrue($user->hasRoles($this->userDateValide['roles'][0]));
+        $user = new User($this->dataValide);
+        $this->assertTrue($user->hasRoles($this->dataValide['roles'][0]));
         $this->assertFalse($user->hasRoles('ADMIN'));
     }
 }
