@@ -8,10 +8,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\ApiSecurity;
 use App\SecurityTool;
 use PHPUnit\Framework\TestCase;
 
-class SecurityToolTest extends TestCase
+class ApiSecurityTest extends TestCase
 {
 
     /**
@@ -22,7 +23,15 @@ class SecurityToolTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->security = new SecurityTool();
+        $this->security = new ApiSecurity();
+    }
+
+    public function testGetUid()
+    {
+        $this->assertIsString($this->security->getUid());
+        $Uid1 = $this->security->getUid();
+        $Uid2 = $this->security->getUid();
+        $this->assertNotEquals($Uid1, $Uid2);
     }
 
     public function testHashPassWord()
