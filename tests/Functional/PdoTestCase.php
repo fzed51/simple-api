@@ -19,13 +19,26 @@ class PdoTestCase extends TestCase
             PDOFactory::$fetchMode = \PDO::FETCH_ASSOC;
             $pdo = PDOFactory::sqlite();
             $pdo->exec(<<<SQL
-CREATE TABLE entity (
+create table entity (
     ref text primary key , 
     owner text not null,     
     ressource text not null,
     created   text not null default current_timestamp,
     updated   text,
     data      text not null)
+SQL
+            );
+            $pdo->exec(<<<SQL
+create table user (
+    ref       text not null,
+    owner     text not null,
+    name      text not null,
+    email     text not null,
+    pass      text not null,
+    role      text not null,
+    created   text not null default current_timestamp,
+    updated   text
+)
 SQL
             );
             $this->pdo = $pdo;
