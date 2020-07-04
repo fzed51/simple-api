@@ -15,7 +15,7 @@ class NewUserTest extends BaseUserSession
     public function setUp(): void
     {
         parent::setUp();
-        $this->dataValide['confirm'] = $this->dataValide['pass'];
+        $this->dataValide['confirm'] = $this->dataValide['pass'] = $this->passWord;
     }
 
 
@@ -30,7 +30,6 @@ class NewUserTest extends BaseUserSession
     public function test_getter()
     {
         $user = new NewUser($this->dataValide);
-        $this->assertEquals($this->dataValide['ref'], $user->getRef());
         $this->assertEquals($this->dataValide['name'], $user->getName());
         $this->assertEquals($this->dataValide['email'], $user->getEmail());
     }

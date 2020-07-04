@@ -29,7 +29,6 @@ SQL
         $ref = $security->getUid();
         $owner = $this->owner->getRef();
         $data = json_decode($json, true);
-        $data['ref'] = $ref;
         $user = new NewUser($data);
         $name = $user->getName();
         $email = $user->getEmail();

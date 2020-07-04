@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 
-class NewUser extends User
+class NewUser extends BaseUser
 {
 
     /**
@@ -18,8 +18,8 @@ class NewUser extends User
      */
     protected function hydrate($data): void
     {
-        $this->controlNewUser($data);
         parent::hydrate($data);
+        $this->controlNewUser($data);
     }
 
     /**
@@ -30,9 +30,6 @@ class NewUser extends User
     {
         if (!is_array($data)) {
             throw new \Exception('Un nouveau user ne peut pas être initialisé avec un ' . gettype($data));
-        }
-        if (!array_key_exists('pass', $data) || !self::isValidString($data['pass'])) {
-            throw new \Exception("Le mot de passe n'a pas de format valide");
         }
         if (!array_key_exists('confirm', $data) || !self::isValidString($data['confirm'])) {
             throw new \Exception("La confirmation du mot de passe n'a pas de format valide");
