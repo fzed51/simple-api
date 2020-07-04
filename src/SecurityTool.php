@@ -11,6 +11,7 @@ namespace App;
 
 interface SecurityTool
 {
+    public function getUid(): string;
     public function hashPassWord(string $pass): string;
     public function testPassWord(string $pass, string $hash): bool;
 }

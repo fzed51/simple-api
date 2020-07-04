@@ -6,9 +6,9 @@ declare(strict_types=1);
  * Time: 13:04
  */
 
-namespace Tests;
+namespace Tests\Entity;
 
-use App\Role;
+use App\Entity\Role;
 use Exception;
 use PHPUnit\Framework\TestCase;
 

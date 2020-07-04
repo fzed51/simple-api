@@ -5,7 +5,7 @@ namespace Tests\Functional;
 
 
 use App\ApiSecurity;
-use App\Owner;
+use App\Entity\Owner;
 
 class ActionTestCase extends PdoTestCase
 {
@@ -18,6 +18,29 @@ class ActionTestCase extends PdoTestCase
                 'ressources' => ['item']
             ]
         ];
+    }
+
+    protected function getPassWord(): string
+    {
+        return 'abcdef0123456789';
+    }
+
+    protected function getUser(): array
+    {
+        return [
+            'ref' => '104a9144-8a98-4eea-b6a3-677e93cfb6f6',
+            'name' => 'johndoe',
+            'email' => 'johndoe@mail.net',
+            'pass' => $this->getPassWord(),
+            'roles' => ['admin']
+        ];
+    }
+
+    protected function getNewUser(): array
+    {
+        $user = $this->getUser();
+        $user['confirm'] = $this->getPassWord();
+        return $user;
     }
 
     protected function getOwner(): Owner

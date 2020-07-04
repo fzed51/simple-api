@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Time: 11:23
  */
 
-namespace App;
+namespace App\Entity;
 
 /*
  * structure
@@ -62,12 +62,12 @@ class User
         return is_string($str) && !empty($str);
     }
 
-    private function controleUser($data)
+    public static function controleUser($data, bool $refRequired = true)
     {
         if (!is_array($data)) {
             throw new \Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
         }
-        if (!array_key_exists('ref', $data) || !self::isValidString($data['ref'])) {
+        if ($refRequired && (!array_key_exists('ref', $data) || !self::isValidString($data['ref']))) {
             throw new \Exception("La ref du user n'est pas valide");
         }
         if (!array_key_exists('name', $data) || !self::isValidString($data['name'])) {
@@ -119,6 +119,16 @@ class User
             }
         }
         return false;
+    }
+
+    /**
+     * @return \App\Role[]
+     */
+    public function getRoles(): array
+    {
+        return array_map(static function (Role $role) {
+            return $role->getName();
+        }, $this->roles);
     }
 
 }

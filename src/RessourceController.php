@@ -9,6 +9,7 @@ use App\action\DeleteEntity;
 use App\action\GetAllEntities;
 use App\action\GetEntity;
 use App\action\UpdateEntity;
+use App\Entity\Owner;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

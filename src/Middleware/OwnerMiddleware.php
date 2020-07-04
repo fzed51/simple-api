@@ -4,7 +4,7 @@
 namespace App\Middleware;
 
 
-use App\Owner;
+use App\Entity\Owner;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;

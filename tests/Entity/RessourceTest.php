@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Tests\Entity;
 
-use App\Ressource;
+use App\Entity\Ressource;
 use PHPUnit\Framework\TestCase;
 
 /**

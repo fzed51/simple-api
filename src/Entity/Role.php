@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Time: 22:51
  */
 
-namespace App;
+namespace App\Entity;
 
 
 class Role

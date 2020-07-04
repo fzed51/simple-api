@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App;
+namespace App\Entity;
 
 
 class Ressource

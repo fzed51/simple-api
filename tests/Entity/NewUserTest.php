@@ -6,25 +6,30 @@ declare(strict_types=1);
  * Time: 13:29
  */
 
-namespace Tests;
+namespace Tests\Entity;
 
-use App\User;
-use PHPUnit\Framework\TestCase;
+use App\Entity\NewUser;
 
-class UserTest extends BaseUserSession
+class NewUserTest extends BaseUserSession
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->dataValide['confirm'] = $this->dataValide['pass'];
+    }
+
 
     public function test__construct()
     {
 
-        $user = new User($this->dataValide);
-        $this->assertInstanceOf(User::class, $user);
+        $user = new NewUser($this->dataValide);
+        $this->assertInstanceOf(NewUser::class, $user);
 
     }
 
     public function test_getter()
     {
-        $user = new User($this->dataValide);
+        $user = new NewUser($this->dataValide);
         $this->assertEquals($this->dataValide['ref'], $user->getRef());
         $this->assertEquals($this->dataValide['name'], $user->getName());
         $this->assertEquals($this->dataValide['email'], $user->getEmail());
@@ -32,8 +37,14 @@ class UserTest extends BaseUserSession
 
     public function test_hasRoles()
     {
-        $user = new User($this->dataValide);
+        $user = new NewUser($this->dataValide);
         $this->assertTrue($user->hasRoles($this->dataValide['roles'][0]));
         $this->assertFalse($user->hasRoles('ADMIN'));
+    }
+
+    public function test_getRoles()
+    {
+        $user = new NewUser($this->dataValide);
+        $this->assertEquals($this->dataValide['roles'], $user->getRoles());
     }
 }

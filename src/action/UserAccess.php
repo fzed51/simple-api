@@ -4,13 +4,13 @@
 namespace App\action;
 
 
-use App\Owner;
+use App\Entity\Owner;
 
 class UserAccess extends DbAccess
 {
 
     /**
-     * @var \App\Owner
+     * @var \App\Entity\Owner
      */
     protected $owner;
 

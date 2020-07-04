@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Time: 19:47
  */
 
-namespace App;
+namespace App\Entity;
 
 
 class Session extends User

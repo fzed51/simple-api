@@ -4,13 +4,13 @@
 namespace App\action;
 
 
-use App\Owner;
+use App\Entity\Owner;
 
 class EntityAccess extends DbAccess
 {
 
     /**
-     * @var \App\Owner
+     * @var \App\Entity\Owner
      */
     protected $owner;
     /**
@@ -22,12 +22,6 @@ class EntityAccess extends DbAccess
     {
         $this->owner = $owner;
         $this->ressourceName = $ressourceName;
-    }
-
-    public function isValidJson(string $json): bool
-    {
-        json_decode($json);
-        return json_last_error() === JSON_ERROR_NONE;
     }
 
 }

@@ -6,9 +6,9 @@ declare(strict_types=1);
  * Time: 19:58
  */
 
-namespace Tests;
+namespace Tests\Entity;
 
-use App\Session;
+use App\Entity\Session;
 use PHPUnit\Framework\TestCase;
 
 class SessionTest extends BaseUserSession

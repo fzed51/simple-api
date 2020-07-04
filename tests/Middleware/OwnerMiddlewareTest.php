@@ -3,7 +3,7 @@
 namespace Tests\App\Middleware;
 
 use App\Middleware\OwnerMiddleware;
-use App\Owner;
+use App\Entity\Owner;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Tests\Functional\ControllerTestCase;

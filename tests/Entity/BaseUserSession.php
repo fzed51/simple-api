@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Time: 22:00
  */
 
-namespace Tests;
+namespace Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
 
