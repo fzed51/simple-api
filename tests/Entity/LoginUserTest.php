@@ -2,6 +2,8 @@
 
 namespace Tests\Entity;
 
+use App\Entity\LoginUser;
+
 class LoginUserTest extends BaseUserSession
 {
 
@@ -16,13 +18,13 @@ class LoginUserTest extends BaseUserSession
     {
         $this->expectException(\Exception::class);
         $dataOwner = ['name' => 'azeaze', 'pass' => "roroa"];
-        $owner = new LoginUser($dataOwner);
+        $login = new LoginUser($dataOwner);
     }
 
     public function test__constructWithEmptyData()
     {
         $this->expectException(\Exception::class);
-        $dataOwner = ['name' => '', 'pass' => "roroa"];
-        $owner = new LoginUser($dataOwner);
+        $dataOwner = ['email' => '', 'pass' => "roroa"];
+        $login = new LoginUser($dataOwner);
     }
 }
