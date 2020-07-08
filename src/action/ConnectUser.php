@@ -27,6 +27,7 @@ class ConnectUser extends UserAccess
             throw new \Exception("l'email ou le mot de passe ne sont pas valide");
         }
         $ref = $user['ref'];
-        // TODO: Creation de la session
+        $user = new User($user);
+
     }
 }
