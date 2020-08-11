@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 
+use Exception;
+
 class Session extends User
 {
 
@@ -40,10 +42,10 @@ class Session extends User
     private function controlSession($data): void
     {
         if (!is_array($data)) {
-            throw new \Exception('Une session ne peut pas être initialisé avec un ' . gettype($data));
+            throw new Exception('Une session ne peut pas être initialisé avec un ' . gettype($data));
         }
         if (!array_key_exists('token', $data) || !self::isValidString($data['token'])) {
-            throw new \Exception("Le token de session n'a pas de format valide");
+            throw new Exception("Le token de session n'a pas de format valide");
         }
     }
 

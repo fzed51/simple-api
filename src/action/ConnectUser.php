@@ -6,10 +6,18 @@ namespace App\action;
 
 use App\ApiSecurity;
 use App\Entity\LoginUser;
+use App\Entity\Session;
+use App\Entity\User;
+use Exception;
 
 class ConnectUser extends UserAccess
 {
-    public function __invoke($json): string
+    /**
+     * @param $json
+     * @return string
+     * @throws \Exception
+     */
+    public function __invoke(string $json): Session
     {
         if (!$this->isValidJson($json)) {
             throw new \InvalidArgumentException('Le JSON passé en paramètre à ' . __CLASS__ . ' n\'est pas  valide', 400);
@@ -21,13 +29,14 @@ class ConnectUser extends UserAccess
         $owner = $this->owner->getRef();
         $email = $login->getEmail();
         if ($stm->execute([$owner, $email]) === false || ($user = $stm->fetch(\PDO::FETCH_ASSOC)) === false) {
-            throw new \Exception("l'email ou le mot de passe ne sont pas valide");
+            throw new Exception("l'email ou le mot de passe ne sont pas valide");
         }
         if (!$security->testPassWord($login->getPass(), $user['pass'])) {
-            throw new \Exception("l'email ou le mot de passe ne sont pas valide");
+            throw new Exception("l'email ou le mot de passe ne sont pas valide");
         }
         $ref = $user['ref'];
         $user = new User($user);
-
+        $idSession = $security->getUid();
+        $idClient = $security->getIdClient();
     }
 }

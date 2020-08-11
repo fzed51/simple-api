@@ -3,6 +3,7 @@
 namespace Test\App\Action;
 
 use App\action\ConnectUser;
+use App\Entity\Session;
 use Tests\Functional\ActionTestCase;
 
 class ConnectUserTest extends ActionTestCase
@@ -19,5 +20,6 @@ class ConnectUserTest extends ActionTestCase
         $user = $this->getNewUser();
         $connect = new ConnectUser($this->getPdo());
         $session = $connect($user);
+        self::assertInstanceOf(Session::class, $session);
     }
 }

@@ -49,7 +49,7 @@ class BaseUser
      * @param $data
      * @throws \Exception
      */
-    public static function controleUser($data)
+    protected static function controleUser($data)
     {
         if (!is_array($data)) {
             throw new Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));

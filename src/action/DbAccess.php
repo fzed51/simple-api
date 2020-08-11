@@ -4,6 +4,8 @@
 namespace App\action;
 
 
+use PDO;
+
 class DbAccess
 {
     /**
@@ -15,14 +17,14 @@ class DbAccess
      * DbAccess constructor.
      * @param \PDO $pdo
      */
-    public function __construct(\PDO $pdo)
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
     protected function isValidJson(string $json): bool
     {
-        json_decode($json);
+        json_decode($json, false);
         return json_last_error() === JSON_ERROR_NONE;
     }
 }
