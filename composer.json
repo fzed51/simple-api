@@ -40,6 +40,10 @@
   "scripts": {
     "start": "php -S localhost:8008 -t public",
     "client": "php -S localhost:9009 -t tests/Client",
-    "test": "phpunit"
+    "test": "phpunit",
+    "dbtest:setup": "docker run --name test-simple-api-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=simpleapi -p 3306:3306 -d mysql:5.7 ",
+    "dbtest": "docker start test-simple-api-mysql",
+    "dbtest:stop": "docker stop test-simple-api-mysql",
+    "dbtest:remove": "docker rm test-simple-api-mysql"
   }
 }
