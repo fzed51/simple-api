@@ -11,7 +11,7 @@ class ApiSecurity implements SecurityTool
     public function getUid(): string
     {
         do {
-            $bytes = openssl_random_pseudo_bytes(24, $strong);
+            $bytes = openssl_random_pseudo_bytes(32, $strong);
         } while (!$strong);
         return bin2hex($bytes);
     }
