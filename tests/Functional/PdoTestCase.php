@@ -30,14 +30,17 @@ SQL
             );
             $pdo->exec(<<<SQL
 create table user (
-    ref       text not null,
-    owner     text not null,
-    name      text not null,
-    email     text not null,
-    pass      text not null,
-    role      text not null,
-    created   text not null default current_timestamp,
-    updated   text
+    ref                   text not null,
+    owner                 text not null,
+    name                  text not null,
+    email                 text not null,
+    pass                  text not null,
+    role                  text not null,
+    created               text not null default current_timestamp,
+    updated               text,
+    session_private_token text,                  
+    session_public_token  text,                  
+    session_expiration     text                 
 )
 SQL
             );
