@@ -8,6 +8,8 @@ use Exception;
 
 class ApiSecurity implements SecurityTool
 {
+    const INTERN = 'e051041e-dba4-4877-97a5-87ea18710c31';
+
     public function getUid(): string
     {
         do {
@@ -38,6 +40,23 @@ class ApiSecurity implements SecurityTool
             throw new Exception ('Impossible d\'identifier l\'utilisateur');
         }
         return hash('sha256', $ip . $userAgent);
+    }
+
+    public function getPublicToken(string $private, string $client = ""): string
+    {
+        if (empty($client)) {
+            $client = $this->getIdCalient();
+        }
+        return hash('sha256', $private . self::INTERN . $client);
+    }
+
+
+    public function testPublicToken(string $public, string $private, string $client = ""): bool
+    {
+        if (empty($client)) {
+            $client = $this->getIdClient();
+        }
+        return $public === hash('sha256', $private . self::INTERN . $client);
     }
 
     /**
