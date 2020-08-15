@@ -6,9 +6,8 @@ namespace App\action;
 
 use App\ApiSecurity;
 use App\Entity\LoginUser;
-use App\Entity\Session;
-use App\Entity\User;
 use Exception;
+use InvalidArgumentException;
 
 class ConnectUser extends UserAccess
 {
@@ -17,10 +16,10 @@ class ConnectUser extends UserAccess
      * @return string
      * @throws \Exception
      */
-    public function __invoke(string $json): Session
+    public function __invoke(string $json): string
     {
         if (!$this->isValidJson($json)) {
-            throw new \InvalidArgumentException('Le JSON passé en paramètre à ' . __CLASS__ . ' n\'est pas  valide', 400);
+            throw new InvalidArgumentException('Le JSON passé en paramètre à ' . __CLASS__ . ' n\'est pas  valide', 400);
         }
         $security = new ApiSecurity();
         $data = json_decode($json, true);
@@ -35,8 +34,26 @@ class ConnectUser extends UserAccess
             throw new Exception("l'email ou le mot de passe ne sont pas valide");
         }
         $ref = $user['ref'];
-        $user = new User($user);
-        $idSession = $security->getUid();
+        $privateToken = $security->getUid();
         $idClient = $security->getIdClient();
+        $publicToken = $security->getPublicToken($privateToken, $idClient);
+        $expiration = (new \DateTime())->add(new \DateInterval('PT6H'));
+        $stm = $this->pdo->prepare(<<<SQL
+UPDATE user 
+    SET 
+        session_private_token = ?,
+        session_public_token = ?,
+        session_expiration = ?
+    WHERE
+        ref = ?
+SQL
+        );
+        $stm->execute([
+            $privateToken,
+            $publicToken,
+            $expiration->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
+            $ref
+        ]);
+        return $ref;
     }
 }
