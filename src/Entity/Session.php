@@ -14,15 +14,37 @@ use Exception;
 class Session extends User
 {
 
-    protected $token;
+    /**
+     * @var string(64)
+     */
+    protected $sessionPrivateToken;
+    /**
+     * @var string(64)
+     */
+    protected $sessionPublicToken;
+    /**
+     * @var string Date
+     */
+    protected $sessionExpiration;
 
     /**
+     * token de session public
      * @return string
      */
-    public function getToken(): string
+    public function getSessionPublicToken(): string
     {
-        return $this->token;
+        return $this->sessionPublicToken;
     }
+
+    /**
+     * date d'expiration de la session
+     * @return string
+     */
+    public function getSessionExpiration(): string
+    {
+        return $this->sessionExpiration;
+    }
+
 
     /**
      * @param $data
@@ -32,7 +54,10 @@ class Session extends User
     {
         $this->controlSession($data);
         parent::hydrate($data);
-        $this->token = $data['token'];
+        $this->sessionPrivateToken = $data['session_private_token'];
+        $this->sessionPublicToken = $data['session_public_token'];
+        $this->sessionExpiration = $data['session_expiration'];
+
     }
 
     /**
@@ -44,10 +69,48 @@ class Session extends User
         if (!is_array($data)) {
             throw new Exception('Une session ne peut pas être initialisé avec un ' . gettype($data));
         }
-        if (!array_key_exists('token', $data) || !self::isValidString($data['token'])) {
+        if (
+            !array_key_exists('session_private_token', $data)
+            || !self::isValidStringLength($data['session_private_token'], 64)
+        ) {
+            throw new Exception("Le token de session interne n'a pas de format valide");
+        }
+        if (
+            !array_key_exists('session_public_token', $data)
+            || !self::isValidStringLength($data['session_public_token'], 64)
+        ) {
             throw new Exception("Le token de session n'a pas de format valide");
+        }
+        if (
+            !array_key_exists('session_expiration', $data)
+            || !(self::isValidDateString($data['session_expiration'])
+                || isnull($data['session_expiration']))
+        ) {
+            throw new Exception("Le date de validité de session n'a pas de format valide");
         }
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
+    protected static function isValidStringLength($str, $length): bool
+    {
+        return is_string($str) && strlen($str) === $length;
+    }
+
+    /**
+     * @param $str
+     * @return bool
+     */
+    protected static function isValidDateString($str): bool
+    {
+        try {
+            new \DateTime($str);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return is_string($str) && !empty($str);
+    }
 
 }

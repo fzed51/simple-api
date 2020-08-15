@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Tests\Entity;
 
 use App\Entity\Session;
-use PHPUnit\Framework\TestCase;
 
 class SessionTest extends BaseUserSession
 {
@@ -19,19 +18,26 @@ class SessionTest extends BaseUserSession
     {
         parent::setUp();
         $this->token = '123456789abcdef';
-        $this->dataValide['token'] = $this->token;
+        $this->dataValide['session_private_token'] = hash('sha256', random_bytes(10));
+        $this->dataValide['session_public_token'] = hash('sha256', random_bytes(10));
+        $this->dataValide['session_expiration'] = (new \DateTime())->format('Y-m-d H:i:s');
     }
 
 
     public function test_construct_valid_session()
     {
         $session = new Session($this->dataValide);
-        $this->assertInstanceOf(Session::class, $session);
+        self::assertInstanceOf(Session::class, $session);
     }
 
-    public function testGetToken()
+    public function testGetPublicToken()
     {
         $session = new Session($this->dataValide);
-        $this->assertEquals($this->token, $session->getToken());
+        self::assertEquals($this->dataValide['session_public_token'], $session->getSessionPublicToken());
+    }
+    public function testGetExpiration()
+    {
+        $session = new Session($this->dataValide);
+        self::assertEquals($this->dataValide['session_expiration'], $session->getSessionExpiration());
     }
 }
