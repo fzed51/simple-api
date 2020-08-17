@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection SqlResolve */
 
 
 namespace App\action;
@@ -6,8 +6,11 @@ namespace App\action;
 
 use App\ApiSecurity;
 use App\Entity\LoginUser;
+use DateInterval;
+use DateTime;
 use Exception;
 use InvalidArgumentException;
+use PDO;
 
 class ConnectUser extends UserAccess
 {
@@ -27,7 +30,7 @@ class ConnectUser extends UserAccess
         $stm = $this->pdo->prepare("select * from user where owner = ? and email = ?");
         $owner = $this->owner->getRef();
         $email = $login->getEmail();
-        if ($stm->execute([$owner, $email]) === false || ($user = $stm->fetch(\PDO::FETCH_ASSOC)) === false) {
+        if ($stm->execute([$owner, $email]) === false || ($user = $stm->fetch(PDO::FETCH_ASSOC)) === false) {
             throw new Exception("l'email ou le mot de passe ne sont pas valide");
         }
         if (!$security->testPassWord($login->getPass(), $user['pass'])) {
@@ -37,7 +40,7 @@ class ConnectUser extends UserAccess
         $privateToken = $security->getUid();
         $idClient = $security->getIdClient();
         $publicToken = $security->getPublicToken($privateToken, $idClient);
-        $expiration = (new \DateTime())->add(new \DateInterval('PT6H'));
+        $expiration = (new DateTime())->add(new DateInterval('PT6H'));
         $stm = $this->pdo->prepare(<<<SQL
 UPDATE user 
     SET 
@@ -51,7 +54,7 @@ SQL
         $stm->execute([
             $privateToken,
             $publicToken,
-            $expiration->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s'),
+            $expiration->setTimezone(new \DateTimeZone('UTC'))->format(DATE_ATOM),
             $ref
         ]);
         return $ref;

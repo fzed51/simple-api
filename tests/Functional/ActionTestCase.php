@@ -84,4 +84,58 @@ class ActionTestCase extends PdoTestCase
             1);
         return $fetch !== false ? $fetch : null;
     }
+
+    /**
+     * méthode de création d'utilisateur pour les tests
+     * @param string $owner
+     * @param string $name
+     * @param string $email
+     * @param string $pass
+     * @param array $roles
+     * @param bool $connected
+     * @return string
+     */
+    protected function addUser(
+        string $owner,
+        string $name,
+        string $email,
+        string $pass,
+        array $roles,
+        bool $connected = true
+    ): string {
+        $security = new ApiSecurity();
+        $ref = $security->getUid();
+        $pass = $security->hashPassWord($pass);
+        $this->dbInsert('user', [
+            'ref' => $ref,
+            'owner' => $owner,
+            'name' => $name,
+            'email' => $email,
+            'pass' => $pass,
+            'role' => json_encode($roles)
+        ]);
+        if ($connected) {
+            $private = $security->getUid();
+            $client = $security->getIdClient();
+            $public = $security->getPublicToken($private, $client);
+            $expiration = (new \DateTime())
+                ->add(new \DateInterval('P1D'))
+                ->format('Y-m-d H:i:s');
+            $this->dbUpdate('user', [
+                'session_private_token' => $private,
+                'session_public_token' => $public,
+                'session_expiration' => $expiration
+            ], "ref = '$ref'");
+        }
+        return $ref;
+    }
+
+    protected function getDbUser(string $owner, string $ref): ?array
+    {
+        $fetch = $this->dbSelectEtoile(
+            'user',
+            "owner = '$owner' AND ref = '$ref'",
+            1);
+        return $fetch !== false ? $fetch : null;
+    }
 }
