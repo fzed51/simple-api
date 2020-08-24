@@ -16,15 +16,20 @@ class UserAccessRead extends UserAccess
     {
         /*
         session => {
-    ref       : string
-    owner     : string
-    name      : string
-    email     : string
-    role      : string[]
-    created   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated   TIMESTAMP    NULL,
+            ref       : string
+            owner     : string
+            name      : string
+            email     : string
+            role      : string[]
         }
         */
+        $out = [];
+        $out['ref'] = $fetch['ref'];
+        $out['owner'] = $fetch['owner'];
+        $out['name'] = $fetch['name'];
+        $out['email'] = $fetch['email'];
+        $out['role'] = json_decode($fetch['role']);
+        return $out;
     }
 
 }

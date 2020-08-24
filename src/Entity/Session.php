@@ -70,12 +70,6 @@ class Session extends User
             throw new Exception('Une session ne peut pas être initialisé avec un ' . gettype($data));
         }
         if (
-            !array_key_exists('session_private_token', $data)
-            || !self::isValidStringLength($data['session_private_token'], 64)
-        ) {
-            throw new Exception("Le token de session interne n'a pas de format valide");
-        }
-        if (
             !array_key_exists('session_public_token', $data)
             || !self::isValidStringLength($data['session_public_token'], 64)
         ) {

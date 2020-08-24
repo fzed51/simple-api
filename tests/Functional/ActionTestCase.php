@@ -115,6 +115,8 @@ class ActionTestCase extends PdoTestCase
             'role' => json_encode($roles)
         ]);
         if ($connected) {
+            $_SERVER['REMOTE_ADDR'] = '90.54.180.1';
+            $_SERVER['HTTP_USER_AGENT'] = 'USER_AGENT';
             $private = $security->getUid();
             $client = $security->getIdClient();
             $public = $security->getPublicToken($private, $client);
