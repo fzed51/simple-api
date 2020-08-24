@@ -17,6 +17,8 @@ class ConnectUserTest extends ActionTestCase
 
     public function test__invoke()
     {
+        $_SERVER['REMOTE_ADDR'] = '90.54.180.1';
+        $_SERVER['HTTP_USER_AGENT'] = 'USER_AGENT';
         $create = new CreateUser($this->getPdo());
         $create->hydrateOwner($this->getOwner());
         $connect = new ConnectUser($this->getPdo());
