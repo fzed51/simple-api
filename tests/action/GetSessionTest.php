@@ -32,7 +32,12 @@ class GetSessionTest extends ActionTestCase
         $action = new GetSession($this->getPdo());
         $action->hydrateOwner($this->getOwner());
         $session = $action($idUser);
-        var_dump($user, $session);
+        self::assertIsArray($session);
+        $props = ['ref', 'owner', 'name', 'email', 'role', 'session_public_token', 'session_expiration'];
+        foreach ($props as $property) {
+            self::assertArrayHasKey($property, $session);
+        }
+        self::assertIsArray($session['role']);
     }
 
 }

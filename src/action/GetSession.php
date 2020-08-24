@@ -42,8 +42,8 @@ SQL
     public function format(array $fetch): array
     {
         $out = parent::format($fetch);
-        $our['session_public_token'] = $fetch['session_public_token'];
-        $our['session_expiration'] = $fetch['session_expiration'];
+        $out['session_public_token'] = $fetch['session_public_token'];
+        $out['session_expiration'] = $fetch['session_expiration'];
         return $out;
     }
 
