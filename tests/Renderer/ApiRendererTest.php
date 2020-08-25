@@ -5,16 +5,26 @@ namespace Tests\Renderer;
 use App\Renderer\ApiRenderer;
 use Tests\Functional\ControllerTestCase;
 
+/**
+ * test de ApiRenderer
+ * @package Tests\Renderer
+ */
 class ApiRendererTest extends ControllerTestCase
 {
-    public function test__construct()
+    /**
+     * test de __construct
+     */
+    public function test__construct(): void
     {
         $rep = $this->getResponse();
         $render = new ApiRenderer($rep);
         $this->assertInstanceOf(ApiRenderer::class, $render);
     }
 
-    public function testSuccess()
+    /**
+     * test de Success
+     */
+    public function testSuccess(): void
     {
         $rep = $this->getResponse();
         $render = new ApiRenderer($rep);
@@ -22,7 +32,10 @@ class ApiRendererTest extends ControllerTestCase
         $this->assertSuccessResponse($rep);
     }
 
-    public function testError()
+    /**
+     * test de Error
+     */
+    public function testError(): void
     {
         $rep = $this->getResponse();
         $render = new ApiRenderer($rep);

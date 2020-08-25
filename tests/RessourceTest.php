@@ -6,26 +6,34 @@ use App\Ressource;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class RessourceTest
+ * test de Ressource
  * @package Tests
  */
 class RessourceTest extends TestCase
 {
-
-    public function test__construct()
+    /**
+     * test de __construct
+     */
+    public function test__construct(): void
     {
         $ressource = new Ressource('test');
         $this->assertInstanceOf(Ressource::class, $ressource);
     }
 
-    public function testGetName()
+    /**
+     * test de GetName
+     */
+    public function testGetName(): void
     {
         $nom = 'test';
         $ressource = new Ressource($nom);
         $this->assertEquals($nom, $ressource->getName());
     }
 
-    public function testIs()
+    /**
+     * test de Is
+     */
+    public function testIs(): void
     {
         $nom = 'test';
         $ressource = new Ressource($nom);

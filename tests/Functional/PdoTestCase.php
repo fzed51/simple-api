@@ -39,19 +39,19 @@ SQL
      * @param int $limit
      * @return array|array[]|null
      */
-    protected function dbSelectEtoile(string $table, string $where = '', int $limit = 0):?array
+    protected function dbSelectEtoile(string $table, string $where = '', int $limit = 0): ?array
     {
         return $this->dbSelect(['*'], $table, $where, $limit);
     }
 
     /**
-     * @param array $fields
+     * @param string[] $fields
      * @param string $table
      * @param string $where
      * @param int $limit
      * @return array|array[]|null
      */
-    protected function dbSelect(array $fields, string $table, string $where = '', int $limit = 0):?array
+    protected function dbSelect(array $fields, string $table, string $where = '', int $limit = 0): ?array
     {
         $fieldsStr = implode(', ', $fields);
         if (!empty($where)) {
@@ -79,7 +79,7 @@ SQL
 
     /**
      * @param string $table
-     * @param array $data
+     * @param array<string, mixed> $data
      */
     protected function dbInsert(string $table, array $data): void
     {
@@ -103,7 +103,7 @@ SQL
 
     /**
      * @param string $table
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $where
      */
     protected function dbUpdate(string $table, array $data, string $where): void

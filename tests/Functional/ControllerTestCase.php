@@ -49,6 +49,13 @@ class ControllerTestCase extends ActionTestCase
         return $container;
     }
 
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param array<string, string> $header
+     * @param mixed $body
+     * @return \Slim\Http\Request
+     */
     protected function getRequest(string $method, string $uri, array $header = [], $body = null): Request
     {
         // CREATION DE LA REQUETE DE BASE
@@ -83,8 +90,8 @@ class ControllerTestCase extends ActionTestCase
     /**
      * @param string $method -- GET, POST, DELETE, PUT, PATCH, OPTION
      * @param string $uri
-     * @param array $header
-     * @param $body
+     * @param array<string, string> $header
+     * @param mixed $body
      * @return \Slim\Http\Request
      */
     protected function getRequestWithOwner(string $method, string $uri, array $header = [], $body = null): Request

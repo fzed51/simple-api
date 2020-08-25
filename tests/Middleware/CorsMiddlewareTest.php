@@ -7,16 +7,25 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Tests\Functional\ControllerTestCase;
 
+/**
+ * test de CorsMiddleware
+ * @package Tests\Middleware
+ */
 class CorsMiddlewareTest extends ControllerTestCase
 {
-
-    public function test__construct()
+    /**
+     * test de __construct
+     */
+    public function test__construct(): void
     {
         $mw = new CorsMiddleware($this->getContainer());
         $this->assertInstanceOf(CorsMiddleware::class, $mw);
     }
 
-    public function test__invoke()
+    /**
+     * test de __invoke
+     */
+    public function test__invoke(): void
     {
         $run = 0;
         $mw = new CorsMiddleware($this->getContainer());

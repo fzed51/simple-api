@@ -11,15 +11,20 @@ use PHPUnit\Framework\TestCase;
  */
 class OwnerTest extends TestCase
 {
-
-    public function test__construct()
+    /**
+     * test de __construct
+     */
+    public function test__construct(): void
     {
         $dataOwner = ['ref' => 'azeaze'];
         $owner = new Owner($dataOwner);
         $this->assertInstanceOf(Owner::class, $owner);
     }
 
-    public function test__construct_with_bad_data()
+    /**
+     * test de __construct with bad data
+     */
+    public function test__constructWithBadData(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionCode(500);
@@ -27,21 +32,30 @@ class OwnerTest extends TestCase
         $owner = new Owner($dataOwner);
     }
 
-    public function testGetRef()
+    /**
+     * test de GetRef
+     */
+    public function testGetRef(): void
     {
         $dataOwner = ['ref' => 'azeaze'];
         $owner = new Owner($dataOwner);
         $this->assertEquals($dataOwner['ref'], $owner->getRef());
     }
 
-    public function testGetDescription()
+    /**
+     * test de GetDescription
+     */
+    public function testGetDescription(): void
     {
         $dataOwner = ['ref' => 'azeaze', 'description' => 'bar'];
         $owner = new Owner($dataOwner);
         $this->assertEquals($dataOwner['description'], $owner->getDescription());
     }
 
-    public function testHasRessource()
+    /**
+     * test de HasRessource
+     */
+    public function testHasRessource(): void
     {
         $dataOwner = [
             'ref' => 'azeaze',
@@ -52,7 +66,10 @@ class OwnerTest extends TestCase
         $this->assertTrue($owner->hasRessource($dataOwner['ressources'][0]));
     }
 
-    public function testHasRessourceIsFail()
+    /**
+     * test de HasRessourceIsFail
+     */
+    public function testHasRessourceIsFail(): void
     {
         $dataOwner = [
             'ref' => 'azeaze',
