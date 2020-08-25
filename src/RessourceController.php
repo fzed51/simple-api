@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use App\action\CreateEntity;
 use App\action\DeleteEntity;
 use App\action\GetAllEntities;
@@ -66,7 +65,7 @@ class RessourceController extends Controller
             $getOne->hydrateOwnerAndRessource($owner, $ressource);
             $entity = $getOne($args['ref']);
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -116,7 +115,7 @@ class RessourceController extends Controller
             $getOne->hydrateOwnerAndRessource($owner, $ressource);
             $entity = $getOne($create($data));
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -179,7 +178,7 @@ class RessourceController extends Controller
             }
             $entity = $getOne($update($ref, $json));
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -224,7 +223,7 @@ class RessourceController extends Controller
             }
             $delete($ref);
             return $render->success();
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -236,5 +235,4 @@ class RessourceController extends Controller
             return $render->error(500, 'Erreur interne');
         }
     }
-
 }

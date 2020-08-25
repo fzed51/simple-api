@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App;
 
-
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 
@@ -35,5 +34,4 @@ class Controller
         json_decode($string, true);
         return json_last_error() === JSON_ERROR_NONE;
     }
-
 }

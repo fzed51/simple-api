@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 class UpdateEntity extends EntityAccess
 {
 
@@ -26,5 +25,4 @@ SQL
         $stm->execute([$json, $owner, $res, $ref]);
         return $ref;
     }
-
 }

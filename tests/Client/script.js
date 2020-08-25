@@ -25,13 +25,13 @@
                     method: methode
                 }
                 : {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: 'Bearer ' + owner,
-                        "Content-Type": "application/json"
-                    },
-                    method: methode,
-                    body
+            headers: {
+            Accept: "application/json",
+            Authorization: 'Bearer ' + owner,
+            "Content-Type": "application/json"
+            },
+            method: methode,
+            body
                 }
         )
             .then(response => response.json())

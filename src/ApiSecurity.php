@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 class ApiSecurity
 {
     public function getUid()

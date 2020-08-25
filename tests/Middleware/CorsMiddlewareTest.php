@@ -44,5 +44,4 @@ class CorsMiddlewareTest extends ControllerTestCase
         sort($keys);
         $this->assertSame($expect, $keys);
     }
-
 }

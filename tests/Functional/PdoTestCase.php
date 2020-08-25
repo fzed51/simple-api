@@ -3,7 +3,6 @@
 
 namespace Tests\Functional;
 
-
 use Helper\PDOFactory;
 use PHPUnit\Framework\TestCase;
 

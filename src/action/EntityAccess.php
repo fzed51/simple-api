@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 use App\Owner;
 
 class EntityAccess extends DbAccess
@@ -29,5 +28,4 @@ class EntityAccess extends DbAccess
         json_decode($json);
         return json_last_error() === JSON_ERROR_NONE;
     }
-
 }

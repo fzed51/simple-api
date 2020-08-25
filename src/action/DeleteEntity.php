@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 class DeleteEntity extends EntityAccess
 {
 
@@ -36,5 +35,4 @@ SQL
         $after = (int)$count->fetchColumn();
         return $after === 0;
     }
-
 }

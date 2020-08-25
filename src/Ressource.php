@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 class Ressource
 {
     /** @var string */

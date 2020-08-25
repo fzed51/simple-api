@@ -3,7 +3,6 @@
 
 namespace Tests\Functional;
 
-
 use App\ApiSecurity;
 use App\Owner;
 
@@ -58,7 +57,8 @@ class ActionTestCase extends PdoTestCase
         $fetch = $this->dbSelectEtoile(
             'entity',
             "owner = '$owner' AND ressource = '$ressource' AND ref = '$ref'",
-            1);
+            1
+        );
         return $fetch !== false ? $fetch : null;
     }
 }

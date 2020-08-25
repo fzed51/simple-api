@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 class GetEntity extends EntityAccessRead
 {
     public function __invoke(string $ref): ?array

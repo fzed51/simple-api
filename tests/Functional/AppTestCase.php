@@ -4,7 +4,6 @@ namespace Tests\Functional;
 
 use Slim\App;
 
-
 /**
  * This is an example class that shows how you could set up a method that
  * runs the application. Note that it doesn't cover all use-cases and is

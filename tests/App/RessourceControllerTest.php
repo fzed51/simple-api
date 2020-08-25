@@ -61,7 +61,8 @@ class RessourceControllerTest extends ControllerTestCase
                 [],
                 [
                     'foo' => 'bar'
-                ]),
+                ]
+            ),
             $this->getResponse(),
             ['ressource' => 'item']
         );

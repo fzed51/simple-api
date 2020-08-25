@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 class Owner
 {
     /** @var string */
@@ -28,7 +27,7 @@ class Owner
         $this->description = $data['description'] ?? '';
         try {
             $this->hydrateRessources($data['ressources'] ?? []);
-        } catch ( \Throwable $t) {
+        } catch (\Throwable $t) {
             error_log('data.ressources : ' . json_encode($data['ressources']));
             throw new \Exception('Ressources du owner corompues', 500);
         }
@@ -61,8 +60,8 @@ class Owner
     public function hasRessource(string $ressourceName)
     {
         /** @var \App\Ressource $ressource */
-        foreach ($this->ressources as $ressource){
-            if($ressource->is($ressourceName)){
+        foreach ($this->ressources as $ressource) {
+            if ($ressource->is($ressourceName)) {
                 return true;
             }
         }

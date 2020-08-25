@@ -19,7 +19,6 @@ class DeleteEntityTest extends ActionTestCase
     {
         $deleteEntity = new DeleteEntity($this->getPdo());
         $this->assertInstanceOf(DeleteEntity::class, $deleteEntity);
-
     }
 
     public function test__supprimeUneEntity()

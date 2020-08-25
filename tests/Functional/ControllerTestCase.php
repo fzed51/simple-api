@@ -176,5 +176,4 @@ class ControllerTestCase extends ActionTestCase
     {
         return 'Bearer ' . $this->getOwner()->getRef();
     }
-
 }

@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 class GetAllEntities extends EntityAccessRead
 {
 
@@ -74,5 +73,4 @@ LIMIT $offset, $limit
 SQL
         );
     }
-
 }

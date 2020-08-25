@@ -3,7 +3,6 @@
 
 namespace App\Middleware;
 
-
 use App\Owner;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;

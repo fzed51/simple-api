@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 class EntityAccessRead extends EntityAccess
 {
 
@@ -23,5 +22,4 @@ class EntityAccessRead extends EntityAccess
         $data['id'] = $fetch['ref'];
         return $data;
     }
-
 }
