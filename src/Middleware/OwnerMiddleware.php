@@ -11,15 +11,27 @@ use Slim\Http\Response;
 class OwnerMiddleware extends Middleware
 {
 
+    /**
+     * @var array<string,mixed>[]
+     */
     private $owners;
 
+    /**
+     * OwnerMiddleware constructor.
+     * @param \Psr\Container\ContainerInterface $container
+     * @param array<string,mixed>[] $owners
+     */
     public function __construct(ContainerInterface $container, array $owners)
     {
         $this->owners = $owners;
         parent::__construct($container);
     }
 
-    private function findOwner($owner): ?array
+    /**
+     * @param string $owner
+     * @return array<string,mixed>|null
+     */
+    private function findOwner(string $owner): ?array
     {
         $i = array_search(
             $owner,
@@ -34,6 +46,7 @@ class OwnerMiddleware extends Middleware
 
     public function __invoke(Request $request, Response $response, callable $next): Response
     {
+        /* @var string[]|null $authorization */
         $authorization = $request->getHeader('HTTP_AUTHORIZATION');
         if (null === $authorization || empty($authorization)) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
