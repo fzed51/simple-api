@@ -48,7 +48,7 @@ class OwnerMiddleware extends Middleware
     {
         /* @var string[]|null $authorization */
         $authorization = $request->getHeader('HTTP_AUTHORIZATION');
-        if (null === $authorization || empty($authorization)) {
+        if (empty($authorization)) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
         }
         $authorization = $authorization[0];

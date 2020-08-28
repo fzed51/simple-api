@@ -24,12 +24,19 @@ class GetAllEntities extends EntityAccessRead
         $this->offset = 0;
     }
 
-    public function setLimit(int $limit, int $offset = 0)
+    /**
+     * @param int $limit
+     * @param int $offset
+     */
+    public function setLimit(int $limit, int $offset = 0): void
     {
         $this->limit = $limit;
         $this->offset = $offset;
     }
 
+    /**
+     * @return  array{ref:string,owner:string,created:string,updated:string,data:string}[]
+     */
     public function __invoke(): array
     {
         if ($this->limit <= 0) {
@@ -46,6 +53,9 @@ class GetAllEntities extends EntityAccessRead
         );
     }
 
+    /**
+     * @return \PDOStatement
+     */
     private function statementWithoutLimit(): \PDOStatement
     {
         return $this->pdo->prepare(<<<SQL
@@ -58,6 +68,9 @@ SQL
         );
     }
 
+    /**
+     * @return \PDOStatement
+     */
     private function statementWithLimit(): \PDOStatement
     {
         $offset = max(0, $this->offset);

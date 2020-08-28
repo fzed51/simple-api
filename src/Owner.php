@@ -9,15 +9,24 @@ class Owner
     private $ref;
     /** @var string */
     private $description;
-    /** @var array */
+    /** @var \App\Ressource[] */
     private $ressources;
 
+    /**
+     * Owner constructor.
+     * @param array{ref:string,description:string,ressources:string[]} $data
+     * @throws \Exception
+     */
     public function __construct(array $data)
     {
         $this->hydrate($data);
     }
 
-    private function hydrate(array $data)
+    /**
+     * @param array{ref:string,description:string,ressources:string[]} $data
+     * @throws \Exception
+     */
+    private function hydrate(array $data): void
     {
         if (!array_key_exists('ref', $data)) {
             error_log('data : ' . json_encode($data));
@@ -33,7 +42,10 @@ class Owner
         }
     }
 
-    private function hydrateRessources(array $ressources)
+    /**
+     * @param string[] $ressources
+     */
+    private function hydrateRessources(array $ressources): void
     {
         $this->ressources = [];
         foreach ($ressources as $ressource) {
@@ -57,6 +69,10 @@ class Owner
         return $this->description;
     }
 
+    /**
+     * @param string $ressourceName
+     * @return bool
+     */
     public function hasRessource(string $ressourceName)
     {
         /** @var \App\Ressource $ressource */

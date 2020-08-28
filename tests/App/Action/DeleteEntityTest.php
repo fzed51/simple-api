@@ -5,23 +5,37 @@ namespace Tests\App\Action;
 use App\action\DeleteEntity;
 use Tests\Functional\ActionTestCase;
 
+/**
+ * test de DeleteEntity
+ * @package Tests\App\Action
+ */
 class DeleteEntityTest extends ActionTestCase
 {
 
+    /** @var string  */
     private $ref;
 
+    /**
+     * setup
+     */
     public function setup(): void
     {
         $this->ref = $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
     }
 
-    public function test_ConstructionDeDeleteEntity()
+    /**
+     * test de ConstructionDeDeleteEntity
+     */
+    public function test_ConstructionDeDeleteEntity(): void
     {
         $deleteEntity = new DeleteEntity($this->getPdo());
         $this->assertInstanceOf(DeleteEntity::class, $deleteEntity);
     }
 
-    public function test__supprimeUneEntity()
+    /**
+     * test de supprimeUneEntity
+     */
+    public function test__supprimeUneEntity(): void
     {
         $pdo = $this->getPdo();
         $nbEntity =$this->dbCount('entity');
@@ -32,8 +46,11 @@ class DeleteEntityTest extends ActionTestCase
         $this->assertLessThan($nbEntity, $newNbEntity);
         $this->assertTrue($ok);
     }
-    
-    public function test__supprimeUneEntityInconnu()
+
+    /**
+     * test de supprimeUneEntityInconnu
+     */
+    public function test__supprimeUneEntityInconnu(): void
     {
         $pdo = $this->getPdo();
         $nbEntity = $this->dbCount('entity');

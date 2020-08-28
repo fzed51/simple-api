@@ -3,13 +3,22 @@
 
 namespace App\action;
 
+/**
+ * Class GetEntity
+ * @package App\action
+ */
 class GetEntity extends EntityAccessRead
 {
+
+    /**
+     * @param string $ref
+     * @return array{ref:string,owner:string,created:string,updated:string,data:string}|null
+     */
     public function __invoke(string $ref): ?array
     {
         $stm = $this->pdo->prepare(<<<SQL
 SELECT ref, created, updated, data 
-FROM entity 
+FROM entity
 WHERE owner = ? 
   AND ressource = ?
   AND ref = ?

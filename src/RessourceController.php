@@ -8,12 +8,23 @@ use App\action\DeleteEntity;
 use App\action\GetAllEntities;
 use App\action\GetEntity;
 use App\action\UpdateEntity;
+use phpDocumentor\Reflection\Types\Resource_;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+/**
+ * Class RessourceController
+ * @package App
+ */
 class RessourceController extends Controller
 {
-    public function getAll(Request $request, Response $response, array $args)
+    /**
+     * @param \Slim\Http\Request $request
+     * @param \Slim\Http\Response $response
+     * @param array<string,string> $args
+     * @return \Slim\Http\Response
+     */
+    public function getAll(Request $request, Response $response, array $args): Response
     {
         /** @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -39,10 +50,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function getOne(Request $request, Response $response, array $args)
+    public function getOne(Request $request, Response $response, array $args): Response
     {
         /** @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -81,10 +92,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function create(Request $request, Response $response, array $args)
+    public function create(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -131,10 +142,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function update(Request $request, Response $response, array $args)
+    public function update(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -191,7 +202,13 @@ class RessourceController extends Controller
         }
     }
 
-    public function delete(Request $request, Response $response, array $args)
+    /**
+     * @param \Slim\Http\Request $request
+     * @param \Slim\Http\Response $response
+     * @param array<string,string> $args
+     * @return \Slim\Http\Response
+     */
+    public function delete(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
