@@ -5,3 +5,5 @@ parameters:
         - tests
     bootstrapFiles:
         - src/private.php
+    ignoreErrors:
+        - '#Strict comparison using === between PDOStatement and false will always evaluate to false.#'

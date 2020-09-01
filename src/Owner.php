@@ -14,7 +14,7 @@ class Owner
 
     /**
      * Owner constructor.
-     * @param array{ref:string,description:string,ressources:string[]} $data
+     * @param array{ref:string,description?:string,ressources?:string[]} $data
      * @throws \Exception
      */
     public function __construct(array $data)
@@ -23,7 +23,7 @@ class Owner
     }
 
     /**
-     * @param array{ref:string,description:string,ressources:string[]} $data
+     * @param array{ref:string,description?:string,ressources?:string[]} $data
      * @throws \Exception
      */
     private function hydrate(array $data): void

@@ -29,7 +29,7 @@ class OwnerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionCode(500);
         $dataOwner = [];
-        $owner = new Owner($dataOwner);
+        $owner = new Owner($dataOwner);// @phpstan-ignore-line
     }
 
     /**
