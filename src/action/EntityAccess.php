@@ -5,6 +5,7 @@ namespace App\action;
 
 
 use App\Entity\Owner;
+use App\Owner;
 
 class EntityAccess extends DbAccess
 {
@@ -18,7 +19,11 @@ class EntityAccess extends DbAccess
      */
     protected $ressourceName;
 
-    public function hydrateOwnerAndRessource(Owner $owner, string $ressourceName)
+    /**
+     * @param \App\Owner $owner
+     * @param string $ressourceName
+     */
+    public function hydrateOwnerAndRessource(Owner $owner, string $ressourceName): void
     {
         $this->owner = $owner;
         $this->ressourceName = $ressourceName;

@@ -4,12 +4,8 @@ namespace Tests\Functional;
 
 use Slim\App;
 
-
 /**
- * This is an example class that shows how you could set up a method that
- * runs the application. Note that it doesn't cover all use-cases and is
- * tuned to the specifics of this skeleton app, so if your needs are
- * different, you'll need to change it.
+ * Test de base pour App
  */
 class AppTestCase extends ControllerTestCase
 {
@@ -23,9 +19,9 @@ class AppTestCase extends ControllerTestCase
      * Process the application given a request method and URI
      * @param string $requestMethod the request method (GET, POST, etc.)
      * @param string $requestUri the request URI
-     * @param array $requestHeader the request header (content-type, x-header, ...)
+     * @param array<string,string> $requestHeader the request header (content-type, x-header, ...)
      * @param mixed $requestData the request data
-     * @return \Slim\Http\Response
+     * @return \Psr\Http\Message\ResponseInterface
      * @throws \Throwable
      */
     public function runApp(string $requestMethod, string $requestUri, $requestHeader = [], $requestData = null)
@@ -44,7 +40,7 @@ class AppTestCase extends ControllerTestCase
         // Set up dependencies
         $dependencies = require __DIR__ . '/../../src/dependencies.php';
         $dependencies($app);
-        $this->getContainer($app->getContainer() ?: null);
+        $this->getContainer($app->getContainer());
 
         // Set up handlers
         $handlers = require __DIR__ . '/../../src/handlers.php';
@@ -61,7 +57,7 @@ class AppTestCase extends ControllerTestCase
         $routes($app);
 
         // Process the application
-        /* @var \Slim\Http\Response $response */
+        /* @var \Psr\Http\Message\ResponseInterface $response */
         $response = $app->process($request, $response);
 
         // Return the response

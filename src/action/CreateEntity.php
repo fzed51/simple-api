@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 use App\ApiSecurity;
 
 class CreateEntity extends EntityAccess

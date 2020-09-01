@@ -3,7 +3,10 @@
 
 namespace App\Entity;
 
-
+/**
+ * Class Ressource
+ * @package App
+ */
 class Ressource
 {
     /** @var string */
@@ -11,7 +14,7 @@ class Ressource
 
     /**
      * Ressource constructor.
-     * @param mixed $ressource
+     * @param string $ressource
      */
     public function __construct(string $ressource)
     {
@@ -27,9 +30,10 @@ class Ressource
     }
 
     /**
-     * @return string
+     * @param string $name
+     * @return bool
      */
-    public function is($name): bool
+    public function is(string $name): bool
     {
         return $this->name === $name;
     }

@@ -8,6 +8,7 @@ use Tests\Functional\ActionTestCase;
 class GetAllEntitiesTest extends ActionTestCase
 {
 
+    /** @var string */
     private $refEntity;
 
     public function setup(): void

@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use App\action\CreateEntity;
 use App\action\DeleteEntity;
 use App\action\GetAllEntities;
@@ -13,9 +12,19 @@ use App\Entity\Owner;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+/**
+ * Class RessourceController
+ * @package App
+ */
 class RessourceController extends Controller
 {
-    public function getAll(Request $request, Response $response, array $args)
+    /**
+     * @param \Slim\Http\Request $request
+     * @param \Slim\Http\Response $response
+     * @param array<string,string> $args
+     * @return \Slim\Http\Response
+     */
+    public function getAll(Request $request, Response $response, array $args): Response
     {
         /** @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -41,10 +50,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function getOne(Request $request, Response $response, array $args)
+    public function getOne(Request $request, Response $response, array $args): Response
     {
         /** @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -67,7 +76,7 @@ class RessourceController extends Controller
             $getOne->hydrateOwnerAndRessource($owner, $ressource);
             $entity = $getOne($args['ref']);
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -83,10 +92,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function create(Request $request, Response $response, array $args)
+    public function create(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -117,7 +126,7 @@ class RessourceController extends Controller
             $getOne->hydrateOwnerAndRessource($owner, $ressource);
             $entity = $getOne($create($data));
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -133,10 +142,10 @@ class RessourceController extends Controller
     /**
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param array<string,string> $args
      * @return \Slim\Http\Response
      */
-    public function update(Request $request, Response $response, array $args)
+    public function update(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -180,7 +189,7 @@ class RessourceController extends Controller
             }
             $entity = $getOne($update($ref, $json));
             return $render->success($entity);
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -193,7 +202,13 @@ class RessourceController extends Controller
         }
     }
 
-    public function delete(Request $request, Response $response, array $args)
+    /**
+     * @param \Slim\Http\Request $request
+     * @param \Slim\Http\Response $response
+     * @param array<string,string> $args
+     * @return \Slim\Http\Response
+     */
+    public function delete(Request $request, Response $response, array $args): Response
     {
         /* @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
@@ -225,7 +240,7 @@ class RessourceController extends Controller
             }
             $delete($ref);
             return $render->success();
-        } Catch (\Exception $e) {
+        } catch (\Exception $e) {
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -237,5 +252,4 @@ class RessourceController extends Controller
             return $render->error(500, 'Erreur interne');
         }
     }
-
 }

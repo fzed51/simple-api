@@ -5,15 +5,26 @@ namespace Tests\App;
 use App\RessourceController;
 use Tests\Functional\ControllerTestCase;
 
+/**
+ * test de  RessourceController
+ * @package Tests\App
+ */
 class RessourceControllerTest extends ControllerTestCase
 {
-    public function test_constructeurDuRessourceController()
+    /**
+     * test de constructeurDuRessourceController
+     */
+    public function test_constructeurDuRessourceController(): void
     {
         $control = new RessourceController($this->getContainer());
         $this->assertInstanceOf(RessourceController::class, $control);
     }
 
-    public function test_RecupereToutesLesRessources()
+    /**
+     * test de RecupereToutesLesRessources
+     * @throws \JsonException
+     */
+    public function test_RecupereToutesLesRessources(): void
     {
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
@@ -28,7 +39,11 @@ class RessourceControllerTest extends ControllerTestCase
         $this->assertCount($nbEntity, $data);
     }
 
-    public function test_RecupereUneRessource()
+    /**
+     * test de RecupereUneRessource
+     * @throws \JsonException
+     */
+    public function test_RecupereUneRessource(): void
     {
         $refEntity = $this->addEntity(
             $this->getOwner()->getRef(),
@@ -50,7 +65,11 @@ class RessourceControllerTest extends ControllerTestCase
         $data = $this->getDataResponse($response);
     }
 
-    public function test_AjouteUneRessource()
+    /**
+     * test de AjouteUneRessource
+     * @throws \JsonException
+     */
+    public function test_AjouteUneRessource(): void
     {
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
@@ -61,7 +80,8 @@ class RessourceControllerTest extends ControllerTestCase
                 [],
                 [
                     'foo' => 'bar'
-                ]),
+                ]
+            ),
             $this->getResponse(),
             ['ressource' => 'item']
         );

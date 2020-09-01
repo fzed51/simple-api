@@ -8,16 +8,25 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Tests\Functional\ControllerTestCase;
 
+/**
+ * test de OwnerMiddleware
+ * @package Tests\App\Middleware
+ */
 class OwnerMiddlewareTest extends ControllerTestCase
 {
-
-    public function test__construct()
+    /**
+     * test de __construct
+     */
+    public function test__construct(): void
     {
         $mw = new OwnerMiddleware($this->getContainer(), $this->getOwners());
         $this->assertInstanceOf(OwnerMiddleware::class, $mw);
     }
 
-    public function test__invoke()
+    /**
+     * test de __invoke
+     */
+    public function test__invoke(): void
     {
         $self = $this;
         $request = $this->getRequest(
@@ -40,7 +49,10 @@ class OwnerMiddlewareTest extends ControllerTestCase
         $this->assertEquals(1, $run);
     }
 
-    public function test__badInvoke()
+    /**
+     * test de __badInvoke
+     */
+    public function test__badInvoke(): void
     {
         $self = $this;
         $request = $this->getRequest(

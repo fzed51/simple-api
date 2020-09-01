@@ -8,8 +8,6 @@ use Tests\Functional\ActionTestCase;
 class GetAllEntitiesWithLimitTest extends ActionTestCase
 {
 
-    private $refEntity;
-
     public function setup(): void
     {
         $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);

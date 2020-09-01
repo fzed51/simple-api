@@ -10,6 +10,10 @@ class ApiSecurity implements SecurityTool
 {
     const INTERN = 'e051041e-dba4-4877-97a5-87ea18710c31';
 
+    /**
+     * génère un identifiant unique
+     * @return string
+     */
     public function getUid(): string
     {
         do {

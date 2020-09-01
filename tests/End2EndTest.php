@@ -143,5 +143,4 @@ class End2EndTest extends AppTestCase
         );
         $this->assertSuccessResponse($response);
     }
-
 }

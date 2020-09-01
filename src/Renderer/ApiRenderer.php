@@ -14,6 +14,10 @@ class ApiRenderer
         $this->response = $response;
     }
 
+    /**
+     * @param mixed $data
+     * @return \Slim\Http\Response
+     */
     public function success($data = null): Response
     {
         $dataResponse = [
@@ -24,6 +28,11 @@ class ApiRenderer
         return $this->render($dataResponse)->withStatus(200);
     }
 
+    /**
+     * @param int $code
+     * @param string $err
+     * @return \Slim\Http\Response
+     */
     public function error(int $code, string $err): Response
     {
         $dataResponse = [
@@ -37,6 +46,10 @@ class ApiRenderer
         return $this->render($dataResponse)->withStatus($code);
     }
 
+    /**
+     * @param mixed $data
+     * @return \Slim\Http\Response
+     */
     private function render($data): Response
     {
         $this->response->write(json_encode($data));

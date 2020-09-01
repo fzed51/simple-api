@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App;
 
-
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 
@@ -25,15 +24,14 @@ class Controller
         $this->container = $container;
     }
 
-    protected function getBodyRequest(Request $request)
+    protected function getBodyRequest(Request $request): string
     {
         return (string)$request->getBody();
     }
 
-    protected function valideJson(string $string)
+    protected function valideJson(string $string): bool
     {
         json_decode($string, true);
         return json_last_error() === JSON_ERROR_NONE;
     }
-
 }
