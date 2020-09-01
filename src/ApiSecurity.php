@@ -3,10 +3,13 @@
 
 namespace App;
 
-
 class ApiSecurity
 {
-    public function getUid()
+    /**
+     * génère un identifiant unique
+     * @return string
+     */
+    public function getUid(): string
     {
         do {
             $bytes = openssl_random_pseudo_bytes(24, $strong);

@@ -3,14 +3,16 @@
 
 namespace App\action;
 
-
 class EntityAccessRead extends EntityAccess
 {
-
+    /**
+     * @param array{ref:string,owner:string,created:string,updated:string,data:string} $fetch
+     * @return array<string,mixed>
+     */
     protected function format(array $fetch)
     {
         /*
-         * un fetche a cette structure
+         * un fetch a cette structure
          * {
          *  ref,
          *  owner,
@@ -23,5 +25,4 @@ class EntityAccessRead extends EntityAccess
         $data['id'] = $fetch['ref'];
         return $data;
     }
-
 }

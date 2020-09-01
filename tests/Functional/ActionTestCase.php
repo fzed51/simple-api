@@ -3,12 +3,14 @@
 
 namespace Tests\Functional;
 
-
 use App\ApiSecurity;
 use App\Owner;
 
 class ActionTestCase extends PdoTestCase
 {
+    /**
+     * @return array[]
+     */
     protected function getOwners(): array
     {
         return [
@@ -51,14 +53,14 @@ class ActionTestCase extends PdoTestCase
      * @param string $owner
      * @param string $ressource
      * @param string $ref
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     protected function getEntity(string $owner, string $ressource, string $ref): ?array
     {
-        $fetch = $this->dbSelectEtoile(
+        return $this->dbSelectEtoile(
             'entity',
             "owner = '$owner' AND ressource = '$ressource' AND ref = '$ref'",
-            1);
-        return $fetch !== false ? $fetch : null;
+            1
+        );
     }
 }
