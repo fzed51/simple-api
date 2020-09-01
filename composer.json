@@ -42,6 +42,10 @@
   "scripts": {
     "start": "php -S localhost:8008 -t public",
     "client": "php -S localhost:9009 -t tests/Client",
-    "test": "phpunit"
+    "test": "phpunit",
+    "check": [
+      "phpcs",
+      "phpstan analyse"
+    ]
   }
 }

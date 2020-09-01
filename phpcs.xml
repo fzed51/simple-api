@@ -4,7 +4,8 @@
 
     <file>src</file>
     <file>tests</file>
-    
+    <exclude-pattern>*.js</exclude-pattern>
+
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
     <arg value="np"/>
