@@ -13,6 +13,7 @@ use DomainException;
 use InstanceResolver\ResolverClass;
 use PDO;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use Slim\Container;
 use Slim\Http\Environment;
@@ -23,10 +24,10 @@ class ControllerTestCase extends ActionTestCase
 {
 
     /**
-     * @param \Slim\Container|null $container
-     * @return \Slim\Container
+     * @param \Psr\Container\ContainerInterface|null $container
+     * @return \Psr\Container\ContainerInterface
      */
-    protected function getContainer(Container $container = null): Container
+    protected function getContainer(ContainerInterface $container = null): ContainerInterface
     {
         if (null === $container) {
             $container = new Container();
@@ -37,7 +38,7 @@ class ControllerTestCase extends ActionTestCase
         $container[PDO::class] = static function () use ($self) {
             return $self->getPDO();
         };
-        $container['resolve'] = static function (Container $c) {
+        $container['resolve'] = static function (ContainerInterface $c) {
             return new ResolverClass($c);
         };
         $container['renderer'] = static function (ContainerInterface $c) {
@@ -107,9 +108,9 @@ class ControllerTestCase extends ActionTestCase
     }
 
     /**
-     * @param \Slim\Http\Response $expectedResponse
+     * @param \Psr\Http\Message\ResponseInterface $expectedResponse
      */
-    protected function assertSuccessResponse($expectedResponse): void
+    protected function assertSuccessResponse(ResponseInterface $expectedResponse): void
     {
         // la source doit être une reponse
         $this->assertInstanceOf(Response::class, $expectedResponse);
@@ -132,10 +133,10 @@ class ControllerTestCase extends ActionTestCase
 
 
     /**
-     * @param \Slim\Http\Response $expectedResponse
+     * @param \Psr\Http\Message\ResponseInterface $expectedResponse
      * @param int $code donner un code pour verifier le code de la réponse
      */
-    protected function assertErrorResponse($expectedResponse, int $code = -1): void
+    protected function assertErrorResponse(ResponseInterface $expectedResponse, int $code = -1): void
     {
         // la source doit être une reponse
         $this->assertInstanceOf(Response::class, $expectedResponse);
@@ -156,19 +157,19 @@ class ControllerTestCase extends ActionTestCase
     }
 
     /**
-     * @param \Slim\Http\Response $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @return string
      */
-    protected function gerRawDataResponse(Response $response): string
+    protected function gerRawDataResponse(ResponseInterface $response): string
     {
         return (string)$response->getBody();
     }
 
     /**
-     * @param \Slim\Http\Response $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @return mixed
      */
-    protected function getDataResponse(Response $response)
+    protected function getDataResponse(ResponseInterface $response)
     {
         $body = $this->gerRawDataResponse($response);
 

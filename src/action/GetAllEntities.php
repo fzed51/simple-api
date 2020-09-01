@@ -35,7 +35,7 @@ class GetAllEntities extends EntityAccessRead
     }
 
     /**
-     * @return  array{ref:string,owner:string,created:string,updated:string,data:string}[]
+     * @return  array<string,mixed>[]
      */
     public function __invoke(): array
     {

@@ -7,7 +7,7 @@ class EntityAccessRead extends EntityAccess
 {
     /**
      * @param array{ref:string,owner:string,created:string,updated:string,data:string} $fetch
-     * @return mixed
+     * @return array<string,mixed>
      */
     protected function format(array $fetch)
     {

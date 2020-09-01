@@ -12,7 +12,7 @@ class GetEntity extends EntityAccessRead
 
     /**
      * @param string $ref
-     * @return array{ref:string,owner:string,created:string,updated:string,data:string}|null
+     * @return array<string,mixed>|null
      */
     public function __invoke(string $ref): ?array
     {
