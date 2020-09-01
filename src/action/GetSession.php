@@ -46,6 +46,4 @@ SQL
         $out['session_expiration'] = $fetch['session_expiration'];
         return $out;
     }
-
-
 }

@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use Exception;
 
 class ApiSecurity implements SecurityTool
@@ -41,7 +40,7 @@ class ApiSecurity implements SecurityTool
         $ip = $this->getIpAddress();
         $userAgent = $this->getUserAgent();
         if ($ip === null || $userAgent === null) {
-            throw new Exception ('Impossible d\'identifier l\'utilisateur');
+            throw new Exception('Impossible d\'identifier l\'utilisateur');
         }
         return hash('sha256', $ip . $userAgent);
     }

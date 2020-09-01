@@ -31,5 +31,4 @@ class UserAccessRead extends UserAccess
         $out['role'] = json_decode($fetch['role']);
         return $out;
     }
-
 }

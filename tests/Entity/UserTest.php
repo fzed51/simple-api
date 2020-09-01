@@ -17,7 +17,6 @@ class UserTest extends BaseUserSession
     {
         $user = new User($this->dataValide);
         $this->assertInstanceOf(User::class, $user);
-
     }
 
     public function test_getter()

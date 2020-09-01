@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 use PDO;
 
 class DbAccess

@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\action;
 
-
 use App\ApiSecurity;
 use App\Entity\NewUser;
 

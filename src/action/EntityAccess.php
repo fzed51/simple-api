@@ -3,10 +3,12 @@
 
 namespace App\action;
 
-
 use App\Entity\Owner;
-use App\Owner;
 
+/**
+ * Class EntityAccess
+ * @package App\action
+ */
 class EntityAccess extends DbAccess
 {
 
@@ -20,7 +22,7 @@ class EntityAccess extends DbAccess
     protected $ressourceName;
 
     /**
-     * @param \App\Owner $owner
+     * @param \App\Entity\Owner $owner
      * @param string $ressourceName
      */
     public function hydrateOwnerAndRessource(Owner $owner, string $ressourceName): void
@@ -28,5 +30,4 @@ class EntityAccess extends DbAccess
         $this->owner = $owner;
         $this->ressourceName = $ressourceName;
     }
-
 }

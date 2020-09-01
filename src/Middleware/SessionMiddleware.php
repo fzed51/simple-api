@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -18,10 +17,8 @@ class SessionMiddleware extends Middleware
     public function __invoke(Request $request, Response $response, callable $next): Response
     {
         try {
-
             $pdo = $this->container->get(\PDO::class);
         } finally {
-
             return $next($request, $response);
         }
     }

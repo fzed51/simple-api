@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-
 use Exception;
 
 class Session extends User
@@ -57,7 +56,6 @@ class Session extends User
         $this->sessionPrivateToken = $data['session_private_token'];
         $this->sessionPublicToken = $data['session_public_token'];
         $this->sessionExpiration = $data['session_expiration'];
-
     }
 
     /**
@@ -69,14 +67,12 @@ class Session extends User
         if (!is_array($data)) {
             throw new Exception('Une session ne peut pas être initialisé avec un ' . gettype($data));
         }
-        if (
-            !array_key_exists('session_public_token', $data)
+        if (!array_key_exists('session_public_token', $data)
             || !self::isValidStringLength($data['session_public_token'], 64)
         ) {
             throw new Exception("Le token de session n'a pas de format valide");
         }
-        if (
-            !array_key_exists('session_expiration', $data)
+        if (!array_key_exists('session_expiration', $data)
             || !(self::isValidDateString($data['session_expiration'])
                 || isnull($data['session_expiration']))
         ) {
@@ -106,5 +102,4 @@ class Session extends User
         }
         return is_string($str) && !empty($str);
     }
-
 }

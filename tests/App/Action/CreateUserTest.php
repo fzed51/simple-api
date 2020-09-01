@@ -18,8 +18,6 @@ class CreateUserTest extends ActionTestCase
     {
         $action = new CreateUser($this->getPdo());
         $this->assertInstanceOf(CreateUser::class, $action);
-
-
     }
 
     /*

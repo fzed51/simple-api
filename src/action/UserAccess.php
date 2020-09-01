@@ -3,7 +3,6 @@
 
 namespace App\action;
 
-
 use App\Entity\Owner;
 
 class UserAccess extends DbAccess
@@ -18,5 +17,4 @@ class UserAccess extends DbAccess
     {
         $this->owner = $owner;
     }
-
 }

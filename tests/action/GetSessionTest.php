@@ -39,5 +39,4 @@ class GetSessionTest extends ActionTestCase
         }
         self::assertIsArray($session['role']);
     }
-
 }

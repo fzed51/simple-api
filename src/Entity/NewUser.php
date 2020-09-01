@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-
 class NewUser extends BaseUser
 {
 
@@ -38,5 +37,4 @@ class NewUser extends BaseUser
             throw new \Exception("Le mot de passe n'est pas confirmé");
         }
     }
-
 }

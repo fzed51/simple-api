@@ -139,7 +139,8 @@ class ActionTestCase extends PdoTestCase
         $fetch = $this->dbSelectEtoile(
             'user',
             "owner = '$owner' AND ref = '$ref'",
-            1);
+            1
+        );
         return $fetch !== false ? $fetch : null;
     }
 }
