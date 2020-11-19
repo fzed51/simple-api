@@ -9,4 +9,5 @@ CREATE TABLE entity
     PRIMARY KEY (ref),
     INDEX idx_owner (owner ASC),
     INDEX idx_ressource (ressource ASC)
-);
+)
+    DEFAULT CHARACTER SET = utf8;

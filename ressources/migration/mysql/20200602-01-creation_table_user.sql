@@ -12,4 +12,5 @@ CREATE TABLE user
     INDEX idx_owner (owner ASC),
     UNIQUE INDEX idx_name (name ASC),
     UNIQUE INDEX idx_email (email ASC)
-);
+)
+DEFAULT CHARACTER SET = utf8;

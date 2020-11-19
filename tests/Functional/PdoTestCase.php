@@ -19,8 +19,8 @@ class PdoTestCase extends TestCase
             $pdo = PDOFactory::sqlite();
             $pdo->exec(<<<SQL
 create table entity (
-    ref text primary key , 
-    owner text not null,     
+    ref       text primary key , 
+    client    text not null,     
     ressource text not null,
     created   text not null default current_timestamp,
     updated   text,
@@ -30,7 +30,7 @@ SQL
             $pdo->exec(<<<SQL
 create table user (
     ref                   text not null,
-    owner                 text not null,
+    client                text not null,
     name                  text not null,
     email                 text not null,
     pass                  text not null,
@@ -39,7 +39,7 @@ create table user (
     updated               text,
     session_private_token text,                  
     session_public_token  text,                  
-    session_expiration     text                 
+    session_expiration    text                 
 )
 SQL
             );
