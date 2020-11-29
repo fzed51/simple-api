@@ -13,8 +13,8 @@ class GetAllEntitiesTest extends ActionTestCase
 
     public function setup(): void
     {
-        $this->refEntity = $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'aze']);
+        $this->refEntity = $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'bar']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'aze']);
     }
 
     public function test__construitUneActionGetAllEntities(): void
@@ -27,7 +27,7 @@ class GetAllEntitiesTest extends ActionTestCase
     public function test__lireLesEntities(): void
     {
         $getAll = new GetAllEntities($this->getPdo());
-        $getAll->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $getAll->hydrateClientAndRessource($this->getClient(), 'item');
         $entities = $getAll();
         $this->assertIsArray($entities);
         $this->assertCount(2, $entities);

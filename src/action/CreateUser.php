@@ -21,19 +21,19 @@ class CreateUser extends UserAccess
         $security = new ApiSecurity();
         $stm = $this->pdo->prepare(<<<SQL
 INSERT INTO user 
-    (ref, owner, name, email, pass, role) 
+    (ref, client, name, email, pass, role) 
     values (?,?,?,?,?,?)
 SQL
         );
         $ref = $security->getUid();
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $data = json_decode($json, true);
         $user = new NewUser($data);
         $name = $user->getName();
         $email = $user->getEmail();
         $pass = $security->hashPassWord($data['pass']);
         $roles = json_encode($data['roles']);
-        $stm->execute([$ref, $owner, $name, $email, $pass, $roles]);
+        $stm->execute([$ref, $client, $name, $email, $pass, $roles]);
         return $ref;
     }
 }

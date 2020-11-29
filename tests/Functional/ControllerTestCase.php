@@ -7,7 +7,7 @@
 
 namespace Tests\Functional;
 
-use App\Middleware\OwnerMiddleware;
+use App\Middleware\ClientMiddleware;
 use App\Renderer\ApiRenderer;
 use DomainException;
 use InstanceResolver\ResolverClass;
@@ -44,8 +44,8 @@ class ControllerTestCase extends ActionTestCase
         $container['renderer'] = static function (ContainerInterface $c) {
             return new ApiRenderer($c->get('response'));
         };
-        $container[OwnerMiddleware::class] = static function (ContainerInterface $c) use ($self) {
-            return new OwnerMiddleware($c, $self->getOwners());
+        $container[ClientMiddleware::class] = static function (ContainerInterface $c) use ($self) {
+            return new ClientMiddleware($c, $self->getClients());
         };
         return $container;
     }
@@ -95,11 +95,11 @@ class ControllerTestCase extends ActionTestCase
      * @param mixed $body
      * @return \Slim\Http\Request
      */
-    protected function getRequestWithOwner(string $method, string $uri, array $header = [], $body = null): Request
+    protected function getRequestWithClient(string $method, string $uri, array $header = [], $body = null): Request
     {
         $request = $this->getRequest($method, $uri, $header, $body);
-        $owner = $this->getOwner();
-        return $request->withAttribute('owner', $owner);
+        $client = $this->getClient();
+        return $request->withAttribute('client', $client);
     }
 
     protected function getResponse(): Response
@@ -180,8 +180,8 @@ class ControllerTestCase extends ActionTestCase
         return $data->data;
     }
 
-    protected function getOwnerBearerToken(): string
+    protected function getClientBearerToken(): string
     {
-        return 'Bearer ' . $this->getOwner()->getRef();
+        return 'Bearer ' . $this->getClient()->getRef();
     }
 }

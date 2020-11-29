@@ -3,7 +3,7 @@
 
 namespace App\action;
 
-use App\Entity\Owner;
+use App\Entity\Client;
 
 /**
  * Class EntityAccess
@@ -13,21 +13,21 @@ class EntityAccess extends DbAccess
 {
 
     /**
-     * @var \App\Entity\Owner
+     * @var \App\Entity\Client
      */
-    protected $owner;
+    protected $client;
     /**
      * @var string
      */
     protected $ressourceName;
 
     /**
-     * @param \App\Entity\Owner $owner
+     * @param \App\Entity\Client $client
      * @param string $ressourceName
      */
-    public function hydrateOwnerAndRessource(Owner $owner, string $ressourceName): void
+    public function hydrateClientAndRessource(Client $client, string $ressourceName): void
     {
-        $this->owner = $owner;
+        $this->client = $client;
         $this->ressourceName = $ressourceName;
     }
 }

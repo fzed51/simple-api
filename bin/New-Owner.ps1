@@ -1,21 +1,21 @@
 [CmdletBinding()]
 param ()
 
-[string]$Description = Read-Host "Donnez une description du owner "
+[string]$Description = Read-Host "Donnez une description du client "
 [string[]]$Items = @()
 
 do {
-    [string]$Item = Read-Host "Ajouter une ressource gérée par le owner. ([Entrée] pour arrêter) "
+    [string]$Item = Read-Host "Ajouter une ressource gérée par le client. ([Entrée] pour arrêter) "
     $Item = $Item.Trim()
     if ($item -ne '') {
         $Items += $item
     }
 } while ($item -ne '')
 
-$owner = @{
+$client = @{
     ref         = New-Guid;
     description = $Description;
     ressources  = $Items
 }
 
-$owner | ConvertTo-Json
+$client | ConvertTo-Json

@@ -8,29 +8,29 @@ class DeleteEntity extends EntityAccess
 
     public function __invoke(string $ref): bool
     {
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $res = $this->ressourceName;
         $count = $this->pdo->prepare(<<<SQL
 SELECT count(*) 
 FROM entity 
-where owner = ?
+where client = ?
     AND ressource = ?
     AND ref = ?
 SQL
         );
-        $count->execute([$owner, $res, $ref]);
+        $count->execute([$client, $res, $ref]);
         $before = (int)$count->fetchColumn();
         if ($before === 0) {
             return false;
         }
         $stm = $this->pdo->prepare(<<<SQL
 DELETE FROM entity 
-WHERE owner = ?
+WHERE client = ?
     AND ressource = ?
     AND ref = ?
 SQL
         );
-        $stm->execute([$owner, $res, $ref]);
+        $stm->execute([$client, $res, $ref]);
         $count->execute([$ref]);
         $after = (int)$count->fetchColumn();
         return $after === 0;

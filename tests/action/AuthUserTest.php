@@ -13,7 +13,7 @@ class AuthUserTest extends ActionTestCase
     {
         $this->expectNotToPerformAssertions();
         $action = new AuthUser($this->getPdo());
-        $action->hydrateOwner($this->getOwner());
+        $action->hydrateClient($this->getClient());
     }
 
     public function test_actionWithBadToken(): void
@@ -21,7 +21,7 @@ class AuthUserTest extends ActionTestCase
         $token = '446c7128214547e7bc060a5df86f121bf68c12928afc4bc4b458151b5b556e5d';
         $req = Request::createFromEnvironment(Environment::mock(['HTTP_AUTHORIZATION' => 'Bearer ' . $token]));
         $action = new AuthUser($this->getPdo());
-        $action->hydrateOwner($this->getOwner());
+        $action->hydrateClient($this->getClient());
         $ref = $action($req);
         self::assertNull($ref);
     }
@@ -31,7 +31,7 @@ class AuthUserTest extends ActionTestCase
 
         $req = Request::createFromEnvironment(Environment::mock([]));
         $action = new AuthUser($this->getPdo());
-        $action->hydrateOwner($this->getOwner());
+        $action->hydrateClient($this->getClient());
         $ref = $action($req);
         self::assertNull($ref);
     }
@@ -41,18 +41,18 @@ class AuthUserTest extends ActionTestCase
         $_SERVER['REMOTE_ADDR'] = '92.68.125.32';
         $_SERVER['HTTP_USER_AGENT'] = 'USER AGENT';
         $refUser = $this->addUser(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'Jhon Doe',
             'john.doe@mail.com',
             'aze1234',
             ['ADMIN'],
             true
         );
-        $user = $this->getDbUser($this->getOwner()->getRef(), $refUser);
+        $user = $this->getDbUser($this->getClient()->getRef(), $refUser);
         $_SERVER['HTTP_AUTHORIZATION'] = 'Bearer ' . $user['session_public_token'];
         $request = Request::createFromEnvironment(Environment::mock($_SERVER));
         $action = new AuthUser($this->getPdo());
-        $action->hydrateOwner($this->getOwner());
+        $action->hydrateClient($this->getClient());
         $ref = $action($request);
         self::assertIsString($ref);
     }
@@ -62,7 +62,7 @@ class AuthUserTest extends ActionTestCase
         $_SERVER['REMOTE_ADDR'] = '92.68.125.33';
         $_SERVER['HTTP_USER_AGENT'] = 'USER AGENT';
         $refUser = $this->addUser(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'Ervin Howell',
             'ervin.howell@mail.com',
             'aze2345',
@@ -74,11 +74,11 @@ class AuthUserTest extends ActionTestCase
                 ->sub(new \DateInterval('PT30M'))
                 ->format(DATE_ATOM)
         ], "ref = '$refUser'");
-        $user = $this->getDbUser($this->getOwner()->getRef(), $refUser);
+        $user = $this->getDbUser($this->getClient()->getRef(), $refUser);
         $_SERVER['HTTP_AUTHORIZATION'] = 'Bearer ' . $user['session_public_token'];
         $request = Request::createFromEnvironment(Environment::mock($_SERVER));
         $action = new AuthUser($this->getPdo());
-        $action->hydrateOwner($this->getOwner());
+        $action->hydrateClient($this->getClient());
         $ref = $action($request);
         self::assertNull($ref);
     }

@@ -2,7 +2,7 @@
 
 namespace Tests\Entity;
 
-use App\Entity\Owner;
+use App\Entity\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,8 +17,8 @@ class OwnerTest extends TestCase
     public function test__construct(): void
     {
         $dataOwner = ['ref' => 'azeaze'];
-        $owner = new Owner($dataOwner);
-        $this->assertInstanceOf(Owner::class, $owner);
+        $owner = new Client($dataOwner);
+        $this->assertInstanceOf(Client::class, $owner);
     }
 
     /**
@@ -29,7 +29,7 @@ class OwnerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionCode(500);
         $dataOwner = [];
-        $owner = new Owner($dataOwner);// @phpstan-ignore-line
+        $owner = new Client($dataOwner);// @phpstan-ignore-line
     }
 
     /**
@@ -38,7 +38,7 @@ class OwnerTest extends TestCase
     public function testGetRef(): void
     {
         $dataOwner = ['ref' => 'azeaze'];
-        $owner = new Owner($dataOwner);
+        $owner = new Client($dataOwner);
         $this->assertEquals($dataOwner['ref'], $owner->getRef());
     }
 
@@ -48,7 +48,7 @@ class OwnerTest extends TestCase
     public function testGetDescription(): void
     {
         $dataOwner = ['ref' => 'azeaze', 'description' => 'bar'];
-        $owner = new Owner($dataOwner);
+        $owner = new Client($dataOwner);
         $this->assertEquals($dataOwner['description'], $owner->getDescription());
     }
 
@@ -62,7 +62,7 @@ class OwnerTest extends TestCase
             'description' => 'bar',
             'ressources' => ['ressource1']
         ];
-        $owner = new Owner($dataOwner);
+        $owner = new Client($dataOwner);
         $this->assertTrue($owner->hasRessource($dataOwner['ressources'][0]));
     }
 
@@ -76,7 +76,7 @@ class OwnerTest extends TestCase
             'description' => 'bar',
             'ressources' => ['ressource1']
         ];
-        $owner = new Owner($dataOwner);
+        $owner = new Client($dataOwner);
         $this->assertFalse($owner->hasRessource('wxcvbn'));
     }
 }

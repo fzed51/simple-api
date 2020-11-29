@@ -3,45 +3,45 @@
 
 namespace App\Middleware;
 
-use App\Entity\Owner;
+use App\Entity\Client;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class OwnerMiddleware extends Middleware
+class ClientMiddleware extends Middleware
 {
 
     /**
      * @var array<string,mixed>[]
      */
-    private $owners;
+    private $client;
 
     /**
-     * OwnerMiddleware constructor.
+     * ClientMiddleware constructor.
      * @param \Psr\Container\ContainerInterface $container
-     * @param array<string,mixed>[] $owners
+     * @param array<string,mixed>[] $client
      */
-    public function __construct(ContainerInterface $container, array $owners)
+    public function __construct(ContainerInterface $container, array $client)
     {
-        $this->owners = $owners;
+        $this->client = $client;
         parent::__construct($container);
     }
 
     /**
-     * @param string $owner
+     * @param string $client
      * @return array<string,mixed>|null
      */
-    private function findOwner(string $owner): ?array
+    private function findClient(string $client): ?array
     {
         $i = array_search(
-            $owner,
-            array_column($this->owners, 'ref'),
+            $client,
+            array_column($this->client, 'ref'),
             true
         );
         if ($i === false) {
             return null;
         }
-        return $this->owners[$i];
+        return $this->client[$i];
     }
 
     public function __invoke(Request $request, Response $response, callable $next): Response
@@ -57,12 +57,12 @@ class OwnerMiddleware extends Middleware
         if ($result === false || $result === 0) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
         }
-        $owner = $this->findOwner($matches[1]);
-        if ($owner === null) {
+        $client = $this->findClient($matches[1]);
+        if ($client === null) {
             return $this->container->get('renderer')->error(401, "Vous n'êtes pas autorisé à accéder à cette API.");
         }
-        $owner = new Owner($owner);
-        $request = $request->withAttribute('owner', $owner);
+        $client = new Client($client);
+        $request = $request->withAttribute('client', $client);
         return $next($request, $response);
     }
 }

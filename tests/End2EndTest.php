@@ -22,7 +22,7 @@ class End2EndTest extends AppTestCase
             'GET',
             '/item',
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ]
         );
         $this->assertSuccessResponse($response);
@@ -33,7 +33,7 @@ class End2EndTest extends AppTestCase
     /**
      * @throws \Throwable
      */
-    public function test_LireLesRessourcesQuandOnEstPasOwner(): void
+    public function test_LireLesRessourcesQuandOnEstPasClient(): void
     {
         $response = $this->runApp(
             'GET',
@@ -48,7 +48,7 @@ class End2EndTest extends AppTestCase
     /**
      * @throws \Throwable
      */
-    public function test_ReponseQuandIlNYAPasDOwner(): void
+    public function test_ReponseQuandIlNYAPasDeClient(): void
     {
         $response = $this->runApp(
             'GET',
@@ -67,7 +67,7 @@ class End2EndTest extends AppTestCase
             'GET',
             '/meti',
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ]
         );
         $this->assertErrorResponse($response, 404);
@@ -79,7 +79,7 @@ class End2EndTest extends AppTestCase
             'GET',
             '/',
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ]
         );
         $this->assertErrorResponse($response, 404);
@@ -95,7 +95,7 @@ class End2EndTest extends AppTestCase
             'POST',
             '/item',
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ],
             [
                 'foo' => 'bar'
@@ -110,7 +110,7 @@ class End2EndTest extends AppTestCase
     public function test_ModifierUneRessource(): void
     {
         $refItem = $this->addEntity(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'item',
             ['foo' => 'bar']
         );
@@ -118,7 +118,7 @@ class End2EndTest extends AppTestCase
             'POST',
             "/item/$refItem",
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ],
             [
                 'foo' => 'baz'
@@ -130,7 +130,7 @@ class End2EndTest extends AppTestCase
     public function test_SupprimerUneRessource(): void
     {
         $refItem = $this->addEntity(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'item',
             ['foo' => 'bar']
         );
@@ -138,7 +138,7 @@ class End2EndTest extends AppTestCase
             'DELETE',
             "/item/$refItem",
             [
-                'Authorization' => $this->getOwnerBearerToken()
+                'Authorization' => $this->getClientBearerToken()
             ]
         );
         $this->assertSuccessResponse($response);

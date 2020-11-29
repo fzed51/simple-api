@@ -3,7 +3,7 @@
 
 namespace App\Entity;
 
-class Owner
+class Client
 {
     /** @var string */
     private $ref;
@@ -13,7 +13,7 @@ class Owner
     private $ressources;
 
     /**
-     * Owner constructor.
+     * Client constructor.
      * @param array{ref:string,description?:string,ressources?:string[]} $data
      * @throws \Exception
      */
@@ -29,16 +29,16 @@ class Owner
     private function hydrate(array $data): void
     {
         if (!array_key_exists('ref', $data)) {
-            error_log('Owner->hydrate, il n\'y as pas de ref dans data : ' . json_encode($data));
-            throw new \Exception('Données du owner corompues', 500);
+            error_log('Client->hydrate, il n\'y as pas de ref dans data : ' . json_encode($data));
+            throw new \Exception('Données du client corompues', 500);
         }
         $this->ref = $data['ref'];
         $this->description = $data['description'] ?? '';
         try {
             $this->hydrateRessources($data['ressources'] ?? []);
         } catch (\Throwable $t) {
-            error_log('Owner->hydrate, inpossible d\'instancier une ressource avec data.ressources : ' . json_encode($data['ressources']));
-            throw new \Exception('Ressources du owner corompues', 500);
+            error_log('Client->hydrate, inpossible d\'instancier une ressource avec data.ressources : ' . json_encode($data['ressources']));
+            throw new \Exception('Ressources du client corompues', 500);
         }
     }
 

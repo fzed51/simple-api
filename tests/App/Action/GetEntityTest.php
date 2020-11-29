@@ -15,8 +15,8 @@ class GetEntityTest extends ActionTestCase
 
     public function setup(): void
     {
-        $this->refEntity = $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'aze']);
+        $this->refEntity = $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'bar']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'aze']);
     }
 
     public function test__construitUneActionGetEntity(): void
@@ -28,7 +28,7 @@ class GetEntityTest extends ActionTestCase
     public function test_lireUneEntity(): void
     {
         $getOne = new GetEntity($this->getPdo());
-        $getOne->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $getOne->hydrateClientAndRessource($this->getClient(), 'item');
         $entity = $getOne($this->refEntity);
         $this->assertIsArray($entity);
         $this->assertArrayHasKey('id', $entity);
@@ -40,7 +40,7 @@ class GetEntityTest extends ActionTestCase
     public function test_lireUneEntityInconnu(): void
     {
         $getOne = new GetEntity($this->getPdo());
-        $getOne->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $getOne->hydrateClientAndRessource($this->getClient(), 'item');
         $entity = $getOne('unknow');
         $this->assertNull($entity);
     }

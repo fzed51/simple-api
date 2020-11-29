@@ -5,7 +5,7 @@
 
     const send = event => {
         const uri = document.querySelector("#uri").value;
-        const owner = document.querySelector("#owner").value;
+        const client = document.querySelector("#owner").value;
         const methode = document.querySelector("#methode").value;
         const path = document.querySelector("#path").value;
         const body = document.querySelector("#body").value;
@@ -20,14 +20,14 @@
                 ? {
                     headers: {
                         Accept: "application/json",
-                        Authorization: 'Bearer ' + owner
+                        Authorization: 'Bearer ' + client
                     },
                     method: methode
                 }
                 : {
             headers: {
             Accept: "application/json",
-            Authorization: 'Bearer ' + owner,
+            Authorization: 'Bearer ' + client,
             "Content-Type": "application/json"
             },
             method: methode,

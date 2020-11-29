@@ -10,17 +10,17 @@ class GetAllEntitiesWithLimitTest extends ActionTestCase
 
     public function setup(): void
     {
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'aze']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'baz']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'wxc']);
-        $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'dsq']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'bar']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'aze']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'baz']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'wxc']);
+        $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'dsq']);
     }
 
     public function test__lireLesEntitiesWithLimit(): void
     {
         $getAll = new GetAllEntities($this->getPdo());
-        $getAll->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $getAll->hydrateClientAndRessource($this->getClient(), 'item');
         $getAll->setLimit(3);
         $entities = $getAll();
         $this->assertIsArray($entities);

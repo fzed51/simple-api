@@ -15,14 +15,14 @@ class UpdateEntity extends EntityAccess
 UPDATE entity SET
     updated = current_timestamp,
     data = ?
-WHERE owner = ?
+WHERE client = ?
     AND ressource = ?
     AND ref = ?    
 SQL
         );
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $res = $this->ressourceName;
-        $stm->execute([$json, $owner, $res, $ref]);
+        $stm->execute([$json, $client, $res, $ref]);
         return $ref;
     }
 }

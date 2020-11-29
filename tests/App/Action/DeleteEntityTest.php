@@ -20,7 +20,7 @@ class DeleteEntityTest extends ActionTestCase
      */
     public function setup(): void
     {
-        $this->ref = $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
+        $this->ref = $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'bar']);
     }
 
     /**
@@ -40,7 +40,7 @@ class DeleteEntityTest extends ActionTestCase
         $pdo = $this->getPdo();
         $nbEntity =$this->dbCount('entity');
         $deleteEntity = new DeleteEntity($pdo);
-        $deleteEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $deleteEntity->hydrateClientAndRessource($this->getClient(), 'item');
         $ok = $deleteEntity($this->ref);
         $newNbEntity = $this->dbCount('entity');
         $this->assertLessThan($nbEntity, $newNbEntity);
@@ -55,7 +55,7 @@ class DeleteEntityTest extends ActionTestCase
         $pdo = $this->getPdo();
         $nbEntity = $this->dbCount('entity');
         $deleteEntity = new DeleteEntity($pdo);
-        $deleteEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $deleteEntity->hydrateClientAndRessource($this->getClient(), 'item');
         $ok = $deleteEntity('unknow');
         $newNbEntity = $this->dbCount('entity');
         $this->assertEquals($nbEntity, $newNbEntity);

@@ -44,9 +44,9 @@ class GetAllEntities extends EntityAccessRead
         } else {
             $stm = $this->statementWithLimit();
         }
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $res = $this->ressourceName;
-        $stm->execute([$owner, $res]);
+        $stm->execute([$client, $res]);
         return array_map(
             [$this, 'format'],
             $stm->fetchAll(\PDO::FETCH_ASSOC)
@@ -61,7 +61,7 @@ class GetAllEntities extends EntityAccessRead
         return $this->pdo->prepare(<<<SQL
 SELECT ref, data 
 FROM entity 
-WHERE owner = ? 
+WHERE client = ? 
   AND ressource = ?
 ORDER BY created
 SQL
@@ -79,7 +79,7 @@ SQL
         return $this->pdo->prepare(<<<SQL
 SELECT ref, data 
 FROM entity 
-WHERE owner = ? 
+WHERE client = ? 
   AND ressource = ?
 ORDER BY created
 LIMIT $offset, $limit

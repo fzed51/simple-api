@@ -4,14 +4,14 @@
 namespace Tests\Functional;
 
 use App\ApiSecurity;
-use App\Entity\Owner;
+use App\Entity\Client;
 
 class ActionTestCase extends PdoTestCase
 {
     /**
      * @return array[]
      */
-    protected function getOwners(): array
+    protected function getClients(): array
     {
         return [
             [
@@ -45,26 +45,26 @@ class ActionTestCase extends PdoTestCase
         return $user;
     }
 
-    protected function getOwner(): Owner
+    protected function getClient(): Client
     {
-        $owners = $this->getOwners();
-        return new Owner($owners[0]);
+        $clients = $this->getClients();
+        return new Client($clients[0]);
     }
 
     /**
-     * @param string $owner
+     * @param string $client
      * @param string $ressource
      * @param mixed $data converti en json pour ecrire en base
      * @return string
      */
-    protected function addEntity(string $owner, string $ressource, $data): string
+    protected function addEntity(string $client, string $ressource, $data): string
     {
         $security = new ApiSecurity();
         $ref = $security->getUid();
         $json = json_encode($data);
         $this->dbInsert('entity', [
             'ref' => $ref,
-            'owner' => $owner,
+            'client' => $client,
             'ressource' => $ressource,
             'data' => $json
         ]);
@@ -73,23 +73,23 @@ class ActionTestCase extends PdoTestCase
 
 
     /**
-     * @param string $owner
+     * @param string $client
      * @param string $ressource
      * @param string $ref
      * @return array<string, mixed>|null
      */
-    protected function getEntity(string $owner, string $ressource, string $ref): ?array
+    protected function getEntity(string $client, string $ressource, string $ref): ?array
     {
         return $this->dbSelectEtoile(
             'entity',
-            "owner = '$owner' AND ressource = '$ressource' AND ref = '$ref'",
+            "client = '$client' AND ressource = '$ressource' AND ref = '$ref'",
             1
         );
     }
 
     /**
      * méthode de création d'utilisateur pour les tests
-     * @param string $owner
+     * @param string $client
      * @param string $name
      * @param string $email
      * @param string $pass
@@ -98,7 +98,7 @@ class ActionTestCase extends PdoTestCase
      * @return string
      */
     protected function addUser(
-        string $owner,
+        string $client,
         string $name,
         string $email,
         string $pass,
@@ -110,7 +110,7 @@ class ActionTestCase extends PdoTestCase
         $pass = $security->hashPassWord($pass);
         $this->dbInsert('user', [
             'ref' => $ref,
-            'owner' => $owner,
+            'client' => $client,
             'name' => $name,
             'email' => $email,
             'pass' => $pass,
@@ -134,11 +134,11 @@ class ActionTestCase extends PdoTestCase
         return $ref;
     }
 
-    protected function getDbUser(string $owner, string $ref): ?array
+    protected function getDbUser(string $client, string $ref): ?array
     {
         $fetch = $this->dbSelectEtoile(
             'user',
-            "owner = '$owner' AND ref = '$ref'",
+            "client = '$client' AND ref = '$ref'",
             1
         );
         return $fetch !== false ? $fetch : null;

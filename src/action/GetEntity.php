@@ -19,14 +19,14 @@ class GetEntity extends EntityAccessRead
         $stm = $this->pdo->prepare(<<<SQL
 SELECT ref, created, updated, data 
 FROM entity
-WHERE owner = ? 
+WHERE client = ? 
   AND ressource = ?
   AND ref = ?
 SQL
         );
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $res = $this->ressourceName;
-        $stm->execute([$owner, $res, $ref]);
+        $stm->execute([$client, $res, $ref]);
         $fetch = $stm->fetch(\PDO::FETCH_ASSOC);
         if ($fetch === false) {
             return null;

@@ -24,14 +24,14 @@ class GetSession extends UserAccessRead
             role      : string[]
          */
         $stm = $this->pdo->prepare(<<<SQL
-SELECT ref, owner, name, email, role, session_public_token, session_expiration
+SELECT ref, client, name, email, role, session_public_token, session_expiration
 FROM user 
-WHERE owner = ? 
+WHERE client = ? 
   AND ref = ?
 SQL
         );
-        $owner = $this->owner->getRef();
-        $stm->execute([$owner, $ref]);
+        $client = $this->client->getRef();
+        $stm->execute([$client, $ref]);
         $fetch = $stm->fetch(\PDO::FETCH_ASSOC);
         if ($fetch === false) {
             return null;

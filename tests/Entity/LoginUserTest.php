@@ -9,22 +9,22 @@ class LoginUserTest extends BaseUserSession
 
     public function test__construct()
     {
-        $dataOwner = ['email' => 'azeaze', 'pass' => "roroa"];
-        $owner = new LoginUser($dataOwner);
-        $this->assertInstanceOf(LoginUser::class, $owner);
+        $dataClient = ['email' => 'azeaze', 'pass' => "roroa"];
+        $client = new LoginUser($dataClient);
+        $this->assertInstanceOf(LoginUser::class, $client);
     }
 
     public function test__constructWithBadData()
     {
         $this->expectException(\Exception::class);
-        $dataOwner = ['name' => 'azeaze', 'pass' => "roroa"];
-        $login = new LoginUser($dataOwner);
+        $dataClinet = ['name' => 'azeaze', 'pass' => "roroa"];
+        $login = new LoginUser($dataClinet);
     }
 
     public function test__constructWithEmptyData()
     {
         $this->expectException(\Exception::class);
-        $dataOwner = ['email' => '', 'pass' => "roroa"];
-        $login = new LoginUser($dataOwner);
+        $dataClient = ['email' => '', 'pass' => "roroa"];
+        $login = new LoginUser($dataClient);
     }
 }

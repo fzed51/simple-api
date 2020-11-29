@@ -8,7 +8,8 @@ use App\action\DeleteEntity;
 use App\action\GetAllEntities;
 use App\action\GetEntity;
 use App\action\UpdateEntity;
-use App\Entity\Owner;
+use App\Entity\Client;
+use JsonException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -28,21 +29,21 @@ class RessourceController extends Controller
     {
         /** @var \App\Renderer\ApiRenderer $render */
         $render = $this->container->get('renderer');
-        /** @var \App\Owner $owner */
-        $owner = $request->getAttribute('owner');
-        if (!is_a($owner, Owner::class)) {
-            return $render->error(400, 'Owner non renseignee');
+        /** @var \App\Entity\Client $client */
+        $client = $request->getAttribute('client');
+        if (!is_a($client, Client::class)) {
+            return $render->error(400, 'Client non renseignee');
         }
         $ressource = $args['ressource'] ?? null;
         if ($ressource === null) {
             return $render->error(400, 'Ressource non renseignee');
         }
-        if (!$owner->hasRessource($ressource)) {
+        if (!$client->hasRessource($ressource)) {
             return $render->error(404, 'Ressource inconnue');
         }
         $pdo = $this->container->get(\PDO::class);
         $getAll = new GetAllEntities($pdo);
-        $getAll->hydrateOwnerAndRessource($owner, $ressource);
+        $getAll->hydrateClientAndRessource($client, $ressource);
         $entities = $getAll();
         return $render->success($entities);
     }
@@ -59,24 +60,26 @@ class RessourceController extends Controller
         $render = $this->container->get('renderer');
         /** @var \InstanceResolver\ResolverClass $resolve */
         $resolve = $this->container->get('resolve');
-        /** @var \App\Owner $owner */
-        $owner = $request->getAttribute('owner');
-        if (!is_a($owner, Owner::class)) {
-            return $render->error(400, 'Owner non renseignee');
+        /** @var \App\Entity\Client $client */
+        $client = $request->getAttribute('client');
+        if (!is_a($client, Client::class)) {
+            return $render->error(400, 'Client non renseignee');
         }
         $ressource = $args['ressource'] ?? null;
         if ($ressource === null) {
             return $render->error(400, 'Ressource non renseignee');
         }
-        if (!$owner->hasRessource($ressource) || empty($args['ref'] ?? '')) {
+        if (!$client->hasRessource($ressource) || empty($args['ref'] ?? '')) {
             return $render->error(404, 'Ressource inconnue');
         }
         try {
+            /** @var \App\action\GetEntity $getOne */
             $getOne = $resolve(GetEntity::class);
-            $getOne->hydrateOwnerAndRessource($owner, $ressource);
+            $getOne->hydrateClientAndRessource($client, $ressource);
             $entity = $getOne($args['ref']);
             return $render->success($entity);
         } catch (\Exception $e) {
+            /** @noinspection ForgottenDebugOutputInspection */
             error_log(json_encode([
                 'origin' => __FILE__,
                 'message' => $e->getMessage(),
@@ -84,8 +87,9 @@ class RessourceController extends Controller
                 'line' => $e->getLine(),
                 'code' => $e->getCode(),
                 'trace' => $e->getTrace()
-            ]));
+            ], JSON_THROW_ON_ERROR));
             return $render->error(500, 'Erreur interne');
+        } catch (JsonException $e) {
         }
     }
 
@@ -101,16 +105,16 @@ class RessourceController extends Controller
         $render = $this->container->get('renderer');
         /* @var \InstanceResolver\ResolverClass $resolve */
         $resolve = $this->container->get('resolve');
-        /* @var \App\Owner $owner */
-        $owner = $request->getAttribute('owner');
-        if (!is_a($owner, Owner::class)) {
-            return $render->error(400, 'Owner non renseignee');
+        /* @var \App\Entity\Client $client */
+        $client = $request->getAttribute('client');
+        if (!is_a($client, Client::class)) {
+            return $render->error(400, 'Client non renseignee');
         }
         $ressource = $args['ressource'] ?? null;
         if ($ressource === null) {
             return $render->error(400, 'Ressource non renseignee');
         }
-        if (!$owner->hasRessource($ressource)) {
+        if (!$client->hasRessource($ressource)) {
             return $render->error(404, 'Ressource inconnue');
         }
         $data = $this->getBodyRequest($request);
@@ -120,10 +124,10 @@ class RessourceController extends Controller
         try {
             /* @var \App\action\CreateEntity $create */
             $create = $resolve(CreateEntity::class);
-            $create->hydrateOwnerAndRessource($owner, $ressource);
+            $create->hydrateClientAndRessource($client, $ressource);
             /* @var \App\action\GetEntity $getOne */
             $getOne = $resolve(GetEntity::class);
-            $getOne->hydrateOwnerAndRessource($owner, $ressource);
+            $getOne->hydrateClientAndRessource($client, $ressource);
             $entity = $getOne($create($data));
             return $render->success($entity);
         } catch (\Exception $e) {
@@ -151,17 +155,17 @@ class RessourceController extends Controller
         $render = $this->container->get('renderer');
         /* @var \InstanceResolver\ResolverClass $resolve */
         $resolve = $this->container->get('resolve');
-        /* @var \App\Owner $owner */
-        $owner = $request->getAttribute('owner');
-        if (!is_a($owner, Owner::class)) {
-            return $render->error(400, 'Owner non renseignee');
+        /* @var \App\Entity\Client $client */
+        $client = $request->getAttribute('client');
+        if (!is_a($client, Client::class)) {
+            return $render->error(400, 'Client non renseignee');
         }
         $ressource = $args['ressource'] ?? null;
         $ref = $args['ref'] ?? '';
         if ($ressource === null) {
             return $render->error(400, 'Ressource non renseignee');
         }
-        if (!$owner->hasRessource($ressource) || empty($args['ref'] ?? '')) {
+        if (!$client->hasRessource($ressource) || empty($args['ref'] ?? '')) {
             return $render->error(404, 'Ressource inconnue');
         }
         $data = $this->getBodyRequest($request);
@@ -179,10 +183,10 @@ class RessourceController extends Controller
         try {
             /* @var \App\action\UpdateEntity $update */
             $update = $resolve(UpdateEntity::class);
-            $update->hydrateOwnerAndRessource($owner, $ressource);
+            $update->hydrateClientAndRessource($client, $ressource);
             /* @var \App\action\GetEntity $getOne */
             $getOne = $resolve(GetEntity::class);
-            $getOne->hydrateOwnerAndRessource($owner, $ressource);
+            $getOne->hydrateClientAndRessource($client, $ressource);
             $entity = $getOne($ref);
             if (null === $entity) {
                 return $render->error(404, 'Ressource inconnue');
@@ -214,26 +218,26 @@ class RessourceController extends Controller
         $render = $this->container->get('renderer');
         /* @var \InstanceResolver\ResolverClass $resolve */
         $resolve = $this->container->get('resolve');
-        /* @var \App\Owner $owner */
-        $owner = $request->getAttribute('owner');
-        if (!is_a($owner, Owner::class)) {
-            return $render->error(400, 'Owner non renseignee');
+        /* @var \App\Entity\Client $client */
+        $client = $request->getAttribute('client');
+        if (!is_a($client, Client::class)) {
+            return $render->error(400, 'Client non renseignee');
         }
         $ressource = $args['ressource'] ?? null;
         $ref = $args['ref'] ?? '';
         if ($ressource === null) {
             return $render->error(400, 'Ressource non renseignee');
         }
-        if (!$owner->hasRessource($ressource) || empty($args['ref'] ?? '')) {
+        if (!$client->hasRessource($ressource) || empty($args['ref'] ?? '')) {
             return $render->error(404, 'Ressource inconnue');
         }
         try {
             /* @var \App\action\DeleteEntity $delete */
             $delete = $resolve(DeleteEntity::class);
-            $delete->hydrateOwnerAndRessource($owner, $ressource);
+            $delete->hydrateClientAndRessource($client, $ressource);
             /* @var \App\action\GetEntity $getOne */
             $getOne = $resolve(GetEntity::class);
-            $getOne->hydrateOwnerAndRessource($owner, $ressource);
+            $getOne->hydrateClientAndRessource($client, $ressource);
             $entity = $getOne($ref);
             if (null === $entity) {
                 return $render->error(404, 'Ressource inconnue');

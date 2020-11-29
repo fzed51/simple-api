@@ -29,7 +29,7 @@ class RessourceControllerTest extends ControllerTestCase
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->getAll(
-            $this->getRequestWithOwner('GET', '/item'),
+            $this->getRequestWithClient('GET', '/item'),
             $this->getResponse(),
             ['ressource' => 'item']
         );
@@ -46,7 +46,7 @@ class RessourceControllerTest extends ControllerTestCase
     public function test_RecupereUneRessource(): void
     {
         $refEntity = $this->addEntity(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'item',
             [
                 'foo' => 'aze'
@@ -54,7 +54,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->getOne(
-            $this->getRequestWithOwner('GET', "/item/$refEntity"),
+            $this->getRequestWithClient('GET', "/item/$refEntity"),
             $this->getResponse(),
             [
                 'ressource' => 'item',
@@ -74,7 +74,7 @@ class RessourceControllerTest extends ControllerTestCase
         $nbEntity = $this->dbCount('entity', "ressource = 'item'");
         $control = new RessourceController($this->getContainer());
         $response = $control->create(
-            $this->getRequestWithOwner(
+            $this->getRequestWithClient(
                 'POST',
                 '/item',
                 [],
@@ -95,7 +95,7 @@ class RessourceControllerTest extends ControllerTestCase
     public function test_ModifiUneRessource(): void
     {
         $refEntity = $this->addEntity(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'item',
             [
                 'foo' => 'aze'
@@ -103,7 +103,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->update(
-            $this->getRequestWithOwner(
+            $this->getRequestWithClient(
                 'POST',
                 '/item/' . $refEntity,
                 [],
@@ -122,7 +122,7 @@ class RessourceControllerTest extends ControllerTestCase
     public function test_SupprimeUneRessource(): void
     {
         $refEntity = $this->addEntity(
-            $this->getOwner()->getRef(),
+            $this->getClient()->getRef(),
             'item',
             [
                 'foo' => 'aze'
@@ -130,7 +130,7 @@ class RessourceControllerTest extends ControllerTestCase
         );
         $control = new RessourceController($this->getContainer());
         $response = $control->delete(
-            $this->getRequestWithOwner(
+            $this->getRequestWithClient(
                 'DELETE',
                 '/item/' . $refEntity
             ),

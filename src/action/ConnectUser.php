@@ -26,10 +26,10 @@ class ConnectUser extends UserAccess
         $security = new ApiSecurity();
         $data = json_decode($json, true);
         $login = new LoginUser($data);
-        $stm = $this->pdo->prepare("select * from user where owner = ? and email = ?");
-        $owner = $this->owner->getRef();
+        $stm = $this->pdo->prepare("select * from user where client = ? and email = ?");
+        $client = $this->client->getRef();
         $email = $login->getEmail();
-        if ($stm->execute([$owner, $email]) === false || ($user = $stm->fetch(PDO::FETCH_ASSOC)) === false) {
+        if ($stm->execute([$client, $email]) === false || ($user = $stm->fetch(PDO::FETCH_ASSOC)) === false) {
             throw new Exception("l'email ou le mot de passe ne sont pas valide");
         }
         if (!$security->testPassWord($login->getPass(), $user['pass'])) {

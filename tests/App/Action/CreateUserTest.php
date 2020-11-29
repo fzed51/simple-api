@@ -40,7 +40,7 @@ class CreateUserTest extends ActionTestCase
         $pdo = $this->getPdo();
         $nbUser = $this->dbCount('user');
         $createUser = new CreateUser($this->getPdo());
-        $createUser->hydrateOwner($this->getOwner());
+        $createUser->hydrateClient($this->getClient());
         $newRef = $createUser(json_encode([
             'pass' => 'AZE123',
             'confirm' => 'AZE123',

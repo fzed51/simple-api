@@ -25,7 +25,7 @@ class UserAccessRead extends UserAccess
         */
         $out = [];
         $out['ref'] = $fetch['ref'];
-        $out['owner'] = $fetch['owner'];
+        $out['client'] = $fetch['client'];
         $out['name'] = $fetch['name'];
         $out['email'] = $fetch['email'];
         $out['role'] = json_decode($fetch['role']);

@@ -1,6 +1,6 @@
 <?php
 
-use App\Middleware\OwnerMiddleware;
+use App\Middleware\ClientMiddleware;
 use App\Renderer\ApiRenderer;
 use Helper\PDOFactory;
 use InstanceResolver\ResolverClass;
@@ -15,22 +15,22 @@ return static function (App $app) {
         return new ApiRenderer($c->get('response'));
     };
 
-    $container[OwnerMiddleware::class] = static function (ContainerInterface $c) {
-        $ownerFile = __DIR__ . '/../ressources/owner.json';
-        if (is_file($ownerFile)) {
-            $owners = json_decode(
-                file_get_contents($ownerFile),
+    $container[ClientMiddleware::class] = static function (ContainerInterface $c) {
+        $clientFile = __DIR__ . '/../ressources/client.json';
+        if (is_file($clientFile)) {
+            $clients = json_decode(
+                file_get_contents($clientFile),
                 true
             );
-            if (is_array($owners) && (json_last_error() === JSON_ERROR_NONE)) {
-                return new OwnerMiddleware($c, $owners);
+            if (is_array($clients) && (json_last_error() === JSON_ERROR_NONE)) {
+                return new ClientMiddleware($c, $clients);
             } else {
-                error_log("Le fichier [$ownerFile] n'est pas un JSON valide");
+                error_log("Le fichier [$clientFile] n'est pas un JSON valide");
             }
         } else {
-            error_log("Le fichier [$ownerFile] n'existe pas");
+            error_log("Le fichier [$clientFile] n'existe pas");
         }
-        return new OwnerMiddleware($c, []);
+        return new ClientMiddleware($c, []);
     };
 
     $container[PDO::class] = static function (ContainerInterface $c) {

@@ -18,7 +18,7 @@ class CreateEntityTest extends ActionTestCase
         $pdo = $this->getPdo();
         $nbEntity = $this->dbCount('entity');
         $createEntity = new CreateEntity($this->getPdo());
-        $createEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $createEntity->hydrateClientAndRessource($this->getClient(), 'item');
         $newRef = $createEntity(json_encode(['foo' => 'bar']));
         $newNbEntity = $this->dbCount('entity');
         $this->assertTrue($nbEntity < $newNbEntity, "$nbEntity < $newNbEntity");

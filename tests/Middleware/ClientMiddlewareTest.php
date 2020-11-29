@@ -2,25 +2,25 @@
 
 namespace Tests\App\Middleware;
 
-use App\Middleware\OwnerMiddleware;
-use App\Entity\Owner;
+use App\Middleware\ClientMiddleware;
+use App\Entity\Client;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Tests\Functional\ControllerTestCase;
 
 /**
- * test de OwnerMiddleware
+ * test de ClientMiddleware
  * @package Tests\App\Middleware
  */
-class OwnerMiddlewareTest extends ControllerTestCase
+class ClientMiddlewareTest extends ControllerTestCase
 {
     /**
      * test de __construct
      */
     public function test__construct(): void
     {
-        $mw = new OwnerMiddleware($this->getContainer(), $this->getOwners());
-        $this->assertInstanceOf(OwnerMiddleware::class, $mw);
+        $mw = new ClientMiddleware($this->getContainer(), $this->getClients());
+        $this->assertInstanceOf(ClientMiddleware::class, $mw);
     }
 
     /**
@@ -33,18 +33,18 @@ class OwnerMiddlewareTest extends ControllerTestCase
             'GET',
             'item',
             [
-                'HTTP_AUTHORIZATION' => $this->getOwnerBearerToken()
+                'HTTP_AUTHORIZATION' => $this->getClientBearerToken()
             ]
         );
         $response = $this->getResponse();
         $run = 0;
         $next = static function (Request $request, Response $response) use ($self, &$run): Response {
             $run++;
-            $owner = $request->getAttribute('owner');
-            $self->assertInstanceOf(Owner::class, $owner);
+            $client = $request->getAttribute('client');
+            $self->assertInstanceOf(Client::class, $client);
             return $response;
         };
-        $mw = new OwnerMiddleware($this->getContainer(), $this->getOwners());
+        $mw = new ClientMiddleware($this->getContainer(), $this->getClients());
         $mw($request, $response, $next);
         $this->assertEquals(1, $run);
     }
@@ -69,7 +69,7 @@ class OwnerMiddlewareTest extends ControllerTestCase
             return $response;
         };
 
-        $mw = new OwnerMiddleware($this->getContainer(), $this->getOwners());
+        $mw = new ClientMiddleware($this->getContainer(), $this->getClients());
         $response = $mw($request, $response, $next);
         $this->assertEquals(0, $run);
         $this->assertErrorResponse($response);

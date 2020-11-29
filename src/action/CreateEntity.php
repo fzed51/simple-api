@@ -15,15 +15,15 @@ class CreateEntity extends EntityAccess
         $security = new ApiSecurity();
         $stm = $this->pdo->prepare(<<<SQL
 INSERT INTO entity 
-    (ref, owner, ressource, data) 
+    (ref, client, ressource, data) 
     values (?,?,?,?)
 SQL
         );
         $ref = $security->getUid();
-        $owner = $this->owner->getRef();
+        $client = $this->client->getRef();
         $res = $this->ressourceName;
         $data = $json;
-        $stm->execute([$ref, $owner, $res, $data]);
+        $stm->execute([$ref, $client, $res, $data]);
         return $ref;
     }
 }

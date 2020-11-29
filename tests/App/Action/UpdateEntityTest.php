@@ -16,11 +16,11 @@ class UpdateEntityTest extends ActionTestCase
 
     public function test__invoke(): void
     {
-        $ref = $this->addEntity($this->getOwner()->getRef(), 'item', ['foo' => 'bar']);
+        $ref = $this->addEntity($this->getClient()->getRef(), 'item', ['foo' => 'bar']);
         $updateEntity = new UpdateEntity($this->getPdo());
-        $updateEntity->hydrateOwnerAndRessource($this->getOwner(), 'item');
+        $updateEntity->hydrateClientAndRessource($this->getClient(), 'item');
         $updateEntity($ref, json_encode(['foo' => 'aze']));
-        $ent = $this->getEntity($this->getOwner()->getRef(), 'item', $ref);
+        $ent = $this->getEntity($this->getClient()->getRef(), 'item', $ref);
         $this->assertIsArray($ent);
         $this->assertArrayHasKey('data', $ent);
         $data = json_decode($ent['data'], true);

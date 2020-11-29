@@ -3,18 +3,18 @@
 
 namespace App\action;
 
-use App\Entity\Owner;
+use App\Entity\Client;
 
 class UserAccess extends DbAccess
 {
 
     /**
-     * @var \App\Entity\Owner
+     * @var \App\Entity\Client
      */
-    protected $owner;
+    protected $client;
 
-    public function hydrateOwner(Owner $owner)
+    public function hydrateClient(Client $client)
     {
-        $this->owner = $owner;
+        $this->client = $client;
     }
 }
