@@ -13,6 +13,6 @@
 !.empty
 /src/private.php
 /.phpunit.result.cache
-!php_errors.log
 /publish.zip
 /trace.log
+/php_errors.log

@@ -5,7 +5,7 @@
 
     const send = event => {
         const uri = document.querySelector("#uri").value;
-        const client = document.querySelector("#owner").value;
+        const client = document.querySelector("#client").value;
         const methode = document.querySelector("#methode").value;
         const path = document.querySelector("#path").value;
         const body = document.querySelector("#body").value;
