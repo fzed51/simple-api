@@ -17,7 +17,7 @@ class UserAccessRead extends UserAccess
         /*
         session => {
             ref       : string
-            owner     : string
+            client     : string
             name      : string
             email     : string
             role      : string[]

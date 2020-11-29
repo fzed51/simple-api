@@ -18,7 +18,7 @@ class GetSession extends UserAccessRead
     {
         /*
             ref       : string
-            owner     : string
+            client     : string
             name      : string
             email     : string
             role      : string[]
