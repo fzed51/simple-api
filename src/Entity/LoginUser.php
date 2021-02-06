@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Exception;
+
 /**
  * Class LoginUser
  * @package App\Entity
@@ -10,9 +12,9 @@ namespace App\Entity;
 class LoginUser
 {
     /** @var string email */
-    protected $email;
+    protected string $email;
     /** @var string mot de passe */
-    protected $pass;
+    protected string $pass;
 
     /**
      * @return string
@@ -30,13 +32,18 @@ class LoginUser
         return $this->pass;
     }
 
+    /**
+     * LoginUser constructor.
+     * @param mixed $data
+     * @throws \Exception
+     */
     public function __construct($data)
     {
         $this->hydrate($data);
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      * @throws \Exception
      */
     protected function hydrate($data): void
@@ -47,24 +54,24 @@ class LoginUser
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      * @throws \Exception
      */
-    public static function controlLoginUser($data): void
+    protected static function controlLoginUser($data): void
     {
         if (!is_array($data)) {
-            throw new \Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
+            throw new Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
         }
         if (!array_key_exists('email', $data) || !self::isValidString($data['email'])) {
-            throw new \Exception("L'e-mail' du user n'est pas valide");
+            throw new Exception("L'e-mail' du user n'est pas valide");
         }
         if (!array_key_exists('pass', $data) || !self::isValidString($data['pass'])) {
-            throw new \Exception("Le mot de passe du user n'est pas valide");
+            throw new Exception("Le mot de passe du user n'est pas valide");
         }
     }
 
     /**
-     * @param $str
+     * @param mixed $str
      * @return bool
      */
     protected static function isValidString($str): bool
