@@ -16,15 +16,15 @@ class Session extends User
     /**
      * @var string(64)
      */
-    protected $sessionPrivateToken;
+    protected string $sessionPrivateToken;
     /**
      * @var string(64)
      */
-    protected $sessionPublicToken;
+    protected string $sessionPublicToken;
     /**
      * @var string Date
      */
-    protected $sessionExpiration;
+    protected string $sessionExpiration;
 
     /**
      * token de session public
@@ -59,7 +59,7 @@ class Session extends User
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      * @throws \Exception
      */
     private function controlSession($data): void
@@ -74,23 +74,24 @@ class Session extends User
         }
         if (!array_key_exists('session_expiration', $data)
             || !(self::isValidDateString($data['session_expiration'])
-                || isnull($data['session_expiration']))
+                || is_null($data['session_expiration']))
         ) {
             throw new Exception("Le date de validité de session n'a pas de format valide");
         }
     }
 
     /**
-     * @param $str
+     * @param mixed $str
+     * @param int $length
      * @return bool
      */
-    protected static function isValidStringLength($str, $length): bool
+    protected static function isValidStringLength($str, int $length): bool
     {
         return is_string($str) && strlen($str) === $length;
     }
 
     /**
-     * @param $str
+     * @param mixed $str
      * @return bool
      */
     protected static function isValidDateString($str): bool
