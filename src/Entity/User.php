@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Exception;
+
 /**
  * Class User
  * @package App\Entity
@@ -17,7 +19,6 @@ class User extends BaseUser
 
     /** @var string uid */
     protected $ref;
-
 
 
     protected function hydrate($data)
@@ -31,10 +32,10 @@ class User extends BaseUser
     protected static function controleUser($data)
     {
         if (!is_array($data)) {
-            throw new \Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
+            throw new Exception('Un user ne peut pas être initialisé avec un ' . gettype($data));
         }
         if (!array_key_exists('ref', $data) || !self::isValidString($data['ref'])) {
-            throw new \Exception("La ref du user n'est pas valide");
+            throw new Exception("La ref du user n'est pas valide");
         }
     }
 

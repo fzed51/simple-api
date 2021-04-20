@@ -13,6 +13,11 @@ use App\Entity\NewUser;
 
 class CreateUser extends UserAccess
 {
+    /**
+     * @param $json
+     * @return string
+     * @throws \Exception
+     */
     public function __invoke($json): string
     {
         if (!$this->isValidJson($json)) {

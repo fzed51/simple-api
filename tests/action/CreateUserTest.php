@@ -75,5 +75,4 @@ class CreateUserTest extends ActionTestCase
         $idUser = $action($newUser);
         $after = $this->dbCount('user');
     }
-
 }
