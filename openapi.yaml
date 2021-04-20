@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: simple-api
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /{ressource}:
+    parameters:
+      - name: ressource
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: liste les entités de la ressources
+      responses:
+        200:
+          description: liste d'entités
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/entity'
+    post:
+      description: cree une entité de la ressource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        200:
+          description: entité qui vient d'être créée
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/entity'
+  /{ressource}/{ref}:
+    parameters:
+      - name: ressource
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: ref
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: entité de la ressources correspondant à la ref
+      responses:
+        200:
+          description: liste d'entités
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/entity'
+    post:
+      description: modifie une entité de la ressource correspondant à la ref
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        200:
+          description: entité qui vient d'être modifiée
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/entity'
+    delete:
+      description: supprime une entité de la ressource correspondant à la ref
+      responses:
+        200:
+          description: entité supprimée
+components:
+  schemas:
+    entity:
+      type: object
+      properties:
+        ref:
+          type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+      additionalProperties: true
