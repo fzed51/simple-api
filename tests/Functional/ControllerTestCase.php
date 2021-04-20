@@ -113,19 +113,20 @@ class ControllerTestCase extends ActionTestCase
     protected function assertSuccessResponse(ResponseInterface $expectedResponse): void
     {
         // la source doit être une reponse
-        $this->assertInstanceOf(Response::class, $expectedResponse);
+        self::assertInstanceOf(Response::class, $expectedResponse);
         $body = (string)$expectedResponse->getBody();
         // le body de la source doit être un json valide
-        $this->assertJson($body);
+        self::assertJson($body);
         $data = json_decode($body, false);
         // la donnee doit être une reponse de l'api valide
-        $this->assertIsObject($data);
-        $this->assertObjectHasAttribute('success', $data);
-        $this->assertObjectHasAttribute('data', $data);
-        $this->assertObjectHasAttribute('error', $data);
+        self::assertIsObject($data);
+        self::assertObjectHasAttribute('success', $data);
+        self::assertObjectHasAttribute('data', $data);
+        self::assertObjectHasAttribute('error', $data);
+        self::assertIsBool($data->success);
         // la reponse doit être un succes
         $messageErr = (!$data->success) ? '(' . (string)$data->error->status . ') ' . $data->error->message : '';
-        $this->assertTrue(
+        self::assertTrue(
             $data->success,
             "La réponse n'est pas de type 'success' elle a retournée une erreur : " . $messageErr
         );
