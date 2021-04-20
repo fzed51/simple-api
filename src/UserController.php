@@ -1,9 +1,11 @@
-<?php
+<?php /** @noinspection ForgottenDebugOutputInspection */
+
+/** @noinspection PhpUnusedParameterInspection */
 
 namespace App;
 
 use App\action\CreateUser;
-use App\action\GetSession;
+use App\action\GetUser;
 use App\Entity\Client;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -18,9 +20,8 @@ class UserController extends Controller
      * méthode du controleur pour créer un utilisateur
      * @param \Slim\Http\Request $request
      * @param \Slim\Http\Response $response
-     * @param array $args
+     * @param string[] $args
      * @return \Slim\Http\Response
-     * @throws \ReflectionException
      */
     public function create(Request $request, Response $response, array $args): Response
     {
@@ -39,20 +40,24 @@ class UserController extends Controller
             $create = $resolve(CreateUser::class);
             $create->hydrateClient($client);
             $refUser = $create($data);
-            /** @var \App\action\GetSession $getSession */
-            $getSession = $resolve(GetSession::class);
-            $getSession->hydrateClient($client);
-            $session = $getSession($refUser);
-            return $render->success($session);
+
+            $getUser = $resolve(GetUser::class);
+            $getUser->hydrateClient($client);
+            $user = $getUser($refUser);
+            return $render->success($user);
         } catch (\Exception $e) {
-            error_log(json_encode([
-                'origin' => __FILE__,
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'code' => $e->getCode(),
-                'trace' => $e->getTrace()
-            ]));
+            try {
+                error_log(json_encode([
+                    'origin' => __FILE__,
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'code' => $e->getCode(),
+                    'trace' => $e->getTrace()
+                ], JSON_THROW_ON_ERROR));
+            } catch (\JsonException $e) {
+                error_log('json_encode => ' . $e->getMessage());
+            }
             return $render->error(500, 'Erreur interne');
         }
     }
