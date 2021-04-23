@@ -7,12 +7,28 @@ servers:
 paths:
   /{ressource}:
     parameters:
+      - name: client
+        in: header
+        required: true
+        schema:
+          type: string
       - name: ressource
         in: path
         required: true
         schema:
           type: string
     get:
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
       description: liste les entités de la ressources
       responses:
         200:
@@ -40,6 +56,11 @@ paths:
                 $ref: '#components/schemas/entity'
   /{ressource}/{ref}:
     parameters:
+      - name: client
+        in: header
+        required: true
+        schema:
+          type: string
       - name: ressource
         in: path
         required: true
@@ -79,10 +100,20 @@ paths:
       responses:
         200:
           description: entité supprimée
+  /user:
+  /user/{ref}:
+  /connect:
+  /forgotten:
+  /recover:
+
 components:
   schemas:
     entity:
       type: object
+      required:
+        - ref
+        - created
+        - owner
       properties:
         ref:
           type: string
@@ -92,4 +123,44 @@ components:
         updated:
           type: string
           format: date-time
+        owner:
+          type: string
       additionalProperties: true
+    user:
+      type: object
+      required:
+        - ref
+        - owner
+        - name
+        - email
+        - pass
+        - role
+        - created
+      properties:
+        ref:
+          type: string
+        owner:
+          type: string
+        client:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        pass:
+          type: string
+        role:
+          type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        session_private_token:
+          type: string
+        session_public_token:
+          type: string
+        session_expiration:
+          type: string
+          format: date-time
