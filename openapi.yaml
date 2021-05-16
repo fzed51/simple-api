@@ -4,7 +4,111 @@ info:
   version: 1.0.0
 servers:
   - url: 'https'
+tags:
+  - name: session
+  - name: user
+  - name: ressource
 paths:
+  /user:
+    parameters:
+      - name: client
+        in: header
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - user
+      responses:
+        200:
+          description: liste des utilisateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+    post:
+      tags:
+        - user
+      responses:
+        200:
+          description: utilisateur créé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+  /user/{ref}:
+    parameters:
+      - name: client
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: ref
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/ref'
+    get:
+      tags:
+        - user
+      responses:
+        200:
+          description: utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    post:
+      tags:
+        - user
+      responses:
+        200:
+          description: utilisateur modifié
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    delete:
+      tags:
+        - user
+      responses:
+        200:
+          description: OK, utilisateur supprimé
+
+  /connect:
+    parameters:
+      - name: client
+        in: header
+        required: true
+        schema:
+          type: string
+    post:
+      tags:
+        - session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  format: email
+                pass:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: sessino connectée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/session'
+  /forgotten:
+  /recover:
+    
   /{ressource}:
     parameters:
       - name: client
@@ -18,6 +122,8 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - ressource
       parameters:
         - name: limit
           in: query
@@ -40,6 +146,8 @@ paths:
                 items:
                   $ref: '#components/schemas/entity'
     post:
+      tags:
+        - ressource
       description: cree une entité de la ressource
       requestBody:
         content:
@@ -70,8 +178,10 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ref'
     get:
+      tags:
+        - ressource
       description: entité de la ressources correspondant à la ref
       responses:
         200:
@@ -81,13 +191,14 @@ paths:
               schema:
                 $ref: '#components/schemas/entity'
     post:
+      tags:
+        - ressource
       description: modifie une entité de la ressource correspondant à la ref
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: true
+              $ref: '#components/schemas/entity'
       responses:
         200:
           description: entité qui vient d'être modifiée
@@ -96,18 +207,23 @@ paths:
               schema:
                 $ref: '#components/schemas/entity'
     delete:
+      tags:
+        - ressource
       description: supprime une entité de la ressource correspondant à la ref
       responses:
         200:
-          description: entité supprimée
-  /user:
-  /user/{ref}:
-  /connect:
-  /forgotten:
-  /recover:
+          description: OK, entité supprimée
+
 
 components:
   schemas:
+    ref:
+      type: string
+      format: uuid
+      example: ebe3d81e-c460-424d-8d9d-c6d60f6d0c4b
+    token:
+      type: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYmUzZDgxZS1jNDYwLTQyNGQtOGQ5ZC1jNmQ2MGY2ZDBjNGIiLCJuYW1lIjoic3RyaW5nIiwicm9sZSI6InN0cmluZyIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxNjAwMDAwMDAwfQ.9EFQKorBWJpN1_gL0opyy9J87kT8-CaJq2z6OqhJlTM
     entity:
       type: object
       required:
@@ -116,7 +232,7 @@ components:
         - owner
       properties:
         ref:
-          type: string
+          $ref: '#/components/schemas/ref'
         created:
           type: string
           format: date-time
@@ -124,43 +240,65 @@ components:
           type: string
           format: date-time
         owner:
-          type: string
+          $ref: '#/components/schemas/ref'
       additionalProperties: true
-    user:
+    user-base:
       type: object
       required:
-        - ref
-        - owner
         - name
         - email
-        - pass
         - role
-        - created
       properties:
-        ref:
-          type: string
-        owner:
-          type: string
-        client:
-          type: string
         name:
           type: string
         email:
           type: string
-        pass:
-          type: string
+          format: email
         role:
           type: string
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        session_private_token:
-          type: string
-        session_public_token:
-          type: string
-        session_expiration:
-          type: string
-          format: date-time
+    user-new:
+      allOf:
+        - $ref: '#/components/schemas/user-base'
+        - type: object
+          required:
+            - pass
+            - confirm
+          properties:
+            pass:
+              type: string
+              format: password
+            confirm:
+              type: string
+              format: password
+    user:
+      allOf:
+        - $ref: '#/components/schemas/user-base'
+        - type: object
+          required:
+            - ref
+            - created
+          properties:
+            ref:
+              $ref: '#/components/schemas/ref'
+            created:
+              type: string
+              format: date-time
+            updated:
+              type: string
+              format: date-time
+    session:
+      allOf:
+        - $ref: '#/components/schemas/user'
+        - type: object
+          required:
+            - session_public_token
+            - session_expiration
+          properties:
+            session_public_token:
+              $ref: '#/components/schemas/token'
+            session_expiration:
+              type: string
+              format: date-time
+
+
+
