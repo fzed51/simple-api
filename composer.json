@@ -1,11 +1,11 @@
 {
-    "name": "fzed51\/simple-api",
+    "name": "fzed51/simple-api",
     "description": "Simple-api permet de construire une API simplement avec un fichier de configuration minimal.",
     "type": "project",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Fzed51\\SimpleApi\\": "src\/"
+            "SimpleApi\\": "src/"
         }
     },
     "authors": [
