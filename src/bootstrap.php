@@ -19,15 +19,15 @@ if (false) { // Should be set to true in production
 }
 
 // Set up settings
-$settings = require __DIR__ . '/../app/settings.php';
+$settings = require __DIR__ . '/./settings.php';
 $settings($containerBuilder);
 
 // Set up dependencies
-$dependencies = require __DIR__ . '/../app/dependencies.php';
+$dependencies = require __DIR__ . '/./dependencies.php';
 $dependencies($containerBuilder);
 
 // Set up repositories
-$repositories = require __DIR__ . '/../app/repositories.php';
+$repositories = require __DIR__ . '/./repositories.php';
 $repositories($containerBuilder);
 
 // Build PHP-DI Container instance
