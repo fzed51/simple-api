@@ -15,11 +15,10 @@ class LogSettings
      * @param string $path
      * @param \Monolog\Level $level
      */
-public function __construct(
-    readonly public string $apiName,
-    readonly public string $path,
-    readonly public Level $level
-)
-{
-}
+    public function __construct(
+        readonly public string $apiName,
+        readonly public string $path,
+        readonly public Level  $level
+    ) {
+    }
 }
