@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Handlers\HttpErrorHandler;
-use App\Application\Handlers\ShutdownHandler;
-use App\Application\ResponseEmitter\ResponseEmitter;
-use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use SimpleApi\Handlers\DefaultErrorHandler;
+use SimpleApi\Handlers\HttpErrorHandler;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -34,20 +32,9 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
-// Register middleware
-$middleware = require __DIR__ . '/../app/middleware.php';
-$middleware($app);
-
 // Register routes
-$routes = require __DIR__ . '/../app/routes.php';
+$routes = require __DIR__ . '/./routes.php';
 $routes($app);
-
-/** @var SettingsInterface $settings */
-$settings = $container->get(SettingsInterface::class);
-
-$displayErrorDetails = $settings->get('displayErrorDetails');
-$logError = $settings->get('logError');
-$logErrorDetails = $settings->get('logErrorDetails');
 
 // Create Request object from globals
 $serverRequestCreator = ServerRequestCreatorFactory::create();
@@ -55,21 +42,23 @@ $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 // Create Error Handler
 $responseFactory = $app->getResponseFactory();
-$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 
+/**
 // Create Shutdown Handler
-$shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
+$shutdownHandler = new ShutdownHandler($request, $errorHandler, false);
 register_shutdown_function($shutdownHandler);
+*/
 
 // Add Routing Middleware
 $app->addRoutingMiddleware();
 
-// Add Body Parsing Middleware
-$app->addBodyParsingMiddleware();
-
+// Create Errors Handlers
+$httpErrorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+$defaultErrorHandler = new DefaultErrorHandler($callableResolver, $responseFactory);
 // Add Error Middleware
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logError, $logErrorDetails);
-$errorMiddleware->setDefaultErrorHandler($errorHandler);
+$errorMiddleware = $app->addErrorMiddleware(false, true, true);
+$errorMiddleware->setErrorHandler(HttpException\HttpException::class, $httpErrorHandler);
+$errorMiddleware->setDefaultErrorHandler($defaultErrorHandler);
 
 // Run App & Emit Response
 $response = $app->handle($request);
