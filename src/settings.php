@@ -19,17 +19,5 @@ return static function (ContainerBuilder $containerBuilder) {
                 Level::Debug
             )
         );
-    }, LoggerInterface::class => function (ContainerInterface $c) {
-        /** @var \SimpleApi\Settings\Settings $settings */
-        $settings = $c->get(Settings::class);
-        $handle = new Monolog\Handler\NullHandler();
-        $process1 = new Monolog\Processor\UidProcessor(6);
-        $process2 = new Monolog\Processor\WebProcessor();
-        $process3 = new Monolog\Processor\IntrospectionProcessor();
-        return new Logger(
-            $settings->logSetting->apiName,
-            [$handle],
-            [$process1, $process2, $process3]
-        );
     }]);
 };
