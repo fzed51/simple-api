@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "SimpleApi\\": "src/"
+            "SimpleApi\\": "src/SimpleApi/"
         }
     },
     "authors": [
@@ -36,6 +36,7 @@
         "php": ">=8.1",
         "slim/slim": "^4.11",
         "php-di/php-di": "^6.4",
-        "slim/psr7": "^1.6"
+        "slim/psr7": "^1.6",
+        "monolog/monolog": "^3.2"
     }
 }

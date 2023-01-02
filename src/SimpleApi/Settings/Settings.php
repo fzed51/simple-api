@@ -11,7 +11,7 @@ class Settings
      * Constructeur de Settings
      * @param \SimpleApi\Settings\LogSettings $logSetting
      */
-    public function __construct(readonly protected LogSettings $logSetting)
+    public function __construct(readonly public LogSettings $logSetting)
     {
     }
 }
