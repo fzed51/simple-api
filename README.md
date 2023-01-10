@@ -4,7 +4,7 @@ Simple-api permet de construire une API simplement avec un fichier de configurat
 
 ## TODO
 
-- [ ] Mise en place du socle Slimv4
+- [X] Mise en place du socle Slimv4
 - [ ] Mise en place d'une Entité avec API key
 - [ ] Création d'un utilisateur non actif
 - [ ] Activation d'un utilisateur
