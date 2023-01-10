@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use Monolog\Level;
-use Monolog\Logger;
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 use SimpleApi\Settings\LogSettings;
 use SimpleApi\Settings\Settings;
 
