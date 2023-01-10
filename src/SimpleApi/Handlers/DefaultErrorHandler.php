@@ -2,10 +2,8 @@
 
 namespace SimpleApi\Handlers;
 
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Handlers\ErrorHandler;
 use Throwable;
 
 /**
@@ -35,13 +33,9 @@ class DefaultErrorHandler extends ErrorHandler
             'line' => $exception->getLine(),
             'trace' => $exception->getTraceAsString()
         ]);
-        $body = ['message' => 'Erreur interne'];
-        try {
-            $strBody = json_encode($body, JSON_THROW_ON_ERROR);
-            $response->getBody()->write($strBody);
-            $response->withHeader("content-type", "application/json");
-        } catch (JsonException $e) {
-        }
+        $strBody = '{"message": "Erreur Interne"}';
+        $response->getBody()->write($strBody);
+        $response->withHeader("content-type", "application/json");
         return $response;
     }
 }

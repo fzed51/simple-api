@@ -7,7 +7,6 @@ use JsonException;
 use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Handlers\ErrorHandler;
 use Throwable;
 
 /**
@@ -54,10 +53,19 @@ class HttpErrorHandler extends ErrorHandler
         ];
         try {
             $strBody = json_encode($body, JSON_THROW_ON_ERROR);
-            $response->getBody()->write($strBody);
-            $response->withHeader("content-type", "application/json");
         } catch (JsonException $e) {
+            $this->logger->critical(
+                "Erreur lors de la transformation en JSON d'un message : " . $e->getMessage(),
+                [
+                    'code' => $e->getCode(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ]
+            );
+            $strBody = '{"message":"Erreur Interne"}';
         }
+        $response->getBody()->write($strBody);
+        $response->withHeader("content-type", "application/json");
         return $response;
     }
 }

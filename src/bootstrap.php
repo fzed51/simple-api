@@ -44,17 +44,17 @@ $request = $serverRequestCreator->createServerRequestFromGlobals();
 $responseFactory = $app->getResponseFactory();
 
 /**
-// Create Shutdown Handler
-$shutdownHandler = new ShutdownHandler($request, $errorHandler, false);
-register_shutdown_function($shutdownHandler);
-*/
+ * // Create Shutdown Handler
+ * $shutdownHandler = new ShutdownHandler($request, $errorHandler, false);
+ * register_shutdown_function($shutdownHandler);
+ */
 
 // Add Routing Middleware
 $app->addRoutingMiddleware();
 
 // Create Errors Handlers
-$httpErrorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
-$defaultErrorHandler = new DefaultErrorHandler($callableResolver, $responseFactory);
+$httpErrorHandler = new HttpErrorHandler($responseFactory, $container);
+$defaultErrorHandler = new DefaultErrorHandler($responseFactory, $container);
 // Add Error Middleware
 $errorMiddleware = $app->addErrorMiddleware(false, true, true);
 $errorMiddleware->setErrorHandler(HttpException\HttpException::class, $httpErrorHandler);
