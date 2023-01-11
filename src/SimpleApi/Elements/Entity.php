@@ -9,6 +9,18 @@ namespace SimpleApi\Elements;
 class Entity
 {
 
+    /**
+     * @param string $uuid
+     * @param string $title
+     * @param array<Ressource> $ressources
+     */
+    public function __construct(
+        readonly public string $uuid,
+        readonly public string $title,
+        readonly public array $ressources,
+    )
+    {
+    }
 
     /**
      * @param array<string,mixed> $structure
@@ -16,6 +28,6 @@ class Entity
      */
     public static function fromArray(array $structure): self
     {
-
+        return new self();
     }
 }
