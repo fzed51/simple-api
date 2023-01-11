@@ -78,3 +78,4 @@ Desktop.ini
 #  |___/                         
 *~
 *.log
+/config/entity.json

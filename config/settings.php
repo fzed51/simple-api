@@ -10,6 +10,7 @@ return static function (ContainerBuilder $containerBuilder) {
 
     $containerBuilder->addDefinitions([Settings::class => function () {
         return new Settings(
+            __DIR__ . '/entity.json',
             new LogSettings(
                 'simple-api',
                 isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',

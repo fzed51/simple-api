@@ -19,7 +19,33 @@ Simple-api permet de construire une API simplement avec un fichier de configurat
 
 ### Installation
 
+Installation à partir de composer
+
+```shell
+composer create-project fzed51/simple-api path-to-my-api
+```
+
+Installation à partir de github
+```shell
+git clone https://github.com/fzed51/simple-api.git path-to-my-api
+cd path-to-my-api
+composer install
+```
+
+Après avoir installer les source, créer un fichier de configuration dans le dossier config
+
 ### Fichier de configuration
+
+Schema :
+```json
+[
+  {
+    "uuid" : "b80ad7f1-7136-4e27-b5f0-beb6374f2477",
+    "title" : "nom de mon api",
+    "ressources" : []
+  }
+]
+```
 
 ## Fichier de configuration
 

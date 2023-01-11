@@ -10,9 +10,13 @@ class Settings
 {
     /**
      * Constructeur de Settings
+     * @param string $configEntitiesFile
      * @param \SimpleApi\Settings\LogSettings $logSetting
      */
-    public function __construct(readonly public LogSettings $logSetting)
+    public function __construct(
+        readonly public string $configEntitiesFile,
+        readonly public LogSettings $logSetting
+    )
     {
     }
 }
