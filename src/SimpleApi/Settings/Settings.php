@@ -16,7 +16,6 @@ class Settings
     public function __construct(
         readonly public string $configEntitiesFile,
         readonly public LogSettings $logSetting
-    )
-    {
+    ) {
     }
 }

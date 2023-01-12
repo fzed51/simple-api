@@ -3,10 +3,15 @@ declare(strict_types=1);
 
 namespace SimpleApi\Elements;
 
+/**
+ * Ressource pour les entity
+ */
 class Ressource
 {
-    public function __construct(
-    )
+    /**
+     * Constructeur
+     */
+    public function __construct()
     {
     }
 

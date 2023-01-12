@@ -8,6 +8,12 @@
             "SimpleApi\\": "src/SimpleApi/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/",
+            "SimpleApi\\": "test/SimpleApi/"
+        }
+    },
     "authors": [
         {
             "name": "Fabien Sanchez",
