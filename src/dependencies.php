@@ -12,12 +12,23 @@ use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use SimpleApi\Elements\Entity;
 use SimpleApi\Settings\Settings;
 
-return function (ContainerBuilder $containerBuilder) {
+return static function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
+        "Entities" => function (ContainerInterface $c) {
+            $entitiesJson = file_get_contents(__DIR__ . "/../config/entity.json");
+            $entitiesData = json_decode($entitiesJson, false, 512, JSON_THROW_ON_ERROR);
+            $entities = [];
+            foreach ($entitiesData as $entity) {
+                $e = Entity::fromArray($entity);
+                $entities[$e->uuid] = $e;
+            }
+            return $entities;
+        },
         LoggerInterface::class => function (ContainerInterface $c) {
-        /** @var Settings $settings */
+            /** @var Settings $settings */
             $settings = $c->get(Settings::class);
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $ipClient = $_SERVER['HTTP_CLIENT_IP'];
@@ -48,5 +59,6 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($jsonSteam);
             return $logger;
         },
+
     ]);
 };

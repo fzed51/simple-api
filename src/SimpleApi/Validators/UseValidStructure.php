@@ -6,9 +6,8 @@ namespace SimpleApi\Validators;
 /**
  * Trait de validation
  */
-trait UseValideStructure
+trait UseValidStructure
 {
-
     /**
      * Valide si la data est une entity
      * @param mixed $data
@@ -24,7 +23,7 @@ trait UseValideStructure
         $errs = [];
         $errs[] = self::isUid($data['uid'], "la clé uid");
         $errs[] = self::isText($data['title'], "la clé title", 4, 128);
-        $errs[] = self::isArrayOf($data['ressources'], "la clé ressources");
+        $errs[] = self::isArrayOf($data['resources'], "la clé ressources");
         $errs = self::cleanArrayError($errs);
         if (count($errs) > 0) {
             return sprintf("%s n'est pas valide : %s", $name, implode(", ", $errs));
@@ -37,7 +36,7 @@ trait UseValideStructure
      * @param mixed $data
      * @param string $name
      * @param array<string> $keys
-     * @return bool|string
+     * @return true|string
      */
     public static function isArrayWithKey(mixed $data, string $name, array $keys): bool|string
     {
@@ -65,7 +64,7 @@ trait UseValideStructure
      * Valide si une data est une UID
      * @param mixed $data
      * @param string $name
-     * @return bool|string
+     * @return true|string
      */
     public static function isUid(mixed $data, string $name): bool|string
     {
@@ -97,7 +96,7 @@ trait UseValideStructure
      * @param string $name
      * @param int $minMax max si max non defini si non min
      * @param int|null $max max si defini
-     * @return bool|string
+     * @return true|string
      */
     public static function isText(mixed $data, string $name, int $minMax, ?int $max = null): bool|string
     {
@@ -148,5 +147,28 @@ trait UseValideStructure
     private static function cleanArrayError(array $errors): array
     {
         return array_filter($errors, static fn($i) => ($i !== true));
+    }
+
+    /**
+     * Valide si la data est une entity
+     * @param mixed $data
+     * @param string $name
+     * @return true|string
+     */
+    public static function isResource(mixed $data, string $name): bool|string
+    {
+        $err = self::isArrayWithKey($data, $name, ['name', 'fields']);
+        if ($err !== true) {
+            return $err;
+        }
+        $errs = [];
+        $errs[] = self::isText($data['name'], "la clé nom", 4, 128);
+        $errs[] = self::isArrayOf($data['fields'], "la clé champs", fn($data, $name
+        ) => self::isText($data['name'], "le champ", 2, 32));
+        $errs = self::cleanArrayError($errs);
+        if (count($errs) > 0) {
+            return sprintf("%s n'est pas valide : %s", $name, implode(", ", $errs));
+        }
+        return true;
     }
 }

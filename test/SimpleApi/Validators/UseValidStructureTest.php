@@ -9,7 +9,7 @@ use Test\Stubs\Validators;
 /**
  * Test de UseValideStructure
  */
-class UseValideStructureTest extends TestCase
+class UseValidStructureTest extends TestCase
 {
     /**
      * test de IsArrayOf
