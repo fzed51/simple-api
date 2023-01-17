@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace SimpleApi\Validators;
 
-use PHPUnit\Framework\TestCase;
 use Test\Stubs\Validators;
+use Test\ValidatorTestCase;
 
 /**
  * Test de UseValideStructure
  */
-class UseValidStructureTest extends TestCase
+class UseValidStructureTest extends ValidatorTestCase
 {
     /**
      * test de IsArrayOf
