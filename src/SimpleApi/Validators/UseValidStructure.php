@@ -16,7 +16,7 @@ trait UseValidStructure
      */
     public static function isEntity(mixed $data, string $name): bool|string
     {
-        $err = self::isArrayWithKey($data, $name, ['uid', 'title', 'ressources']);
+        $err = self::isArrayWithKey($data, $name, ['uid', 'title', 'resources']);
         if ($err !== true) {
             return $err;
         }

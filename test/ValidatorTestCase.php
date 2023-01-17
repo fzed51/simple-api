@@ -2,6 +2,9 @@
 
 namespace Test;
 
+use Test\Constraint\NotValidation;
+use Test\Constraint\Validation;
+
 class ValidatorTestCase extends TestCase
 {
     /**
@@ -10,21 +13,20 @@ class ValidatorTestCase extends TestCase
      * @param string $message
      * @return void
      */
-    protected static function assertIsValid(mixed $current, string $message = "")
+    protected static function assertIsValid(mixed $current, string $message = ""): void
     {
-        if ($current === true) {
-            self::assertTrue($data);
-        }
+        self::assertThat($current, new Validation(), $message);
     }
 
     /**
      * methode d'assertion d'un Validator pour une donnée non valide
+     * @param string $expected
      * @param mixed $current
      * @param string $message
      * @return void
      */
-    protected static function assertIsNotValid(mixed $current, string $message = "")
+    protected static function assertIsNotValid(string $expected, mixed $current, string $message = ""): void
     {
-
+        self::assertThat($current, new NotValidation($expected), $message);
     }
 }
