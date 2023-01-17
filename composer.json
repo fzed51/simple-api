@@ -30,7 +30,7 @@
     "scripts": {
         "lint": [
             "phpcs --cache",
-            "phpstan --xdebug"
+            "php -d xdebug.mode=\"\" vendor/bin/phpstan"
         ],
         "fixed": "phpcbf",
         "test": [

@@ -20,15 +20,4 @@ abstract class Middleware implements MiddlewareInterface
     public function __construct(protected Container $container)
     {
     }
-
-    /**
-     * @inheritDoc
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Server\RequestHandlerInterface $handler
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    abstract public function process(
-        ServerRequestInterface  $request,
-        RequestHandlerInterface $handler
-    ): ResponseInterface;
 }
