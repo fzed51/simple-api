@@ -44,7 +44,7 @@ class ControllerTestCase extends ActionTestCase
         $factory = new ServerRequestFactory();
         $request = $factory->createServerRequest('GET', $url, $_SERVER);
         foreach ($headers as $headerName => $headerValue) {
-            $request->withHeader($headerName, $headerValue);
+            $request = $request->withHeader($headerName, $headerValue);
         }
         return $request;
     }

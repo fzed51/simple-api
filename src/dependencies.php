@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
+use InstanceResolver\ResolverClass;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
@@ -59,6 +60,8 @@ return static function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($jsonSteam);
             return $logger;
         },
-
+        ResolverClass::class => function (ContainerInterface $container) {
+            return new ResolverClass($container);
+        }
     ]);
 };

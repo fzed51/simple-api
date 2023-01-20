@@ -6,6 +6,7 @@ namespace Test;
 use DI\Container;
 use DI\ContainerBuilder;
 use Exception;
+use InstanceResolver\ResolverClass;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
 use Monolog\Logger;
@@ -21,6 +22,26 @@ class ActionTestCase extends TestCase
 
     /** @var \DI\Container|null */
     private Container|null $container = null;
+    /** @var \Test\ResolverClass|null */
+    private ResolverClass|null $instanceResolver = null;
+
+    /**
+     * resoud une instance de class
+     * @param class-string $className
+     * @return mixed
+     */
+    protected function resolve(string $className): mixed
+    {
+        if ($this->instanceResolver === null) {
+            $this->instanceResolver = new ResolverClass($this->getContainer());
+        }
+        $resolver = $this->instanceResolver;
+        try {
+            return $resolver($className);
+        } catch (Exception $e) {
+            throw new RuntimeException("Impossible de résoudre $className : {$e->getMessage()}");
+        }
+    }
 
     protected function getContainer(): Container
     {

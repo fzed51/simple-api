@@ -18,7 +18,10 @@ class EntityMiddlewareTest extends MiddlewareTestCase
     public function testProcess(): void
     {
         $mid = $this->getMiddleware();
-        $response = $mid->process($this->makeGetRequest("/test", ['X-APIKEY' => "8aeb376f-5cb3-4a4e-a7f5-1abf65467deb"]), $this->makeRequestHandler());
+        $response = $mid->process(
+            $this->makeGetRequest("/test", ['X-APIKEY' => "8aeb376f-5cb3-4a4e-a7f5-1abf65467deb"]),
+            $this->makeRequestHandler()
+        );
         self::assertResponseAndReturnData(200, $response);
         $container = $this->getContainer();
         self::assertTrue($container->has('currentSchema'));

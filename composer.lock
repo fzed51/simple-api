@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51f9373ce57437079778a3861f1c4cc3",
+    "content-hash": "caac2fd6abd1620b84e8226aa2b63f3a",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -108,6 +108,53 @@
                 "source": "https://github.com/fzed51/http-exception/tree/v3.0.0"
             },
             "time": "2022-09-29T09:07:53+00:00"
+        },
+        {
+            "name": "fzed51/instance-resolver",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/instance-resolver.git",
+                "reference": "93172db7056000031b1759ddaf69ffc697bd27a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/instance-resolver/zipball/93172db7056000031b1759ddaf69ffc697bd27a4",
+                "reference": "93172db7056000031b1759ddaf69ffc697bd27a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.3",
+                "pimple/pimple": "^3.2",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "InstanceResolver\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51+git@gmail.com"
+                }
+            ],
+            "description": "Resolver d'instance, auto link",
+            "support": {
+                "issues": "https://github.com/fzed51/instance-resolver/issues",
+                "source": "https://github.com/fzed51/instance-resolver/tree/v2.1.0"
+            },
+            "time": "2022-11-15T21:50:20+00:00"
         },
         {
             "name": "laravel/serializable-closure",
