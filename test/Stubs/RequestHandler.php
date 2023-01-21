@@ -36,7 +36,7 @@ class RequestHandler implements RequestHandlerInterface
     public function handle(Request $request): Response
     {
         if ($this->handler === null) {
-            return (new ResponseFactory(200))->createResponse();
+            return (new ResponseFactory())->createResponse();
         }
         return ($this->handler)($request);
     }

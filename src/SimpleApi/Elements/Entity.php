@@ -17,7 +17,7 @@ class Entity
     /**
      * @param string $uuid
      * @param string $title
-     * @param array<Ressource> $resources
+     * @param array<Resource> $resources
      */
     public function __construct(
         readonly public string $uuid,
@@ -37,7 +37,7 @@ class Entity
             throw new RuntimeException($err);
         }
         $resources = array_map(
-            static fn($r) => Ressource::fromArray($r),
+            static fn($r) => Resource::fromArray($r),
             $structure['resources']
         );
         return new self(

@@ -25,7 +25,7 @@ class ActionTestCase extends TestCase
 
     /** @var \DI\Container|null */
     private Container|null $container = null;
-    /** @var \Test\ResolverClass|null */
+    /** @var \InstanceResolver\ResolverClass|null  */
     private ResolverClass|null $instanceResolver = null;
 
     /**
