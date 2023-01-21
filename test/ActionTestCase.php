@@ -17,6 +17,9 @@ use RuntimeException;
 use SimpleApi\Settings\LogSettings;
 use SimpleApi\Settings\Settings;
 
+/**
+ * Class de test de base pour les actions
+ */
 class ActionTestCase extends TestCase
 {
 

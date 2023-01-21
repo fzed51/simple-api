@@ -20,8 +20,8 @@ class ControllerTestCase extends ActionTestCase
      * @param string $message
      * @return mixed
      */
-    protected static function assertResponseAndReturnData(int $expectedCode, mixed $response, string $message = ""
-    ): mixed {
+    protected static function assertResponseAndReturnData(int $expectedCode, mixed $response, string $message = ""): mixed
+    {
         self::assertInstanceOf(Response::class, $response);
         self::assertEquals($expectedCode, $response->getStatusCode());
         try {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Test\Constraint;
 
@@ -18,7 +19,8 @@ class Validation extends Constraint
     {
         if ($other === true) {
             return true;
-        } elseif (is_string($other)) {
+        }
+        if (is_string($other)) {
             return false;
         }
         $this->fail($other, "is not a result of validation");

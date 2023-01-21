@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Test\Constraint;
 
@@ -30,7 +31,8 @@ class NotValidation extends Constraint
     {
         if (is_string($other)) {
             return $other === $this->expected;
-        } elseif ($other === true) {
+        }
+        if ($other === true) {
             return false;
         }
         $this->fail($other, "is not a result of validation");

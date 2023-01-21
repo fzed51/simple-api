@@ -39,6 +39,5 @@ class RequestHandler implements RequestHandlerInterface
             return (new ResponseFactory(200))->createResponse();
         }
         return ($this->handler)($request);
-
     }
 }

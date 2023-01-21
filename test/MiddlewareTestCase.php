@@ -8,6 +8,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface;
 use Test\Stubs\RequestHandler;
 
+/**
+ * Class de test de base pour les Middleware
+ */
 class MiddlewareTestCase extends ControllerTestCase
 {
     /**

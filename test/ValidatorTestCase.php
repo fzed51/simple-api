@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace Test;
 
 use Test\Constraint\NotValidation;
 use Test\Constraint\Validation;
 
+/**
+ * Class de test de base pour les Validators
+ */
 class ValidatorTestCase extends TestCase
 {
     /**

@@ -64,7 +64,6 @@ return static function (ContainerBuilder $containerBuilder) {
             return new ResolverClass($container);
         },
         'entities' => static function () {
-
         }
     ]);
 };
