@@ -133,7 +133,7 @@ trait UseValidStructure
             }
             $errors = self::cleanArrayError($errors);
             if (count($errors) > 0) {
-                return $name . " n'est pas valide : " . implode(", ", $errors);
+                return $name . " ne sont pas valide : " . implode(", ", $errors);
             }
         }
         return true;
@@ -164,7 +164,7 @@ trait UseValidStructure
         $errs = [];
         $errs[] = self::isText($data['name'], "la clé nom", 4, 128);
         $errs[] = self::isArrayOf($data['fields'], "la clé champs", fn($data, $name
-        ) => self::isText($data['name'], "le champ", 2, 32));
+        ) => self::isText($data, "le champ $name", 2, 32));
         $errs = self::cleanArrayError($errs);
         if (count($errs) > 0) {
             return sprintf("%s n'est pas valide : %s", $name, implode(", ", $errs));

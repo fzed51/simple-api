@@ -62,6 +62,9 @@ return static function (ContainerBuilder $containerBuilder) {
         },
         ResolverClass::class => function (ContainerInterface $container) {
             return new ResolverClass($container);
+        },
+        'entities' => static function () {
+
         }
     ]);
 };

@@ -14,6 +14,9 @@ class EntityMiddlewareTest extends MiddlewareTestCase
     /**
      * test de Process
      * @return void
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \HttpException\ForbiddenException
      */
     public function testProcess(): void
     {

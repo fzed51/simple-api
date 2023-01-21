@@ -8,7 +8,7 @@ use SimpleApi\Validators\UseValidStructure;
 /**
  * Ressource pour les entity
  */
-class Ressource
+class Resource
 {
 
     use UseValidStructure;
@@ -30,7 +30,7 @@ class Ressource
      */
     public static function fromArray(array $structure): self
     {
-        $err = self::isArrayOf($structure, "les ressources", self::isResource(...));
+        $err = self::isResource($structure, "la ressource");
         if ($err !== true) {
             throw new \RuntimeException($err);
         }
