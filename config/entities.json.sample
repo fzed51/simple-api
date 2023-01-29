@@ -5,7 +5,7 @@
     "resources" : [
         {
             "name" : "nom de la ressource",
-            "field" : ["champ 1", "champ 2"]
+            "fields" : ["champ 1", "champ 2"]
         }
     ]
   }
