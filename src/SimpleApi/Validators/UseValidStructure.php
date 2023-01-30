@@ -133,7 +133,7 @@ trait UseValidStructure
             }
             $errors = self::cleanArrayError($errors);
             if (count($errors) > 0) {
-                return $name . " ne sont pas valide : " . implode(", ", $errors);
+                return $name . " n'est pas valide : " . implode(", ", $errors);
             }
         }
         return true;

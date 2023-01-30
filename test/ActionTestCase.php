@@ -14,6 +14,8 @@ use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\UidProcessor;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use SimpleApi\Elements\Entity;
+use SimpleApi\Elements\Resource;
 use SimpleApi\Settings\LogSettings;
 use SimpleApi\Settings\Settings;
 
@@ -25,11 +27,11 @@ class ActionTestCase extends TestCase
 
     /** @var \DI\Container|null */
     private Container|null $container = null;
-    /** @var \InstanceResolver\ResolverClass|null  */
+    /** @var \InstanceResolver\ResolverClass|null */
     private ResolverClass|null $instanceResolver = null;
 
     /**
-     * resoud une instance de class
+     * Résoud une instance de class
      * @param class-string $className
      * @return mixed
      */
@@ -60,7 +62,11 @@ class ActionTestCase extends TestCase
                     "test_simple-api",
                     [new RotatingFileHandler(__DIR__ . "/log/test.log", 1, Level::Debug)],
                     [new UidProcessor(), new IntrospectionProcessor()]
-                )
+                ),
+                "Entities" => function () {
+                    $entity = $this->getEntity();
+                    return [$entity->uuid => $entity];
+                }
             ]);
             try {
                 $this->container = $containerBuilder->build();
@@ -69,5 +75,16 @@ class ActionTestCase extends TestCase
             }
         }
         return $this->container;
+    }
+
+    protected function getEntity(): Entity
+    {
+        return new Entity(
+            '8aeb376f-5cb3-4a4e-a7f5-1abf65467deb',
+            'EntityTest',
+            [
+                new Resource('test', ['data1', 'data2'])
+            ]
+        );
     }
 }

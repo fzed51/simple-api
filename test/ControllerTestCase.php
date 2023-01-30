@@ -20,13 +20,16 @@ class ControllerTestCase extends ActionTestCase
      * @param string $message
      * @return mixed
      */
-    protected static function assertResponseAndReturnData(int $expectedCode, mixed $response, string $message = ""): mixed
-    {
+    protected static function assertResponseAndReturnData(int $expectedCode, mixed $response, string $message = ""
+    ): mixed {
         self::assertInstanceOf(Response::class, $response);
         self::assertEquals($expectedCode, $response->getStatusCode());
         try {
             /** @var Response $response */
             $body = (string)$response->getBody();
+            if ($body === "") {
+                return null;
+            }
             return json_decode($body, false, 512, JSON_THROW_ON_ERROR);
         } catch (Exception $ex) {
             self::fail("Impossible de décoder les données de la réponsqe : " . $ex::class . ", " . $ex->getMessage());

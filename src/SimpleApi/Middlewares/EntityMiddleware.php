@@ -28,7 +28,7 @@ class EntityMiddleware extends Middleware
             throw new ForbiddenException("L'APIKEY n'est pas présente.");
         }
         $apiKey = implode('', $request->getHeader('X-APIKEY'));
-        $entities = $this->container->get('Entites');
+        $entities = $this->container->get('Entities');
         if (!array_key_exists($apiKey, $entities)) {
             throw new ForbiddenException("L'APIKEY n'est pas valide.");
         }

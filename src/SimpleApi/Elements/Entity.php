@@ -17,7 +17,7 @@ class Entity
     /**
      * @param string $uuid
      * @param string $title
-     * @param array<Resource> $resources
+     * @param array<\SimpleApi\Elements\Resource> $resources
      */
     public function __construct(
         readonly public string $uuid,

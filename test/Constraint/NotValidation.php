@@ -29,6 +29,10 @@ class NotValidation extends Constraint
      */
     protected function matches(mixed $other): bool
     {
+        // var_dump([
+        //     "other" => $other,
+        //     "expected" => $this->expected
+        // ]);
         if (is_string($other)) {
             return $other === $this->expected;
         }

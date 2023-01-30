@@ -22,13 +22,13 @@ class UseValidStructureTest extends ValidatorTestCase
         self::assertIsValid(Validators::isArrayOf(
             ["a", "b", "c"],
             "test",
-            (static fn($a, $b) => Validators::isText($a, $b, 10))(...)
+            static fn($a, $b) => Validators::isText($a, $b, 10)
         ));
         self::assertIsNotValid("test n'est pas un tableau", Validators::isArrayOf("array", "test"));
         self::assertIsNotValid("test n'est pas valide : l'élément 1 n'est pas du text", Validators::isArrayOf(
             ["a", 2],
             "test",
-            (static fn($a, $b) => Validators::isText($a, $b, 10))(...)
+            static fn($a, $b) => Validators::isText($a, $b, 10)
         ));
     }
 
