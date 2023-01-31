@@ -79,3 +79,4 @@ Desktop.ini
 *~
 *.log
 /config/entities.json
+/migration-config.json

@@ -36,6 +36,17 @@
         "test": [
             "Composer\\Config::disableProcessTimeout",
             "phpunit"
+        ],
+        "db:init": "docker pull mysql:debian",
+        "db:start": [
+            "docker run --rm --name test-mysql -e MYSQL_ROOT_PASSWORD=root-pass -e MYSQL_DATABASE=test-data -e MYSQL_USER=test-user -e MYSQL_PASSWORD=test-pass -p 3306:3306 -d mysql:debian",
+            "php -r \"sleep(10);\"",
+            "migrate ./migration-config.json"
+        ],
+        "db:stop": "docker stop test-mysql",
+        "db:restart": [
+            "@db:stop",
+            "@db:start"
         ]
     },
     "require": {
