@@ -1,0 +1,11 @@
+{
+    "migration_directory": "./db/migration",
+    "config_intern": {
+        "provider": "mysql",
+        "host": "172.31.0.1",
+        "port": 3306,
+        "name": "test-data",
+        "user": "root",
+        "pass": "root-pass"
+    }
+}
