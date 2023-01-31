@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "caac2fd6abd1620b84e8226aa2b63f3a",
+    "content-hash": "3f9baffc1914e6b8f082c85e07c85aaf",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -61,6 +61,52 @@
                 "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
             },
             "time": "2020-11-24T22:02:12+00:00"
+        },
+        {
+            "name": "fzed51/console-options",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/console-options.git",
+                "reference": "2ff65bb78ffcd7e70ef75189a715e664e78b8fff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/console-options/zipball/2ff65bb78ffcd7e70ef75189a715e664e78b8fff",
+                "reference": "2ff65bb78ffcd7e70ef75189a715e664e78b8fff",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ocramius/package-versions": "^2.5",
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Console\\Options\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "option parser pour ligne de commande PHP",
+            "support": {
+                "issues": "https://github.com/fzed51/console-options/issues",
+                "source": "https://github.com/fzed51/console-options/tree/v2.0.0"
+            },
+            "time": "2022-09-29T15:32:47+00:00"
         },
         {
             "name": "fzed51/http-exception",
@@ -155,6 +201,106 @@
                 "source": "https://github.com/fzed51/instance-resolver/tree/v2.1.0"
             },
             "time": "2022-11-15T21:50:20+00:00"
+        },
+        {
+            "name": "fzed51/migration",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/migration.git",
+                "reference": "90c3181594004de93751a8be40198794f82d1424"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/migration/zipball/90c3181594004de93751a8be40198794f82d1424",
+                "reference": "90c3181594004de93751a8be40198794f82d1424",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-pdo": "*",
+                "fzed51/console-options": "^2.0",
+                "fzed51/pdo-helper": "^2.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ocramius/package-versions": "^2.5",
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "bin": [
+                "./bin/migrate"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Migration\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "Outil de migration de base de donnée",
+            "support": {
+                "issues": "https://github.com/fzed51/migration/issues",
+                "source": "https://github.com/fzed51/migration/tree/v2.0.0"
+            },
+            "time": "2022-10-03T07:44:47+00:00"
+        },
+        {
+            "name": "fzed51/pdo-helper",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzed51/pdo-helper.git",
+                "reference": "23202fd4659b74cc6438a143a908374c30c291fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzed51/pdo-helper/zipball/23202fd4659b74cc6438a143a908374c30c291fa",
+                "reference": "23202fd4659b74cc6438a143a908374c30c291fa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.2",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Helper\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Sanchez",
+                    "email": "fzed51@users.noreply.github.com"
+                }
+            ],
+            "description": "Helper pour faciliter l'initialisation d'objet PDO",
+            "support": {
+                "issues": "https://github.com/fzed51/pdo-helper/issues",
+                "source": "https://github.com/fzed51/pdo-helper/tree/v2.0.0"
+            },
+            "time": "2022-09-29T13:59:19+00:00"
         },
         {
             "name": "laravel/serializable-closure",

@@ -45,6 +45,7 @@
         "slim/psr7": "^1.6",
         "monolog/monolog": "^3.2",
         "fzed51/http-exception": "^3.0",
-        "fzed51/instance-resolver": "^2.1"
+        "fzed51/instance-resolver": "^2.1",
+        "fzed51/migration": "^2.0"
     }
 }
