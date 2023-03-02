@@ -9,13 +9,23 @@ namespace SimpleApi\Elements;
 class NewUser
 {
     /**
-     * @param string $email email du user
-     * @param string $pass mot de passe du user
+     * Constructeur de NewUser
+     * @param string $entity 10car
+     * @param string $email 320car
+     * @param string $pass 256car
+     * @param string $salt 36car
+     * @param bool $enable
+     * @param string $enableToken 36car
+     * @param string $enableLimit au format yyyy-mm-dd
      */
     public function __construct(
-        readonly protected string $entity,
-        readonly protected string $email,
-        readonly protected string $pass,
+        readonly public string $entity,
+        readonly public string $email,
+        readonly public string $pass,
+        readonly public string $salt,
+        readonly public bool   $enable,
+        readonly public string $enableToken,
+        readonly public string $enableLimit
     ) {
     }
 
@@ -26,6 +36,14 @@ class NewUser
      */
     public static function fromArray(Entity $entity, array $data)
     {
-        return new self($entity->uuid, "", "");
+        return new self(
+            $entity->uuid,
+            $data['email'],
+            $data['pass'],
+            $data['salt'],
+            $data['enable'],
+            $data['enable_token'],
+            $data['enable_limit']
+        );
     }
 }
