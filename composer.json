@@ -51,7 +51,7 @@
     },
     "require": {
         "php": ">=8.1",
-        "ext-pdo": "*"?
+        "ext-pdo": "*",
         "slim/slim": "^4.11",
         "php-di/php-di": "^6.4",
         "slim/psr7": "^1.6",
