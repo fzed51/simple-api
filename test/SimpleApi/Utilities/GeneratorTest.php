@@ -1,13 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace SimpleApi\Utilities;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test de Generator
+ */
 class GeneratorTest extends TestCase
 {
 
-    public function testUuid()
+    /** test de Uuid */
+    public function testUuid(): void
     {
         $g = new Generator();
         $uuid = $g->uuid();
@@ -16,4 +21,14 @@ class GeneratorTest extends TestCase
             $uuid
         );
     }
+
+    /** test de Token */
+    public function testToken(): void
+    {
+        $g = new Generator();
+        $t = $g->token(32);
+        self::assertIsString($t);
+        self::assertMatchesRegularExpression('/[0-9a-z]{32}/', $t);
+    }
+
 }
