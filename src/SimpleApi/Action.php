@@ -18,7 +18,7 @@ abstract class Action
      * Méthode de base permettant d'exécuter cette action
      * @return void
      */
-    abstract public function execute():void;
+    abstract public function run(): void;
 
     public function getValue(): mixed
     {
