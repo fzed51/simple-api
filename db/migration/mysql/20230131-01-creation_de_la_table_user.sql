@@ -1,6 +1,6 @@
 CREATE TABLE user (
     ref VARCHAR(36) NOT NULL PRIMARY KEY,
-    entity varchar(10) NOT NULL,
+    entity varchar(36) NOT NULL,
     email VARCHAR(320) NOT NULL,
     CONSTRAINT UNIQUE entity_email_u (entity, email),
     pass VARCHAR(256) NOT NULL,
