@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace SimpleApi\Utilities;
 
-use PHPUnit\Framework\TestCase;
+use Test\TestCase;
 
 /**
  * Test de Generator

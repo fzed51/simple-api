@@ -5,14 +5,20 @@ namespace Test;
 
 use DI\Container;
 use DI\ContainerBuilder;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Exception;
+use Helper\PDOFactory;
 use InstanceResolver\ResolverClass;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\UidProcessor;
+use PDO;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use ReflectionException;
 use RuntimeException;
 use SimpleApi\Elements\Entity;
 use SimpleApi\Elements\Resource;
@@ -25,26 +31,28 @@ use SimpleApi\Settings\Settings;
 class ActionTestCase extends TestCase
 {
 
-    /** @var \DI\Container|null */
+    private PDO|null $pdo = null;
     private Container|null $container = null;
-    /** @var \InstanceResolver\ResolverClass|null */
-    private ResolverClass|null $instanceResolver = null;
+    private Settings|null $settings = null;
+    private Entity|null $entity = null;
 
     /**
-     * Résoud une instance de class
-     * @param class-string $className
-     * @return mixed
+     * Resoud une instance de class ou retourne un élément du container
+     * @template T
+     * @param string|class-string<T> $className
+     * @return mixed|T
      */
-    protected function resolve(string $className): mixed
+    protected function resolve($className)
     {
-        if ($this->instanceResolver === null) {
-            $this->instanceResolver = new ResolverClass($this->getContainer());
-        }
-        $resolver = $this->instanceResolver;
+        $container = $this->getContainer();
         try {
+            /** @var ResolverClass $resolver */
+            $resolver = $container->get(ResolverClass::class);
             return $resolver($className);
-        } catch (Exception $e) {
-            throw new RuntimeException("Impossible de résoudre $className : {$e->getMessage()}");
+        } catch (DependencyException|NotFoundException $e) {
+            throw new RuntimeException("ResolverClass non initialisé dans le container", $e->getCode(), $e);
+        } catch (ReflectionException $e) {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -53,38 +61,82 @@ class ActionTestCase extends TestCase
         if ($this->container === null) {
             $containerBuilder = new ContainerBuilder();
             $containerBuilder->addDefinitions([
-                Settings::class => fn() => new Settings("", new LogSettings("", "", Level::Debug))
-            ]);
-            $dependencies = require __DIR__ . '/../src/dependencies.php';
-            $dependencies($containerBuilder);
-            $containerBuilder->addDefinitions([
-                LoggerInterface::class => fn() => new Logger(
-                    "test_simple-api",
-                    [new RotatingFileHandler(__DIR__ . "/log/test.log", 1, Level::Debug)],
-                    [new UidProcessor(), new IntrospectionProcessor()]
-                ),
-                "Entities" => function () {
-                    $entity = $this->getEntity();
-                    return [$entity->uuid => $entity];
+                Settings::class => function () {
+                    return $this->getSettings();
+                },
+                LoggerInterface::class => function (ContainerInterface $c) {
+                    $logger = new Logger("test-simple-api");
+                    $logPath = __DIR__ . "/log/events.log";
+                    $logger->pushProcessor(new UidProcessor());
+                    $logger->pushProcessor(new IntrospectionProcessor());
+                    $steam = new RotatingFileHandler($logPath, 15, Level::Debug);
+                    $logger->pushHandler($steam);
+                    return $logger;
+                },
+                ResolverClass::class => function (ContainerInterface $container) {
+                    return new ResolverClass($container);
+                },
+                PDO::class => function () {
+                    return $this->getPdo();
                 }
             ]);
             try {
                 $this->container = $containerBuilder->build();
-            } catch (Exception) {
-                throw new RuntimeException("Impossible d'initialiser le container");
+            } catch (Exception $e) {
+                throw new RuntimeException(
+                    "Impossible d'initialiser le container",
+                    $e->getCode(),
+                    $e
+                );
             }
         }
         return $this->container;
     }
 
+    protected function getSettings(): Settings
+    {
+        if ($this->settings === null) {
+            $this->settings = new Settings(
+                __DIR__ . '/entity.json',
+                new LogSettings(
+                    'simple-api',
+                    isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+                    Level::Debug
+                )
+            );
+        }
+        return $this->settings;
+    }
+
+    /**
+     * Retourne une instance de PDO pour les tests
+     * @return \PDO
+     */
+    protected function getPdo(): PDO
+    {
+        if ($this->pdo === null) {
+            $this->pdo = PDOFactory::mysql(
+                '172.26.208.1',
+                'test-data',
+                'root',
+                'root-pass',
+                3306
+            );
+        }
+        return $this->pdo;
+    }
+
     protected function getEntity(): Entity
     {
-        return new Entity(
-            '8aeb376f-5cb3-4a4e-a7f5-1abf65467deb',
-            'EntityTest',
-            [
-                new Resource('test', ['data1', 'data2'])
-            ]
-        );
+        if ($this->entity === null) {
+            $this->entity = new Entity(
+                '8aeb376f-5cb3-4a4e-a7f5-1abf65467deb',
+                'EntityTest',
+                [
+                    new Resource('test', ['data1', 'data2'])
+                ]
+            );
+        }
+        return $this->entity;
     }
 }
