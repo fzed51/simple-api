@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Elements;
+namespace SimpleApi\Elements;
 
-use SimpleApi\Elements\Resource;
 use Test\TestCase;
 
 /**
@@ -32,7 +31,7 @@ class ResourceTest extends TestCase
      */
     public function testFromBadNameInArray(): void
     {
-        $this->expectDeprecationMessage("la ressource n'est pas valide : la clé nom n'est pas du text");
+        $this->expectExceptionMessage("la ressource n'est pas valide : la clé nom n'est pas du text");
         Resource::fromArray([
             "name" => [],
             "fields" => [
@@ -47,7 +46,7 @@ class ResourceTest extends TestCase
      */
     public function testFromBadFieldsInArray(): void
     {
-        $this->expectDeprecationMessage("la ressource n'est pas valide : la clé champs n'est pas un tableau");
+        $this->expectExceptionMessage("la ressource n'est pas valide : la clé champs n'est pas un tableau");
         Resource::fromArray(["name" => "resource", "fields" => "field1 , field2"]);
     }
 }

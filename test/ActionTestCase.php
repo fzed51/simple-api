@@ -78,6 +78,10 @@ class ActionTestCase extends TestCase
                 },
                 PDO::class => function () {
                     return $this->getPdo();
+                },
+                "Entities" => function () {
+                    $entity = $this->getEntity();
+                    return [$entity->uuid => $entity];
                 }
             ]);
             try {
