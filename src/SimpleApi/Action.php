@@ -11,8 +11,8 @@ use LogicException;
 abstract class Action
 {
 
-    public bool $initializedValue = false;
-    public mixed $value;
+    private bool $initializedValue = false;
+    private mixed $value;
 
     /**
      * Méthode de base permettant d'exécuter cette action
