@@ -48,7 +48,8 @@
         "db:restart": [
             "@db:stop",
             "@db:start"
-        ]
+        ],
+        "deploy": "deployment ./deployment.ini"
     },
     "require": {
         "php": ">=8.1",
@@ -60,6 +61,7 @@
         "monolog/monolog": "^3.2",
         "fzed51/http-exception": "^3.0",
         "fzed51/instance-resolver": "^2.1",
-        "fzed51/migration": "^2.0"
+        "fzed51/migration": "^2.0",
+        "dg/ftp-deployment": "^3.6"
     }
 }

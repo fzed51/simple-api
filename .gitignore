@@ -81,3 +81,4 @@ Desktop.ini
 /migration-config.json
 /config/*
 !/config/*.sample
+/deployment.ini
