@@ -78,5 +78,6 @@ Desktop.ini
 #  |___/                         
 *~
 *.log
-/config/entities.json
 /migration-config.json
+/config/*
+!/config/*.sample
